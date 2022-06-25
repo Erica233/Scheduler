@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // 去掉严格模式节点
+  
   // <React.StrictMode>
     <App />
   // </React.StrictMode>
