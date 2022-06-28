@@ -5,11 +5,11 @@ import Choice from './components/choice';
 import Day from './components/day';
 import Identity from './components/identity';
 
-const semesters = [
-  { value: 'Spring 2023', label: 'Spring 2023' },
-  { value: 'Fall 2022', label: 'Fall 2022' },
-  { value: 'Summer 2022', label: 'Summer 2022' },
-];
+// const semesters = [
+//   { value: 'Spring 2023', label: 'Spring 2023' },
+//   { value: 'Fall 2022', label: 'Fall 2022' },
+//   { value: 'Summer 2022', label: 'Summer 2022' },
+// ];
 // const graduates = [
 //   { value: 'Graduate', label: 'Graduate' },
 //   { value: 'Undergraduate', label: 'Undergraduate' },
@@ -18,7 +18,7 @@ const semesters = [
 function App () {
   return (
     <div className="App">
-      <p class="box">
+      <p className="box">
         <span>Table Name</span>
         <br></br>
         <input clearable showCount maxLength={20} />
