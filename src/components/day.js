@@ -1,18 +1,11 @@
 import { Tag,  } from '@arco-design/web-react';
 import React from 'react';
 import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+import styled from "styled-components";
+import "../App.css";
 
-// const options = [
-//   'Sunday',
-//   'Monday',
-//   'Tuesday',
-//   'Wednesday',
-//   'Thursday',
-//   'Friday',
-//   'Saturday',
-// ];
-
-const options = [
+const day_options = [
     { value: 'Sunday', label: 'Sunday' },
     { value: 'Monday', label: 'Monday' },
     { value: 'Tuesday', label: 'Tuesday' },
@@ -22,37 +15,37 @@ const options = [
     { value: 'Saturday', label: 'Saturday' },
   ];
 
-  function tagRender(props) {
-    const { label, value, closable, onClose } = props;
-    return (
-      <Tag
-        color={options.indexOf(value) > -1 ? value : 'gray'}
-        closable={closable}
-        onClose={onClose}
-        style={{ margin: '2px 6px 2px 0' }}
-      >
-        {label}
-      </Tag>
-    );
-  }
+  const animatedComponents = makeAnimated();
 
-  const Day = () => {
+
+  const Day = (props) => {
     return (
-      <div>
-        <div style={{ marginBottom: 20 }}>
-          <Select
-            style={{ maxWidth: 350, marginRight: 20 }}
+      <div className="row">
+        <label>{props.description}</label>
+        <SelectsContainer>
+<Select
+            className="select"
+            closeMenuOnSelect={false}
             allowClear
             placeholder='Please Select'
             isMulti
-            defaultValue={options.slice(0, 2)}
-            options={options}
-            renderTag={tagRender}
+            options={day_options}
+            components={animatedComponents}
           />
+        </SelectsContainer>
+          
         </div>
-      </div>
+      
     );
   };
+
+  const SelectsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 20%;
+  width: 100%;
+`;
 
 export default Day;
 
