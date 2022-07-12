@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 import "../App.css";
 import styled from "styled-components";
@@ -10,14 +10,24 @@ const semester_options = [
 ];
 
 const SemesterChoice = (props) => {
+  const [semesterOption, setSemesterOption] = React.useState(null);
+
+  // get selected value
+  const dropdownChangeHandler = (option) => {
+    setSemesterOption(option);
+    props.onChangeFilter(option.value);
+  };
+
   return (
     <div className="row">
       <label>{props.description}</label>
       <SelectsContainer>
         <Select
           className="select"
-          placeholder="Select"
+          size="small"
+          placeholder="Please Select"
           options={semester_options}
+          onChange={dropdownChangeHandler}
         />
       </SelectsContainer>
     </div>

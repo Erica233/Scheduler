@@ -6,19 +6,73 @@ import GradeChoice from "./identity";
 import DayChoice from "./day";
 
 const CreateForm = () => {
+  let table_name = "",
+    semester = "",
+    grade = "",
+    days = "";
+
+  const addTableNameHandler = (_table_name) => {
+    table_name = _table_name;
+  };
+  const addSemesterHandler = (_semester) => {
+    semester = _semester;
+  };
+  const addGradeHandler = (_grade) => {
+    grade = _grade;
+  };
+  const addDaysHandler = (_days) => {
+    days = _days;
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form_data = {
+      table_name: table_name,
+      semester: semester,
+      grade: grade,
+      days: days,
+    };
+    console.log(form_data);
+  };
+
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <FormInput
         description="Table Name"
         placeholder="Enter Your Schedule Name"
         type="text"
+        onChangeInput={addTableNameHandler}
       />
-      <SemesterChoice description="Semester" />
-      <GradeChoice description="Grade" />
-      <DayChoice description="Days" />
+      <SemesterChoice
+        description="Semester"
+        onChangeFilter={addSemesterHandler}
+      />
+      <GradeChoice description="Grade" onChangeFilter={addGradeHandler} />
+      <DayChoice description="Days" onChangeFilter={addDaysHandler} />
       <FormButton title="Start a new Table" />
       <hr className="horizontalRule"></hr>
       <ImportButton title="Import schdule from local" />
+    </form>
+  );
+};
+
+const FormInput = (props) => {
+  const [table_name, setTableName] = React.useState("");
+  const handleChangeTableName = (event) => {
+    setTableName(event.target.value);
+    props.onChangeInput(event.target.value);
+  };
+  return (
+    <div className="row">
+      <label>{props.description}</label>
+      <InputContainer>
+        <StyledInput
+          type={props.type}
+          placeholder={props.placeholder}
+          onChange={handleChangeTableName}
+          required
+        ></StyledInput>
+      </InputContainer>
     </div>
   );
 };
@@ -57,20 +111,6 @@ const ImportButton = (props) => {
           hidden
         />
       </div>
-    </div>
-  );
-};
-
-const FormInput = (props) => {
-  return (
-    <div className="row">
-      <label>{props.description}</label>
-      <InputContainer>
-        <StyledInput
-          type={props.type}
-          placeholder={props.placeholder}
-        ></StyledInput>
-      </InputContainer>
     </div>
   );
 };

@@ -119,6 +119,7 @@
 
 .select {
   width: 80%;
+  height: 50%;
   box-sizing: border-box;
   border: none;
   font-size: 1rem;
