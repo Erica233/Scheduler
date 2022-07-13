@@ -45,7 +45,7 @@ const options = [
             allowClear
             placeholder='Please Select'
             isMulti
-            defaultValue={options.slice(0, 2)}
+            defaultValue={options.slice(1, 2)}
             options={options}
             renderTag={tagRender}
           />

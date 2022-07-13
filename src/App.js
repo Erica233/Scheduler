@@ -4,6 +4,7 @@ import React from 'react';
 import Choice from './components/choice';
 import Day from './components/day';
 import Identity from './components/identity';
+import TemplateSelector from './components/templateSelector';
 
 // const semesters = [
 //   { value: 'Spring 2023', label: 'Spring 2023' },
@@ -23,6 +24,7 @@ function App () {
         <br></br>
         <input clearable showCount maxLength={20} />
         <br></br>
+        <br></br>
         <span>Semester</span>
         <Choice/>
         <br></br>
@@ -31,7 +33,11 @@ function App () {
         <br></br>
         <span>Day of the Week</span>
         <Day/>
+        {/* <TemplateSelector/> */}
         <button type="button">Save</button>
+      </p>
+      <p className="slide">
+      <TemplateSelector/>
       </p>
       </div>
   )
