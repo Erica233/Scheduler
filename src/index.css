@@ -5,37 +5,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-<<<<<<< HEAD
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
-body {
-  background-color:#fff8e7;
-}
-h1 {
-  color:orange;
-  text-align:center;
-}
-p {
-  font-family:"Times New Roman";
-  font-size:20px;
-}
-.box {
-  float: left;
-  width: 300px;
-  height: 300px;
-  margin-left: 100px;
-  position: relative; z-index:99999;
-}
-.slide {
-  margin-left: 650px;
-  width :400px;
-  height: 400px;
-  margin-top: 40px;
-  /* text-align: center; */
-=======
 body{
   font-family: 'Raleway', sans-serif;
   background-image: url('./statics/background_image.jpeg');
@@ -45,5 +14,4 @@ body{
   align-items: center;
   height: 100vh;
   width: 100vw;
->>>>>>> ea8e27e56220c04152cd27ccac49ff2b36962468
 }
