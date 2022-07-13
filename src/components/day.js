@@ -1,41 +1,25 @@
-import { Tag,  } from '@arco-design/web-react';
-import React from 'react';
-import Select from 'react-select';
+import React, { useState } from "react";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import styled from "styled-components";
+import "../App.css";
 
-// const options = [
-//   'Sunday',
-//   'Monday',
-//   'Tuesday',
-//   'Wednesday',
-//   'Thursday',
-//   'Friday',
-//   'Saturday',
-// ];
+const day_options = [
+  { value: "Sunday", label: "Sunday" },
+  { value: "Monday", label: "Monday" },
+  { value: "Tuesday", label: "Tuesday" },
+  { value: "Wednesday", label: "Wednesday" },
+  { value: "Thursday", label: "Thursday" },
+  { value: "Friday", label: "Friday" },
+  { value: "Saturday", label: "Saturday" },
+];
 
-const options = [
-    { value: 'Sunday', label: 'Sunday' },
-    { value: 'Monday', label: 'Monday' },
-    { value: 'Tuesday', label: 'Tuesday' },
-    { value: 'Wednesday', label: 'Wednesday' },
-    { value: 'Thursday', label: 'Thursday' },
-    { value: 'Friday', label: 'Friday' },
-    { value: 'Saturday', label: 'Saturday' },
-  ];
+const animatedComponents = makeAnimated();
 
-  function tagRender(props) {
-    const { label, value, closable, onClose } = props;
-    return (
-      <Tag
-        color={options.indexOf(value) > -1 ? value : 'gray'}
-        closable={closable}
-        onClose={onClose}
-        style={{ margin: '2px 6px 2px 0' }}
-      >
-        {label}
-      </Tag>
-    );
-  }
+const Day = (props) => {
+  const [daysOption, setDaysOption] = useState(null);
 
+<<<<<<< HEAD
   const Day = () => {
     return (
       <div>
@@ -52,8 +36,39 @@ const options = [
         </div>
       </div>
     );
+=======
+  const dropdownChangeHandler = (option) => {
+    setDaysOption(option);
+    // mapping from option's object to array only contains value
+    props.onChangeFilter(option.map(option => option.value));
+>>>>>>> ea8e27e56220c04152cd27ccac49ff2b36962468
   };
 
+  return (
+    <div className="row">
+      <label>{props.description}</label>
+      <SelectsContainer>
+        <Select
+          className="select"
+          closeMenuOnSelect={false}
+          allowClear
+          placeholder="Please Select"
+          isMulti="True"
+          options={day_options}
+          components={animatedComponents}
+          onChange={dropdownChangeHandler}
+        />
+      </SelectsContainer>
+    </div>
+  );
+};
+
+const SelectsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 20%;
+  width: 100%;
+`;
+
 export default Day;
-
-
