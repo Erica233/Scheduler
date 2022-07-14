@@ -7,8 +7,26 @@ import BasicTable from "../components/Table";
 const EditedTable = () => {
   return (
     <EditedPageContainer>
+<<<<<<< Updated upstream
       <HeaderBar/>
       <BasicTable/>
+=======
+    <HeaderBar/>
+      <Table>
+        <Column width={100} sort fixed resizable>
+          <HeaderCell>Week</HeaderCell>
+          <Cell dataKey="week" />
+        </Column>
+        <Column width={100} sort resizable>
+          <HeaderCell>Topic</HeaderCell>
+          <Cell dataKey="topic" />
+        </Column>
+        <Column width={100} sort resizable>
+          <HeaderCell>Description</HeaderCell>
+          <Cell dataKey="description" />
+        </Column>
+      </Table>
+>>>>>>> Stashed changes
     </EditedPageContainer>
   );
 };
