@@ -5,10 +5,12 @@ import CreateForm from "../components/createForm";
 
 function Home() {
   return (
-    <MainContainer>
-      <FormHeader title="Course Scheduler" />
-      <CreateForm />
-    </MainContainer>
+    <div>
+      <MainContainer>
+        <FormHeader title="Course Scheduler" />
+        <CreateForm />
+      </MainContainer>
+    </div>
   );
 }
 
@@ -18,6 +20,8 @@ const FormHeader = (props) => <h2 id="headerTitle">{props.title}</h2>;
 
 const MainContainer = styled.div`
   display: flex;
+  margin-left: auto;
+  margin-right: auto;
   align-items: center;
   flex-direction: column;
   height: 80vh;
@@ -56,6 +60,7 @@ const MainContainer = styled.div`
   @media only screen and (min-width: 768px) {
     width: 70vw;
     height: 80vh;
+    display: flex;
   }
   @media only screen and (min-width: 1024px) {
     width: 40vw;
