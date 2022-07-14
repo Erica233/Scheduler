@@ -5,9 +5,26 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body{
-  font-family: 'Raleway', sans-serif;
+  height: 100vh;
+  width: 100vw;
+  background-color: #003087;
+}
+
+.home{
   background-image: url('./statics/background_image.jpeg');
+  font-family: 'Raleway', sans-serif;
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.edited{
+  background-color: #003087;
+  font-family: 'Raleway', sans-serif;
   background-size: cover;
   justify-content: center;
   align-items: center;

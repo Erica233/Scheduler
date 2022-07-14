@@ -5,7 +5,7 @@ import CreateForm from "../components/createForm";
 
 function Home() {
   return (
-    <div>
+    <div className="home">
       <MainContainer>
         <FormHeader title="Course Scheduler" />
         <CreateForm />
