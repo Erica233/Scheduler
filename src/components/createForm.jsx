@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import "../App.css";
 import styled from "styled-components";
 import SemesterChoice from "./semesterChoice";
@@ -24,6 +25,8 @@ const CreateForm = () => {
     days = _days;
   };
 
+  const history = useHistory();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const form_data = {
@@ -33,6 +36,7 @@ const CreateForm = () => {
       days: days,
     };
     console.log(form_data);
+    history.push("/edited");
   };
 
   return (
