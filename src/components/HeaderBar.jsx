@@ -4,7 +4,11 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Dropdown from "react-bootstrap/Dropdown";
 import { Home, PlusCircle, ExternalLink } from "react-feather";
+import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
+import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
+import Button from "react-bootstrap/Button";
 
 function HeaderBar() {
   // determine the screen size
@@ -35,22 +39,44 @@ function HeaderBar() {
         <MobileNavbar.Wrapper>
           <MobileNavbar.Items>
             <MobileNavbar.Item>
-              <MobileNavbar.Icon>
-                <Home size={20} />
-              </MobileNavbar.Icon>
-              Style
+              <Dropdown id={`dropdown-basic`} drop="up">
+                <DropdownToggle variant="light">
+                  <MobileNavbar.Icon>
+                    <Home size={20} />
+                  </MobileNavbar.Icon>
+                  <br />
+                  Style
+                </DropdownToggle>
+                <DropdownMenu>
+                  <Dropdown.Item eventKey="1">Template 1</Dropdown.Item>
+                  <Dropdown.Item eventKey="2">Template 2</Dropdown.Item>
+                  <Dropdown.Item eventKey="3">
+                    Something else here
+                  </Dropdown.Item>
+                </DropdownMenu>
+              </Dropdown>
             </MobileNavbar.Item>
+            <Dropdown id={`dropdown-basic`} drop="up">
+              <DropdownToggle variant="light">
+                <MobileNavbar.Icon>
+                  <PlusCircle size={20} />
+                </MobileNavbar.Icon>
+                <br />
+                Add
+              </DropdownToggle>
+              <DropdownMenu>
+                <Dropdown.Item eventKey="1">Add Column</Dropdown.Item>
+                <Dropdown.Item eventKey="2">Add Row</Dropdown.Item>
+                <Dropdown.Item eventKey="3">Set Holiday</Dropdown.Item>
+              </DropdownMenu>
+            </Dropdown>
             <MobileNavbar.Item>
-              <MobileNavbar.Icon>
-                <PlusCircle size={20} />
-              </MobileNavbar.Icon>
-              Add
-            </MobileNavbar.Item>
-            <MobileNavbar.Item>
-              <MobileNavbar.Icon>
-                <ExternalLink size={20} />
-              </MobileNavbar.Icon>
-              Export
+              <Button variant="light">
+                <MobileNavbar.Icon>
+                  <ExternalLink size={20} />
+                </MobileNavbar.Icon>
+                Export
+              </Button>
             </MobileNavbar.Item>
           </MobileNavbar.Items>
         </MobileNavbar.Wrapper>
@@ -133,20 +159,18 @@ const MobileNavbar = {
     position: fixed;
     width: 100vw;
     bottom: 0;
-
+    height: 25vw;
     justify-content: center;
   `,
   Items: styled(NavbarStyle.Items)`
     flex: 1;
     padding: 0 2rem;
-
     justify-content: space-around;
   `,
   Item: styled(NavbarStyle.Item)`
     display: flex;
     flex-direction: column;
     align-items: center;
-
     font-size: 1.2rem;
   `,
   Icon: styled.span``,
