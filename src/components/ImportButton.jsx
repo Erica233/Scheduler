@@ -1,33 +1,45 @@
 import React, { useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import "../App.css";
 
-
 const ImportButton = (props) => {
-    const fileRef = useRef();
-  
-    const handleChange = (event) => {
-      const [file] = event.target.files;
-      console.log(file);
-    };
-    return (
-      <div id="button" className="row">
-        <div className="buttonContainer">
-          <button
-            className="importButton"
-            onClick={() => fileRef.current.click()}
-          >
-            {props.title}
-          </button>
-          <input
-            ref={fileRef}
-            onChange={handleChange}
-            multiple={false}
-            type="file"
-            hidden
-          />
-        </div>
-      </div>
-    );
+  const history = useHistory();
+  const fileRef = useRef();
+
+  const handleChange = async (event) => {
+    const [file] = event.target.files;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    // server hostname + url
+    const res = await fetch("http://172.20.6.102:1999/upload-file", {
+      method: "POST",
+      body: formData,
+    }).then((res) => res.json());
+    alert(JSON.stringify(`${res.message}, status: ${res.status}`));
+    history.push("/edited");
   };
 
-  export default ImportButton;
+  return (
+    <div id="button" className="row">
+      <div className="buttonContainer">
+        <button
+          className="importButton"
+          onClick={() => fileRef.current.click()}
+        >
+          {props.title}
+        </button>
+        <input
+          ref={fileRef}
+          onChange={handleChange}
+          multiple={false}
+          type="file"
+          hidden
+        />
+      </div>
+    </div>
+  );
+};
+
+export default ImportButton;

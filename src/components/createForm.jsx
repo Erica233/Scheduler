@@ -1,10 +1,12 @@
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import "../App.css";
 import styled from "styled-components";
 import SemesterChoice from "./semesterChoice";
 import GradeChoice from "./identity";
 import DayChoice from "./day";
+import ImportButton from "./ImportButton";
 
 const CreateForm = () => {
   let table_name = "",
@@ -40,23 +42,25 @@ const CreateForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <FormInput
-        description="Table Name"
-        placeholder="Enter Your Schedule Name"
-        type="text"
-        onChangeInput={addTableNameHandler}
-      />
-      <SemesterChoice
-        description="Semester"
-        onChangeFilter={addSemesterHandler}
-      />
-      <GradeChoice description="Grade" onChangeFilter={addGradeHandler} />
-      <DayChoice description="Days" onChangeFilter={addDaysHandler} />
-      <FormButton title="Start a new Table" />
-      <hr className="horizontalRule"></hr>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <FormInput
+          description="Table Name"
+          placeholder="Enter Your Schedule Name"
+          type="text"
+          onChangeInput={addTableNameHandler}
+        />
+        <SemesterChoice
+          description="Semester"
+          onChangeFilter={addSemesterHandler}
+        />
+        <GradeChoice description="Grade" onChangeFilter={addGradeHandler} />
+        <DayChoice description="Days" onChangeFilter={addDaysHandler} />
+        <FormButton title="Start a new Table" />
+        <hr className="horizontalRule"></hr>
+      </form>
       <ImportButton title="Import schdule from local" />
-    </form>
+    </div>
   );
 };
 
@@ -91,33 +95,6 @@ const FormButton = (props) => (
   </div>
 );
 
-const ImportButton = (props) => {
-  const fileRef = useRef();
-
-  const handleChange = (event) => {
-    const [file] = event.target.files;
-    console.log(file);
-  };
-  return (
-    <div id="button" className="row">
-      <div className="buttonContainer">
-        <button
-          className="importButton"
-          onClick={() => fileRef.current.click()}
-        >
-          {props.title}
-        </button>
-        <input
-          ref={fileRef}
-          onChange={handleChange}
-          multiple={false}
-          type="file"
-          hidden
-        />
-      </div>
-    </div>
-  );
-};
 
 const InputContainer = styled.div`
   display: flex;
