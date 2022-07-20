@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import "../App.css";
 import styled from "styled-components";
 import SemesterChoice from "./semesterChoice";
@@ -29,16 +28,26 @@ const CreateForm = () => {
 
   const history = useHistory();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const form_data = {
-      table_name: table_name,
-      semester: semester,
-      grade: grade,
-      days: days,
-    };
-    console.log(form_data);
-    history.push("/edited");
+    try {
+      const form_data = {
+        table_name: table_name,
+        semester: semester,
+        grade: grade,
+        days: days,
+      };
+      const res = await fetch("http://10.197.120.183:1999/upload-file", {
+      method: "POST",
+      body: JSON.stringify(form_data),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => res.json());
+      history.push("/edited");
+    } catch (error) {
+      //handle some error here
+    }
   };
 
   return (
@@ -94,7 +103,6 @@ const FormButton = (props) => (
     </div>
   </div>
 );
-
 
 const InputContainer = styled.div`
   display: flex;
