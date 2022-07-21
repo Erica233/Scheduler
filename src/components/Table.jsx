@@ -2,18 +2,32 @@ import React, { useState } from 'react';
 import 'antd/dist/antd.min.css';
 // import './index.css';
 import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
+import { toBeInTheDocument } from '@testing-library/jest-dom/dist/matchers';
 
-const originData = [];
+const originData = [
+  [1, 'Tuesday 8/26', ""],
+  [1, 'Thursday 8/31', ""],
+  [2, 'Tuesday 9/2', ""],
+  [2, 'Thursday 9/7', ""],
+  [3, 'Tuesday 9/9', ""],
+  [3, 'Thursday 9/14', ""],
+  [4, 'Tuesday 9/16', ""],
+  [4, 'Thursday 9/21', ""],
+  [5, 'Tuesday 9/23', ""],
+  [5, 'Thursday 9/28', ""],
+  [6, 'Tuesday 9/30', ""],
+  [6, 'Thursday 10/5', "NO CLASS"],
+];
 
-for (let i = 1; i < 10; i++) {
-  originData.push({
-    key: i.toString(),
-    week: `${i}`,
-    date: `${i}`,
-    topic: ``,
-    description: ``,
+const tableData = originData.map( arr => {
+    return {key: 0, week: `${arr[0]}`, date: `${arr[1]}`, topic: arr[2], description: ``,};
   });
-}
+
+// add index to data
+tableData.forEach((row, index) => {row.key = index});
+
+
+console.log(tableData);
 
 const EditableCell = ({
   editing,
@@ -52,7 +66,7 @@ const EditableCell = ({
 
 const BasicTable = () => {
   const [form] = Form.useForm();
-  const [data, setData] = useState(originData);
+  const [data, setData] = useState(tableData);
   const [editingKey, setEditingKey] = useState('');
 
   const isEditing = (record) => record.key === editingKey;
@@ -97,14 +111,14 @@ const BasicTable = () => {
     {
       title: 'week',
       dataIndex: 'week',
-      width: '15%',
-      editable: true,
+      width: '10%',
+      editable: false,
     },
     {
       title: 'date',
       dataIndex: 'date',
       width: '25%',
-      editable: true,
+      editable: false,
       // sorter: (a, b) => {
       //   //将日期转成毫秒数，有利于计算大小
       //     let atime=new Date(a.Date.replace(/-/g,'/')).getTime();
@@ -192,3 +206,22 @@ const BasicTable = () => {
 };
 
 export default BasicTable;
+
+/**
+ * TODO
+ * 1. add row
+ *   - add new row
+ *   - add with week and date -> insert into correct position
+ * 2. add column
+ * 3. pesist store for refresh
+ * 4. responsive view -> the table cover the Nav bar
+ * 5. edit row
+ *    - sort into correct position
+ * 6. delete row
+ * 7. delete column
+ */
+
+/**
+ * 1. map backend data from array to object
+ * 2. make week and date uneditable
+ */

@@ -13,7 +13,7 @@ const ImportButton = (props) => {
     formData.append("file", file);
 
     // server hostname + url
-    const res = await fetch("http://10.197.120.183:1999/upload-file", {
+    const res = await fetch("http://vcm-26740.vm.duke.edu:1999/upload-file", {
       method: "POST",
       body: formData,
     }).then((res) => res.json());

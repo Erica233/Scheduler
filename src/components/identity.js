@@ -4,8 +4,8 @@ import styled from "styled-components";
 import "../App.css";
 
 const grade_options = [
-  { value: "Graduate", label: "Graduate" },
-  { value: "Undergraduate", label: "Undergraduate" },
+  { value: "graduate", label: "Graduate" },
+  { value: "undergraduate", label: "Undergraduate" },
 ];
 
 const Identity = (props) => {

@@ -37,13 +37,13 @@ const CreateForm = () => {
         grade: grade,
         days: days,
       };
-      const res = await fetch("http://10.197.120.183:1999/upload-file", {
-      method: "POST",
-      body: JSON.stringify(form_data),
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    }).then((res) => res.json());
+      const res = await fetch("http://vcm-26740.vm.duke.edu:1999/upload-file", {
+        method: "POST",
+        body: JSON.stringify(form_data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json());
       history.push("/edited");
     } catch (error) {
       //handle some error here
