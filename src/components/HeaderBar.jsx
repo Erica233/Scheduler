@@ -9,8 +9,12 @@ import { Home, PlusCircle, ExternalLink } from "react-feather";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import Button from "react-bootstrap/Button";
+import { useDispatch } from "react-redux";
+import { addColumn, deleteColumn } from '../redux/slices/tableSlice';
 
 function HeaderBar() {
+  // redux
+  const dispatch = useDispatch();
   // determine the screen size
   const [windowDimension, setWindowDimension] = useState(null);
 
@@ -36,6 +40,7 @@ function HeaderBar() {
   return (
     <div>
       {isMobile ? (
+        // mobile screen
         <MobileNavbar.Wrapper>
           <MobileNavbar.Items>
             <MobileNavbar.Item>
@@ -62,11 +67,12 @@ function HeaderBar() {
                   <PlusCircle size={20} />
                 </MobileNavbar.Icon>
                 <br />
-                Add
+                Edit
               </DropdownToggle>
               <DropdownMenu>
                 <Dropdown.Item eventKey="1">Add Column</Dropdown.Item>
                 <Dropdown.Item eventKey="2">Add Row</Dropdown.Item>
+                <Dropdown.Item eventKey="2">Delete Column</Dropdown.Item>
                 <Dropdown.Item eventKey="3">Set Holiday</Dropdown.Item>
               </DropdownMenu>
             </Dropdown>
@@ -81,6 +87,7 @@ function HeaderBar() {
           </MobileNavbar.Items>
         </MobileNavbar.Wrapper>
       ) : (
+        // computer screen
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
           <Container>
             <Navbar.Brand href="#home">
@@ -104,12 +111,15 @@ function HeaderBar() {
                     Template 2
                   </NavDropdown.Item>
                 </NavDropdown>
-                <NavDropdown title="Add">
+                <NavDropdown title="Edit">
                   <NavDropdown.Item href="#action/3.1">
                     Add Row
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
+                  <NavDropdown.Item href="#action/addColumn" onClick={()=>dispatch(addColumn())}>
                     Add Column
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/deleteColumn" onClick={()=>dispatch(deleteColumn())}>
+                    Delete Column
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#action/3.4">

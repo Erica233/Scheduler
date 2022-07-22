@@ -6,8 +6,12 @@ import SemesterChoice from "./semesterChoice";
 import GradeChoice from "./identity";
 import DayChoice from "./day";
 import ImportButton from "./ImportButton";
+import { useDispatch } from "react-redux";
+import { resetState } from '../redux/slices/tableSlice';
 
 const CreateForm = () => {
+  const dispatch = useDispatch();
+
   let table_name = "",
     semester = "",
     grade = "",
@@ -37,13 +41,14 @@ const CreateForm = () => {
         grade: grade,
         days: days,
       };
-      const res = await fetch("http://vcm-26740.vm.duke.edu:1999/upload-file", {
+      const res = await fetch("http://localhost:1999/upload-file", {
         method: "POST",
         body: JSON.stringify(form_data),
         headers: {
           "Content-Type": "application/json",
         },
       }).then((res) => res.json());
+      dispatch(resetState());
       history.push("/edited");
     } catch (error) {
       //handle some error here
