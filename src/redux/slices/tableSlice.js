@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import storage from "redux-persist/lib/storage";
 
 const originData = [
   [1, "Tuesday 8/26", ""],
@@ -16,15 +15,20 @@ const originData = [
   [6, "Thursday 10/5", "NO CLASS"],
 ];
 
-const transformData = originData.map((arr) => {
+const transformData = originData.map((arr, index) => {
   return {
-    key: 0,
+    key: index,
     week: `${arr[0]}`,
     date: `${arr[1]}`,
     topic: arr[2],
     description: ``,
   };
 });
+
+// // add index to data
+// transformData.forEach((row, index) => {
+//   row.key = index;
+// });
 
 const init_columns = [
   {
@@ -62,14 +66,9 @@ export const tableSlice = createSlice({
   name: "table_info",
   initialState,
   reducers: {
-    addColumn: (state) => {
-      state = state.columns.push({
-        title: "homework",
-        dataIndex: "homework",
-        width: "20%",
-        editable: true,
-      });
-    },
+    // addColumn: (state, action) => {
+    //   state = state.columns.push(action.payload);
+    // },
 
     addRow: (state) => {},
 
@@ -78,14 +77,19 @@ export const tableSlice = createSlice({
     },
 
     deleteRow: (state) => {},
+
     resetState: (state) =>{
-      console.log("clean");
-      state = undefined;
+      state.columns = initialState.columns;
+      sessionStorage.removeItem("persist:root");
+    },
+
+    setData:(state, action)=>{
+      state.data = action.payload;
     }
   },
 });
 
-export const { addColumn, addRow, deleteColumn, deleteRow, resetState } =
+export const { addColumn, addRow, deleteColumn, deleteRow, resetState, setData } =
   tableSlice.actions;
 
 export default tableSlice.reducer;

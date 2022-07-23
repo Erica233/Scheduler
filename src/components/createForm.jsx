@@ -7,7 +7,7 @@ import GradeChoice from "./identity";
 import DayChoice from "./day";
 import ImportButton from "./ImportButton";
 import { useDispatch } from "react-redux";
-import { resetState } from '../redux/slices/tableSlice';
+import { resetState, deleteColumn } from '../redux/slices/tableSlice';
 
 const CreateForm = () => {
   const dispatch = useDispatch();

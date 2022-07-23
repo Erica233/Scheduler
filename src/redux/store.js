@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import tableReducer from "./slices/tableSlice";
-import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/lib/storage/session";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 
