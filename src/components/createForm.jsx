@@ -41,7 +41,7 @@ const CreateForm = () => {
         grade: grade,
         days: days,
       };
-      const res = await fetch("http://localhost:1999/upload-file", {
+      const res = await fetch("http://172.28.230.31:1999/upload-file", {
         method: "POST",
         body: JSON.stringify(form_data),
         headers: {

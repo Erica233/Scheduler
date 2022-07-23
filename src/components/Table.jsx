@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "antd/dist/antd.min.css";
-// import './index.css';
 import { Form, Input, InputNumber, Popconfirm, Table, Typography } from "antd";
-import { toBeInTheDocument } from "@testing-library/jest-dom/dist/matchers";
 import { useSelector, useDispatch } from "react-redux";
 
 const originData = [
