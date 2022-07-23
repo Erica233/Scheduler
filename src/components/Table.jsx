@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "antd/dist/antd.min.css";
 import { Form, Input, InputNumber, Table, Popconfirm, Typography } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { addColumn, setData } from '../redux/slices/tableSlice';
+import { addColumn, setData, deleteRow } from "../redux/slices/tableSlice";
 
 const EditableCell = ({
   editing,
@@ -44,7 +44,7 @@ const BasicTable = () => {
   // const [data, setData] = useState(tableData);
   const [editingKey, setEditingKey] = useState("");
   const dispatch = useDispatch();
-  const data = useSelector((state)=> state.data);
+  const data = useSelector((state) => state.data);
 
   const isEditing = (record) => record.key === editingKey;
 
@@ -116,36 +116,47 @@ const BasicTable = () => {
   //   },
   // }));
 
-
-  const columns = [ ...columns_state, {
-    title: "operation",
-    dataIndex: "operation",
-    render: (_, record) => {
-      const editable = isEditing(record);
-      return editable ? (
-        <span>
-          <Typography.Link
-            onClick={() => save(record.key)}
-            style={{
-              marginRight: 8,
-            }}
-          >
-            Save
-          </Typography.Link>
-          <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-            <a>Cancel</a>
-          </Popconfirm>
-        </span>
-      ) : (
-        <Typography.Link
-          disabled={editingKey !== ""}
-          onClick={() => edit(record)}
-        >
-          Edit
-        </Typography.Link>
-      );
+  const columns = [
+    ...columns_state,
+    {
+      title: "operation",
+      dataIndex: "operation",
+      render: (_, record) => {
+        const editable = isEditing(record);
+        return editable ? (
+          <span>
+            <Typography.Link
+              onClick={() => save(record.key)}
+              style={{
+                marginRight: 8,
+              }}
+            >
+              Save
+            </Typography.Link>
+            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+              <a>Cancel</a>
+            </Popconfirm>
+          </span>
+        ) : (
+          <div>
+            <Typography.Link
+              disabled={editingKey !== ""}
+              onClick={() => edit(record)}
+            >
+              Edit
+            </Typography.Link>
+            <br />
+            <Typography.Link
+              disabled={editingKey !== ""}
+              onClick={() => dispatch(deleteRow(record))}
+            >
+              Delete
+            </Typography.Link>
+          </div>
+        );
+      },
     },
-  }];
+  ];
 
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
@@ -163,6 +174,7 @@ const BasicTable = () => {
       }),
     };
   });
+
   return (
     <Form form={form} component={false}>
       <Table

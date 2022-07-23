@@ -20,7 +20,6 @@ class ColumnForm extends React.Component {
     event.preventDefault();
   }
 
-
   render() {
     return (
       <form onSubmit={this.handleSubmit}>

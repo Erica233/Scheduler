@@ -25,32 +25,27 @@ const transformData = originData.map((arr, index) => {
   };
 });
 
-// // add index to data
-// transformData.forEach((row, index) => {
-//   row.key = index;
-// });
-
 const init_columns = [
   {
-    title: "week",
+    title: "Week",
     dataIndex: "week",
     width: "10%",
     editable: false,
   },
   {
-    title: "date",
+    title: "Date",
     dataIndex: "date",
     width: "25%",
     editable: false,
   },
   {
-    title: "topic",
+    title: "Topic",
     dataIndex: "topic",
     width: "20%",
     editable: true,
   },
   {
-    title: "description",
+    title: "Description",
     dataIndex: "description",
     width: "20%",
     editable: true,
@@ -69,17 +64,23 @@ export const tableSlice = createSlice({
     // addColumn: (state, action) => {
     //   state = state.columns.push(action.payload);
     // },
-
-    addRow: (state) => {},
+    
+    addRow: (state) => {
+    },
 
     deleteColumn: (state) => {
       state = state.columns.pop();
     },
 
-    deleteRow: (state) => {},
+    deleteRow: (state, action) => {
+      const key = action.payload.key;
+      console.log(key);
+      state.data = state.data.filter(item => item.key !== key);
+    },
 
     resetState: (state) =>{
       state.columns = initialState.columns;
+      state.data = initialState.data;
       sessionStorage.removeItem("persist:root");
     },
 
