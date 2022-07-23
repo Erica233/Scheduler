@@ -4,6 +4,9 @@ import HeaderBar from "../components/HeaderBar";
 import styled from "styled-components";
 import BasicTable from "../components/Table";
 
+
+
+
 const EditedTable = () => {
   return (
     <div className="edit">

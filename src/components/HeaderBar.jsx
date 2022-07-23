@@ -11,13 +11,16 @@ import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import Button from "react-bootstrap/Button";
 import { useDispatch } from "react-redux";
 import { addColumn, deleteColumn } from '../redux/slices/tableSlice';
+import PopupColumn from "./PopupColumn";
+import Popup from "./Popup";
 
 function HeaderBar() {
   // redux
   const dispatch = useDispatch();
   // determine the screen size
   const [windowDimension, setWindowDimension] = useState(null);
-
+  // popup trigger
+  const [buttonPopup, setButtonPopup] = useState(false);
   useEffect(() => {
     setWindowDimension(window.innerWidth);
   }, []);
@@ -39,6 +42,9 @@ function HeaderBar() {
 
   return (
     <div>
+      <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+        <PopupColumn/>
+      </Popup>
       {isMobile ? (
         // mobile screen
         <MobileNavbar.Wrapper>
@@ -115,7 +121,7 @@ function HeaderBar() {
                   <NavDropdown.Item href="#action/3.1">
                     Add Row
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/addColumn" onClick={()=>dispatch(addColumn())}>
+                  <NavDropdown.Item href="#action/addColumn" onClick={() => setButtonPopup(true)}>
                     Add Column
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#action/deleteColumn" onClick={()=>dispatch(deleteColumn())}>
