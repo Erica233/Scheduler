@@ -61,12 +61,15 @@ export const tableSlice = createSlice({
   name: "table_info",
   initialState,
   reducers: {
-    // addColumn: (state, action) => {
-    //   state = state.columns.push(action.payload);
-    // },
-    
-    addRow: (state) => {
+    addColumn: (state, action) => {
+      state = state.columns.push({
+        title: action.payload.column_name,
+        dataIndex: action.payload.column_name,
+        width: "25%",
+      });
     },
+
+    addRow: (state) => {},
 
     deleteColumn: (state) => {
       state = state.columns.pop();
@@ -75,22 +78,28 @@ export const tableSlice = createSlice({
     deleteRow: (state, action) => {
       const key = action.payload.key;
       console.log(key);
-      state.data = state.data.filter(item => item.key !== key);
+      state.data = state.data.filter((item) => item.key !== key);
     },
 
-    resetState: (state) =>{
+    resetState: (state) => {
       state.columns = initialState.columns;
       state.data = initialState.data;
       sessionStorage.removeItem("persist:root");
     },
 
-    setData:(state, action)=>{
+    setData: (state, action) => {
       state.data = action.payload;
-    }
+    },
   },
 });
 
-export const { addColumn, addRow, deleteColumn, deleteRow, resetState, setData } =
-  tableSlice.actions;
+export const {
+  addColumn,
+  addRow,
+  deleteColumn,
+  deleteRow,
+  resetState,
+  setData,
+} = tableSlice.actions;
 
 export default tableSlice.reducer;

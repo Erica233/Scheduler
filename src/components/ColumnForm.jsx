@@ -46,7 +46,7 @@ function ColumnForm() {
 
             <br/> */}
 
-            <button onClick={()=>dispatch(addColumn())}>Submit</button>
+            <button onClick={()=>dispatch(addColumn(inputField))}>Submit</button>
         </div>
     )
 }
