@@ -11,8 +11,8 @@ import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import Button from "react-bootstrap/Button";
 import { useDispatch } from "react-redux";
 import { addColumn, deleteColumn } from '../redux/slices/tableSlice';
-import PopupColumn from "./PopupColumn";
 import Popup from "./Popup";
+import ColumnForm from "./ColumnForm";
 
 function HeaderBar() {
   // redux
@@ -43,7 +43,8 @@ function HeaderBar() {
   return (
     <div>
       <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-        <PopupColumn/>
+        {/* <PopupColumn/> */}
+        <ColumnForm/>
       </Popup>
       {isMobile ? (
         // mobile screen
