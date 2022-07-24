@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { addColumn, deleteColumn } from '../redux/slices/tableSlice';
 import Popup from "./Popup";
 import ColumnForm from "./ColumnForm";
+import DeleteColumnForm from "./DeleteColumnForm";
 
 function HeaderBar() {
   // redux
@@ -20,7 +21,8 @@ function HeaderBar() {
   // determine the screen size
   const [windowDimension, setWindowDimension] = useState(null);
   // popup trigger
-  const [buttonPopup, setButtonPopup] = useState(false);
+  const [addColumnPopup, setAddColumnPopup] = useState(false);
+  const [deleteColumnPopup, setDeleteColumnPopup] = useState(false);
   useEffect(() => {
     setWindowDimension(window.innerWidth);
   }, []);
@@ -42,9 +44,11 @@ function HeaderBar() {
 
   return (
     <div>
-      <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-        {/* <PopupColumn/> */}
+      <Popup trigger={addColumnPopup} setTrigger={setAddColumnPopup}>
         <ColumnForm/>
+      </Popup>
+      <Popup trigger={deleteColumnPopup} setTrigger={setDeleteColumnPopup}>
+        <DeleteColumnForm/>
       </Popup>
       {isMobile ? (
         // mobile screen
@@ -122,10 +126,10 @@ function HeaderBar() {
                   <NavDropdown.Item href="#action/3.1">
                     Add Row
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/addColumn" onClick={() => setButtonPopup(true)}>
+                  <NavDropdown.Item href="#action/addColumn" onClick={() => setAddColumnPopup(true)}>
                     Add Column
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/deleteColumn" onClick={()=>dispatch(deleteColumn())}>
+                  <NavDropdown.Item href="#action/deleteColumn" onClick={()=>setDeleteColumnPopup(true)}>
                     Delete Column
                   </NavDropdown.Item>
                   <NavDropdown.Divider />

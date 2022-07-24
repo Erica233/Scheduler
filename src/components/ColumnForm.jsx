@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import { useDispatch } from "react-redux";
-import { addColumn, deleteColumn } from '../redux/slices/tableSlice';
+import { addColumn } from '../redux/slices/tableSlice';
 
 
 function ColumnForm() {
     const dispatch = useDispatch();
-    const [inputField , setInputField] = useState({
+    const [inputField, setInputField] = useState({
         column_name: ''
     })
 
@@ -13,9 +13,9 @@ function ColumnForm() {
         setInputField( {[e.target.name]: e.target.value} )
     }
 
-    const submitButton = () =>{
-        alert(inputField.column_name)
-    }
+    // const submitButton = () =>{
+    //     alert(inputField.column_name)
+    // }
 
     return (
         <div>
@@ -28,23 +28,6 @@ function ColumnForm() {
 
             <br/>
 
-            {/* <input 
-            type="text" 
-            name="last_name" 
-            onChange={inputsHandler} 
-            placeholder="First Name" 
-            value={inputField.last_name}/>
-
-            <br/>
-
-            <input 
-            type="gmail" 
-            name="gmail" 
-            onChange={inputsHandler} 
-            placeholder="Gmail" 
-            value={inputField.gmail}/>
-
-            <br/> */}
 
             <button onClick={()=>dispatch(addColumn(inputField))}>Submit</button>
         </div>
