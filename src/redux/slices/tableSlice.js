@@ -55,6 +55,7 @@ const init_columns = [
 const initialState = {
   data: [],
   columns: init_columns,
+  table_name: "",
 };
 
 export const tableSlice = createSlice({
@@ -84,10 +85,12 @@ export const tableSlice = createSlice({
     resetState: (state) => {
       state.columns = initialState.columns;
       state.data = initialState.data;
+      state.table_name = initialState.table_name;
       sessionStorage.removeItem("persist:root");
     },
 
     setData: (state, action) => {
+      console.log(action.payload);
       const originData = action.payload;
       const transformData = originData.map((arr, index) => {
         return {
@@ -99,6 +102,11 @@ export const tableSlice = createSlice({
         };
       });
       state.data = transformData;
+      state.columns = initialState.columns;
+    },
+
+    setTableName:(state, action) =>{
+      state.table_name = action.payload;
     },
   },
 });
@@ -110,6 +118,7 @@ export const {
   deleteRow,
   resetState,
   setData,
+  setTableName,
 } = tableSlice.actions;
 
 export default tableSlice.reducer;

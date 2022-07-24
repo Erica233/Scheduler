@@ -3,22 +3,27 @@ import { useHistory } from "react-router-dom";
 import "../App.css";
 import styled from "styled-components";
 import SemesterChoice from "./semesterChoice";
+import YearChoice from "./YearChoice";
 import GradeChoice from "./identity";
 import DayChoice from "./day";
 import ImportButton from "./ImportButton";
 import { useDispatch } from "react-redux";
-import { resetState, setData } from '../redux/slices/tableSlice';
+import { setTableName, setData } from "../redux/slices/tableSlice";
 
 const CreateForm = () => {
   const dispatch = useDispatch();
 
   let table_name = "",
+    year = "",
     semester = "",
     grade = "",
     days = "";
 
   const addTableNameHandler = (_table_name) => {
     table_name = _table_name;
+  };
+  const addYearHandler = (_year) => {
+    year = _year;
   };
   const addSemesterHandler = (_semester) => {
     semester = _semester;
@@ -36,12 +41,12 @@ const CreateForm = () => {
     event.preventDefault();
     try {
       const form_data = {
-        table_name: table_name,
+        year: year,
         semester: semester,
         grade: grade,
         days: days,
       };
-      const res = await fetch("http://172.28.230.31:1999/upload-file", {
+      const res = await fetch("http://vcm-26740.vm.duke.edu:1999/upload-file", {
         method: "POST",
         body: JSON.stringify(form_data),
         headers: {
@@ -49,6 +54,7 @@ const CreateForm = () => {
         },
       }).then((res) => res.json());
       // console.log(res.message);
+      dispatch(setTableName(table_name));
       dispatch(setData(res.message));
       history.push("/edited");
     } catch (error) {
@@ -65,6 +71,7 @@ const CreateForm = () => {
           type="text"
           onChangeInput={addTableNameHandler}
         />
+        <YearChoice description="Year" onChangeFilter={addYearHandler} />
         <SemesterChoice
           description="Semester"
           onChangeFilter={addSemesterHandler}

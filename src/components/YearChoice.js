@@ -3,21 +3,23 @@ import Select from "react-select";
 import "../App.css";
 import styled from "styled-components";
 
-const semester_options = [
-  { value: "spring", label: "Spring" },
-  { value: "summer", label: "Summer" },
-  { value: "fall", label: "Fall" },
-];
+const YearChoice = (props) => {
+  const [yearOption, setYearOption] = React.useState(null);
 
-const year = (new Date()).getFullYear();
-const years = Array.from(new Array(10),( val, index) => index + year);
+  // get selected years(select last 10 years)
+  const year = new Date().getFullYear();
+  const years = Array.from(new Array(10), (val, index) => year - index + 1);
 
-const SemesterChoice = (props) => {
-  const [semesterOption, setSemesterOption] = React.useState(null);
+  const year_options = years.map((arr) => {
+    return {
+      value: arr,
+      label: `${arr}`,
+    };
+  });
 
   // get selected value
   const dropdownChangeHandler = (option) => {
-    setSemesterOption(option);
+    setYearOption(option);
     props.onChangeFilter(option.value);
   };
 
@@ -29,7 +31,7 @@ const SemesterChoice = (props) => {
           className="select"
           size="small"
           placeholder="Please Select"
-          options={semester_options}
+          options={year_options}
           onChange={dropdownChangeHandler}
         />
       </SelectsContainer>
@@ -45,4 +47,4 @@ const SelectsContainer = styled.div`
   width: 100%;
 `;
 
-export default SemesterChoice;
+export default YearChoice;
