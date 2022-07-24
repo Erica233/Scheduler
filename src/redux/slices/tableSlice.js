@@ -53,7 +53,7 @@ const init_columns = [
 ];
 
 const initialState = {
-  data: transformData,
+  data: [],
   columns: init_columns,
 };
 
@@ -88,7 +88,17 @@ export const tableSlice = createSlice({
     },
 
     setData: (state, action) => {
-      state.data = action.payload;
+      const originData = action.payload;
+      const transformData = originData.map((arr, index) => {
+        return {
+          key: index,
+          week: `${arr[0]}`,
+          date: `${arr[1]}`,
+          topic: arr[2],
+          description: ``,
+        };
+      });
+      state.data = transformData;
     },
   },
 });

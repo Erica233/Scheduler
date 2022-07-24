@@ -7,7 +7,7 @@ import GradeChoice from "./identity";
 import DayChoice from "./day";
 import ImportButton from "./ImportButton";
 import { useDispatch } from "react-redux";
-import { resetState, deleteColumn } from '../redux/slices/tableSlice';
+import { resetState, setData } from '../redux/slices/tableSlice';
 
 const CreateForm = () => {
   const dispatch = useDispatch();
@@ -48,7 +48,8 @@ const CreateForm = () => {
           "Content-Type": "application/json",
         },
       }).then((res) => res.json());
-      dispatch(resetState());
+      // console.log(res.message);
+      dispatch(setData(res.message));
       history.push("/edited");
     } catch (error) {
       //handle some error here
