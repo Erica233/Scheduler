@@ -13,9 +13,9 @@ function ColumnForm() {
         setInputField( {[e.target.name]: e.target.value} )
     }
 
-    // const submitButton = () =>{
-    //     alert(inputField.column_name)
-    // }
+    const submitButton = () =>{
+        alert(inputField.column_name)
+    }
 
     return (
         <div>
