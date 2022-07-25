@@ -19,17 +19,17 @@ function ColumnForm() {
 
     return (
         <div>
+            <form>
             <input 
-            type="text" 
+            type="text"
             name="column_name"
             onChange={inputsHandler} 
             placeholder="Column Name" 
-            value={inputField.column_name}/>
-
+            value={inputField.column_name}
+            required />
             <br/>
-
-
             <button onClick={()=>dispatch(addColumn(inputField))}>Submit</button>
+            </form>
         </div>
     )
 }

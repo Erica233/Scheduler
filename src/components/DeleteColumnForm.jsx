@@ -15,11 +15,14 @@ function DeleteColumnForm() {
     };
 
     const arr = useSelector((state) => state.columns);
-
-    const col_options = arr.map((arr) => {
+    console.log(arr);
+    const col = arr.filter(column => {
+        return column.title !== "Week" && column.title !== "Date";
+    })
+    const col_options = col.map((col) => {
         return {
-            value: arr.title,
-            label: `${arr.title}`,
+            value: col.title,
+            label: `${col.title}`,
         }
     });
     return (
@@ -27,7 +30,7 @@ function DeleteColumnForm() {
         <Select
           className="select"
           size="small"
-          placeholder="Please Select"
+          placeholder="Please Select Column To Delete"
           options={col_options}
           onChange={handleChange}
         />
