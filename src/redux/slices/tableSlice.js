@@ -72,8 +72,8 @@ export const tableSlice = createSlice({
 
     addRow: (state) => {},
 
-    deleteColumn: (state) => {
-      state = state.columns.pop();
+    deleteColumn: (state, action) => {
+      state.columns = state.columns.filter(column => column.title != action.payload);
     },
 
     deleteRow: (state, action) => {

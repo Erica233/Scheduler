@@ -9,15 +9,21 @@ import { Home, PlusCircle, ExternalLink } from "react-feather";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import Button from "react-bootstrap/Button";
-import { useDispatch } from "react-redux";
-import { addColumn, deleteColumn } from '../redux/slices/tableSlice';
+import { useDispatch, useSelector } from "react-redux";
 import Popup from "./Popup";
 import ColumnForm from "./ColumnForm";
 import DeleteColumnForm from "./DeleteColumnForm";
+import * as XLSX from "xlsx";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 function HeaderBar() {
   // redux
   const dispatch = useDispatch();
+  const table_name = useSelector((state) => {
+    return state.table_name;
+  });
+  const columns_state = useSelector((state) => state.columns);
   // determine the screen size
   const [windowDimension, setWindowDimension] = useState(null);
   // popup trigger
@@ -42,13 +48,59 @@ function HeaderBar() {
   const navDropdownIcon = <i className="bi bi-plus-circle"></i>;
   const navExportIcon = <i className="bi bi-box-arrow-up"></i>;
 
+  // dowload functions
+  const originData = [
+    [1, "Tuesday 8/26", "", ""],
+    [1, "Thursday 8/31", "", ""],
+    [2, "Tuesday 9/2", "", ""],
+    [2, "Thursday 9/7", "", ""],
+    [3, "Tuesday 9/9", "", ""],
+    [3, "Thursday 9/14", "", ""],
+    [4, "Tuesday 9/16", "", ""],
+    [4, "Thursday 9/21", "", ""],
+    [5, "Tuesday 9/23", "", ""],
+    [5, "Thursday 9/28", "", ""],
+    [6, "Tuesday 9/30", "", ""],
+    [6, "Thursday 10/5", "NO CLASS", ""],
+  ];
+  // combine conlumn and table data
+  const export_data = originData.map((data) => {
+    let obj = {};
+    for (let i = 0; i < data.length; i++) {
+      const col_name = `${columns_state[i].title}`;
+      obj[col_name] = data[i];
+    }
+    return obj;
+  });
+
+  const downloadExcel = () => {
+    const workSheet = XLSX.utils.json_to_sheet(export_data);
+    const workBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workBook, workSheet, `${table_name}`);
+    //buffer
+    let buf = XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
+    // binary string
+    XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
+    XLSX.writeFile(workBook, `${table_name}.xlsx`);
+  };
+
+  const dowloadPDF = () => {
+    const doc = new jsPDF();
+    doc.text(`${table_name}`, 20, 10);
+    doc.autoTable({
+      head: [columns_state.map(col => col.title)],
+      body: originData,
+    });
+    doc.save(`${table_name}.pdf`);
+  };
+
   return (
     <div>
       <Popup trigger={addColumnPopup} setTrigger={setAddColumnPopup}>
-        <ColumnForm/>
+        <ColumnForm />
       </Popup>
       <Popup trigger={deleteColumnPopup} setTrigger={setDeleteColumnPopup}>
-        <DeleteColumnForm/>
+        <DeleteColumnForm />
       </Popup>
       {isMobile ? (
         // mobile screen
@@ -126,10 +178,16 @@ function HeaderBar() {
                   <NavDropdown.Item href="#action/3.1">
                     Add Row
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/addColumn" onClick={() => setAddColumnPopup(true)}>
+                  <NavDropdown.Item
+                    href="#action/addColumn"
+                    onClick={() => setAddColumnPopup(true)}
+                  >
                     Add Column
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/deleteColumn" onClick={()=>setDeleteColumnPopup(true)}>
+                  <NavDropdown.Item
+                    href="#action/deleteColumn"
+                    onClick={() => setDeleteColumnPopup(true)}
+                  >
                     Delete Column
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
@@ -137,7 +195,25 @@ function HeaderBar() {
                     Set Holiday
                   </NavDropdown.Item>
                 </NavDropdown>
-                <Nav.Link href="#export">Export</Nav.Link>
+                <NavDropdown title="Export">
+                  <NavDropdown.Item onClick={downloadExcel}>
+                    csv
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    href="#action/addColumn"
+                    onClick={dowloadPDF}
+                  >
+                    pdf
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    href="#action/deleteColumn"
+                    onClick={() => setDeleteColumnPopup(true)}
+                  >
+                    html
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.4">xml</NavDropdown.Item>
+                </NavDropdown>
               </Nav>
             </Navbar.Collapse>
           </Container>

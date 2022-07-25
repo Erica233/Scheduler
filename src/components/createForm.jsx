@@ -46,14 +46,14 @@ const CreateForm = () => {
         grade: grade,
         days: days,
       };
-      const res = await fetch("http://vcm-26740.vm.duke.edu:1999/upload-file", {
+      const res = await fetch("http://vcm-26740.vm.duke.edu:1999/upload-form", {
         method: "POST",
         body: JSON.stringify(form_data),
         headers: {
           "Content-Type": "application/json",
         },
       }).then((res) => res.json());
-      // console.log(res.message);
+      console.log(res.message);
       dispatch(setTableName(table_name));
       dispatch(setData(res.message));
       history.push("/edited");

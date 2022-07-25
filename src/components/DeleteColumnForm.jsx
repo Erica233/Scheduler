@@ -12,7 +12,6 @@ function DeleteColumnForm() {
 
     const handleChange = option => {
       setInputField(option.value);
-      console.log(option.value);
     };
 
     const arr = useSelector((state) => state.columns);

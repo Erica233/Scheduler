@@ -49,6 +49,7 @@ const BasicTable = () => {
   const isEditing = (record) => record.key === editingKey;
 
   const edit = (record) => {
+    console.log(record);
     form.setFieldsValue({
       week: "",
       date: "",
@@ -86,40 +87,11 @@ const BasicTable = () => {
 
   // get columns state from redux store
   const columns_state = useSelector((state) => state.columns);
-  // dispatch(addColumn({
-  //   title: "operation",
-  //   dataIndex: "operation",
-  //   render: (_, record) => {
-  //     const editable = isEditing(record);
-  //     return editable ? (
-  //       <span>
-  //         <Typography.Link
-  //           onClick={() => save(record.key)}
-  //           style={{
-  //             marginRight: 8,
-  //           }}
-  //         >
-  //           Save
-  //         </Typography.Link>
-  //         <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-  //           <a>Cancel</a>
-  //         </Popconfirm>
-  //       </span>
-  //     ) : (
-  //       <Typography.Link
-  //         disabled={editingKey !== ""}
-  //         onClick={() => edit(record)}
-  //       >
-  //         Edit
-  //       </Typography.Link>
-  //     );
-  //   },
-  // }));
 
   const columns = [
     ...columns_state,
     {
-      title: "operation",
+      title: "Operation",
       dataIndex: "operation",
       render: (_, record) => {
         const editable = isEditing(record);

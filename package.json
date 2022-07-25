@@ -15,11 +15,14 @@
     "antd": "^4.21.7",
     "bootstrap": "^5.2.0-beta1",
     "bootstrap-icons": "^1.9.0",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.25",
     "material-table": "^2.0.3",
     "namor": "^2.0.4",
     "next": "^12.1.6",
     "react": "^18.2.0",
     "react-bootstrap": "^2.4.0",
+    "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
     "react-hook-form": "^7.33.1",
@@ -35,7 +38,8 @@
     "styled-components": "^5.3.5",
     "swiper": "^8.2.5",
     "uikit": "^3.14.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
