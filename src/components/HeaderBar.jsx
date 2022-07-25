@@ -16,6 +16,7 @@ import DeleteColumnForm from "./DeleteColumnForm";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import RowForm from "./RowForm";
 
 function HeaderBar() {
   // redux
@@ -29,6 +30,7 @@ function HeaderBar() {
   // popup trigger
   const [addColumnPopup, setAddColumnPopup] = useState(false);
   const [deleteColumnPopup, setDeleteColumnPopup] = useState(false);
+  const [addRowPopup, setAddRowPopup] = useState(false);
   useEffect(() => {
     setWindowDimension(window.innerWidth);
   }, []);
@@ -101,6 +103,9 @@ function HeaderBar() {
       </Popup>
       <Popup trigger={deleteColumnPopup} setTrigger={setDeleteColumnPopup}>
         <DeleteColumnForm />
+      </Popup>
+      <Popup trigger={addRowPopup} setTrigger={setAddRowPopup}>
+        <RowForm/>
       </Popup>
       {isMobile ? (
         // mobile screen
@@ -175,7 +180,7 @@ function HeaderBar() {
                   </NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="Edit">
-                  <NavDropdown.Item href="#action/3.1">
+                  <NavDropdown.Item href="#action/3.1" onClick={() => setAddRowPopup(true)}>
                     Add Row
                   </NavDropdown.Item>
                   <NavDropdown.Item
