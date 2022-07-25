@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { addRow } from '../redux/slices/tableSlice';
 import 'antd/dist/antd.css';
-import { DatePicker, Space } from 'antd';
 
 function RowForm() {
     const dispatch = useDispatch();
@@ -25,13 +24,14 @@ function RowForm() {
         <div>
             <form>
                 <input
+                  type="number" required
                   onChange={weekHandler}
                   value={inputField.week}
                   placeholder="Week"
                   name="week" />
                 <br/>
                 <input
-                  type="date"
+                  type="date" required
                   onChange={dateHandler}
                   value={inputField.date}
                   placeholder="Date"
