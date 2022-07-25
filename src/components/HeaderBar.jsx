@@ -24,6 +24,9 @@ function HeaderBar() {
   const table_name = useSelector((state) => {
     return state.table_name;
   });
+  const table_data = useSelector((state) => {
+    return state.data;
+  });
   const columns_state = useSelector((state) => state.columns);
   // determine the screen size
   const [windowDimension, setWindowDimension] = useState(null);
@@ -51,29 +54,30 @@ function HeaderBar() {
   const navExportIcon = <i className="bi bi-box-arrow-up"></i>;
 
   // dowload functions
-  const originData = [
-    [1, "Tuesday 8/26", "", ""],
-    [1, "Thursday 8/31", "", ""],
-    [2, "Tuesday 9/2", "", ""],
-    [2, "Thursday 9/7", "", ""],
-    [3, "Tuesday 9/9", "", ""],
-    [3, "Thursday 9/14", "", ""],
-    [4, "Tuesday 9/16", "", ""],
-    [4, "Thursday 9/21", "", ""],
-    [5, "Tuesday 9/23", "", ""],
-    [5, "Thursday 9/28", "", ""],
-    [6, "Tuesday 9/30", "", ""],
-    [6, "Thursday 10/5", "NO CLASS", ""],
-  ];
-  // combine conlumn and table data
-  const export_data = originData.map((data) => {
-    let obj = {};
-    for (let i = 0; i < data.length; i++) {
-      const col_name = `${columns_state[i].title}`;
-      obj[col_name] = data[i];
-    }
-    return obj;
-  });
+  // const originData = [
+  //   [1, "Tuesday 8/26", "", ""],
+  //   [1, "Thursday 8/31", "", ""],
+  //   [2, "Tuesday 9/2", "", ""],
+  //   [2, "Thursday 9/7", "", ""],
+  //   [3, "Tuesday 9/9", "", ""],
+  //   [3, "Thursday 9/14", "", ""],
+  //   [4, "Tuesday 9/16", "", ""],
+  //   [4, "Thursday 9/21", "", ""],
+  //   [5, "Tuesday 9/23", "", ""],
+  //   [5, "Thursday 9/28", "", ""],
+  //   [6, "Tuesday 9/30", "", ""],
+  //   [6, "Thursday 10/5", "NO CLASS", ""],
+  // ];
+  // // combine conlumn and table data
+  // const export_data = originData.map((data) => {
+  //   let obj = {};
+  //   for (let i = 0; i < data.length; i++) {
+  //     const col_name = `${columns_state[i].title}`;
+  //     obj[col_name] = data[i];
+  //   }
+  //   return obj;
+  // });
+  const export_data = table_data.map(({key, ...res})=>({...res}));
 
   const downloadExcel = () => {
     const workSheet = XLSX.utils.json_to_sheet(export_data);
@@ -87,11 +91,14 @@ function HeaderBar() {
   };
 
   const dowloadPDF = () => {
+    const data = export_data.map((data) => {return Object.values(data)});
+    console.log(data);
+    console.log(export_data);
     const doc = new jsPDF();
     doc.text(`${table_name}`, 20, 10);
     doc.autoTable({
       head: [columns_state.map(col => col.title)],
-      body: originData,
+      body: data,
     });
     doc.save(`${table_name}.pdf`);
   };

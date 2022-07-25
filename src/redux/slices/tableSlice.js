@@ -63,17 +63,25 @@ export const tableSlice = createSlice({
   initialState,
   reducers: {
     addColumn: (state, action) => {
-      state = state.columns.push({
-        title: action.payload.column_name,
-        dataIndex: action.payload.column_name,
+      const col_name = `${action.payload.column_name}`;
+      state.columns.push({
+        title: col_name,
+        dataIndex: col_name,
         width: "25%",
+      });
+
+      state.data.map((data) => {
+        data[col_name] = "";
+        return data;
       });
     },
 
     addRow: (state) => {},
 
     deleteColumn: (state, action) => {
-      state.columns = state.columns.filter(column => column.title != action.payload);
+      state.columns = state.columns.filter(
+        (column) => column.title != action.payload
+      );
     },
 
     deleteRow: (state, action) => {
@@ -105,7 +113,7 @@ export const tableSlice = createSlice({
       state.columns = initialState.columns;
     },
 
-    setTableName:(state, action) =>{
+    setTableName: (state, action) => {
       state.table_name = action.payload;
     },
   },
