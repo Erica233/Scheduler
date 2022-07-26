@@ -3,9 +3,10 @@ import React, {useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { deleteColumn } from '../redux/slices/tableSlice';
 import Select from "react-select";
+import './Popup.css';
 
 
-function DeleteColumnForm() {
+function DeleteColumnForm(props) {
     const dispatch = useDispatch();
     const [inputField, setInputField] = useState({
     })
@@ -25,18 +26,36 @@ function DeleteColumnForm() {
             label: `${col.title}`,
         }
     });
-    return (
-      <div>
-        <Select
+
+    return (props.trigger) ? (
+      <div className="popup">
+          <div className="popup-inner">
+              <button className="close-btn" onClick={()=>props.setTrigger(false)}>Close</button>
+          <Select
           className="select"
           size="small"
           placeholder="Please Select Column To Delete"
           options={col_options}
           onChange={handleChange}
         />
-        <button onClick={()=>dispatch(deleteColumn(inputField))}>Submit</button>
+        <button onClick={()=>{dispatch(deleteColumn(inputField)); props.setTrigger(false)}}>Submit</button>
+
+          </div>
       </div>
-    );
+    ) : "";
+
+    // return (
+    //   <div>
+    //     <Select
+    //       className="select"
+    //       size="small"
+    //       placeholder="Please Select Column To Delete"
+    //       options={col_options}
+    //       onChange={handleChange}
+    //     />
+    //     <button onClick={()=>dispatch(deleteColumn(inputField))}>Submit</button>
+    //   </div>
+    // );
   };
 
   export default DeleteColumnForm;

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { useDispatch } from "react-redux";
 import { addColumn } from '../redux/slices/tableSlice';
+import './Popup.css';
 
-
-function ColumnForm() {
+function ColumnForm(props) {
     const dispatch = useDispatch();
     const [inputField, setInputField] = useState({
         column_name: ''
@@ -22,9 +22,11 @@ function ColumnForm() {
         }
     }
 
-    return (
-        <div>
-            <form name="columnForm">
+    return (props.trigger) ? (
+        <div className="popup">
+            <div className="popup-inner">
+                <button className="close-btn" onClick={()=>props.setTrigger(false)}>Close</button>
+                <form name="columnForm">
             <input 
             type="text"
             name="column_name"
@@ -33,10 +35,27 @@ function ColumnForm() {
             value={inputField.column_name}
             />
             <br/>
-            <button onClick={()=>checkform()}>Submit</button>
+            <button onClick={()=>{checkform(); props.setTrigger(false);}}>Submit</button>
             </form>
+            </div>
         </div>
-    )
+      ) : "";
+
+    // return (
+    //     <div>
+    //         <form name="columnForm">
+    //         <input 
+    //         type="text"
+    //         name="column_name"
+    //         onChange={inputsHandler} 
+    //         placeholder="Column Name" 
+    //         value={inputField.column_name}
+    //         />
+    //         <br/>
+    //         <button onClick={()=>checkform()}>Submit</button>
+    //         </form>
+    //     </div>
+    // )
 }
 
 export default ColumnForm;

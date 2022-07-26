@@ -35,7 +35,7 @@ const init_columns = [
   {
     title: "Date",
     dataIndex: "date",
-    width: "25%",
+    width: "20%",
     editable: false,
   },
   {
@@ -67,7 +67,7 @@ export const tableSlice = createSlice({
       state.columns.push({
         title: col_name,
         dataIndex: col_name,
-        width: "25%",
+        width: "20%",
       });
 
       state.data.map((data) => {
@@ -76,7 +76,12 @@ export const tableSlice = createSlice({
       });
     },
 
-    addRow: (state) => {},
+    addRow: (state, action) => {
+      // const date = `${action.payload.date}`,
+      // state.data.push({
+      //   title: 
+      // })
+    },
 
     deleteColumn: (state, action) => {
       state.columns = state.columns.filter(
