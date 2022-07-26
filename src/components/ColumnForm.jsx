@@ -13,22 +13,27 @@ function ColumnForm() {
         setInputField( {[e.target.name]: e.target.value} )
     }
 
-    // const submitButton = () =>{
-    //     alert(inputField.column_name)
-    // }
+    function checkform() {
+        if(document.columnForm.column_name.value === "") {
+            alert("Please Enter Column Name");
+            return false;
+        } else {
+           dispatch(addColumn(inputField));
+        }
+    }
 
     return (
         <div>
-            <form>
+            <form name="columnForm">
             <input 
             type="text"
             name="column_name"
             onChange={inputsHandler} 
             placeholder="Column Name" 
             value={inputField.column_name}
-            required />
+            />
             <br/>
-            <button onClick={()=>dispatch(addColumn(inputField))}>Submit</button>
+            <button onClick={()=>checkform()}>Submit</button>
             </form>
         </div>
     )
