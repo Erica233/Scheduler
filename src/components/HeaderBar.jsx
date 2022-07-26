@@ -55,7 +55,7 @@ function HeaderBar() {
   const navExportIcon = <i className="bi bi-box-arrow-up"></i>;
 
   // dowload functions
-  const export_data = table_data.map(({ key, ...res }) => ({ ...res }));
+  const export_data = table_data.map(({ key, timestamp, ...res }) => ({ ...res }));
 
   const downloadExcel = () => {
     const workSheet = XLSX.utils.json_to_sheet(export_data);

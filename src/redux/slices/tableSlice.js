@@ -66,7 +66,7 @@ const getTimeStamp = (data, year) =>{
   let month = date[0].length === 1 ? '0'+ date[0] : date[0];
   let day = date[1];
   let timestamp = new Date(year, month-1, day);
-  return timestamp;
+  return timestamp.getTime()/100000;
 }
 
 export const tableSlice = createSlice({
@@ -88,7 +88,13 @@ export const tableSlice = createSlice({
     },
 
     addRow: (state, action) => {
-      // const date = `${action.payload.date}`,
+      let date = action.payload.date;
+      date = date.split('-');
+      let timestamp = new Date(date[0], date[1]-1, date[2]);
+      timestamp = timestamp.getTime()/100000;
+      const week = action.payload.week;
+
+      // let columns = state.columns.map((col)=>{col.title: ""});
       // state.data.push({
       //   title: 
       // })
