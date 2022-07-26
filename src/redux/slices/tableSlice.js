@@ -56,7 +56,18 @@ const initialState = {
   data: [],
   columns: init_columns,
   table_name: "",
+  selected_year: "",
 };
+
+const getTimeStamp = (data, year) =>{
+  //Tuesday 9/9
+  data = data.split(" ");
+  let date = data[1].split("/");
+  let month = date[0].length === 1 ? '0'+ date[0] : date[0];
+  let day = date[1];
+  let timestamp = new Date(year, month-1, day);
+  return timestamp;
+}
 
 export const tableSlice = createSlice({
   name: "table_info",
@@ -107,6 +118,7 @@ export const tableSlice = createSlice({
           date: `${arr[1]}`,
           topic: arr[2],
           description: ``,
+          timestamp: getTimeStamp(arr[1], state.selected_year),
         };
       });
       state.data = transformData;
@@ -115,6 +127,10 @@ export const tableSlice = createSlice({
 
     setTableName: (state, action) => {
       state.table_name = action.payload;
+    },
+
+    setSelectedYear: (state, action) => {
+      state.selected_year = action.payload;
     },
   },
 });
@@ -127,6 +143,7 @@ export const {
   resetState,
   setData,
   setTableName,
+  setSelectedYear,
 } = tableSlice.actions;
 
 export default tableSlice.reducer;

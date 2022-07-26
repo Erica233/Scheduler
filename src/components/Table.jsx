@@ -44,7 +44,10 @@ const BasicTable = () => {
   // const [data, setData] = useState(tableData);
   const [editingKey, setEditingKey] = useState("");
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.data);
+  let data = useSelector((state) => state.data);
+  console.log(data);
+  data = data.map(({ timestamp, ...res }) => ({ ...res }));
+  
 
   const isEditing = (record) => record.key === editingKey;
 

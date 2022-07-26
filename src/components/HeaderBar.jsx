@@ -17,6 +17,7 @@ import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import RowForm from "./RowForm";
+import { saveAs } from "file-saver";
 
 function HeaderBar() {
   // redux
@@ -54,30 +55,7 @@ function HeaderBar() {
   const navExportIcon = <i className="bi bi-box-arrow-up"></i>;
 
   // dowload functions
-  // const originData = [
-  //   [1, "Tuesday 8/26", "", ""],
-  //   [1, "Thursday 8/31", "", ""],
-  //   [2, "Tuesday 9/2", "", ""],
-  //   [2, "Thursday 9/7", "", ""],
-  //   [3, "Tuesday 9/9", "", ""],
-  //   [3, "Thursday 9/14", "", ""],
-  //   [4, "Tuesday 9/16", "", ""],
-  //   [4, "Thursday 9/21", "", ""],
-  //   [5, "Tuesday 9/23", "", ""],
-  //   [5, "Thursday 9/28", "", ""],
-  //   [6, "Tuesday 9/30", "", ""],
-  //   [6, "Thursday 10/5", "NO CLASS", ""],
-  // ];
-  // // combine conlumn and table data
-  // const export_data = originData.map((data) => {
-  //   let obj = {};
-  //   for (let i = 0; i < data.length; i++) {
-  //     const col_name = `${columns_state[i].title}`;
-  //     obj[col_name] = data[i];
-  //   }
-  //   return obj;
-  // });
-  const export_data = table_data.map(({key, ...res})=>({...res}));
+  const export_data = table_data.map(({ key, ...res }) => ({ ...res }));
 
   const downloadExcel = () => {
     const workSheet = XLSX.utils.json_to_sheet(export_data);
@@ -91,16 +69,55 @@ function HeaderBar() {
   };
 
   const dowloadPDF = () => {
-    const data = export_data.map((data) => {return Object.values(data)});
+    const data = export_data.map((data) => {
+      return Object.values(data);
+    });
     console.log(data);
     console.log(export_data);
     const doc = new jsPDF();
     doc.text(`${table_name}`, 20, 10);
     doc.autoTable({
-      head: [columns_state.map(col => col.title)],
+      head: [columns_state.map((col) => col.title)],
       body: data,
     });
     doc.save(`${table_name}.pdf`);
+  };
+
+  const downloadHTML = () => {
+    const columns = columns_state.map((col) => col.title);
+    const data = export_data.map((data) => {
+      return Object.values(data);
+    });
+    console.log(columns);
+    console.log(data);
+    const table = (
+      <table>
+        <tbody>
+          <tr>
+            {columns.map((col_name, idx) => (
+              <th key={idx}>{col_name}</th>
+            ))}
+          </tr>
+          {data.map((rowData, rowIndex) => {
+            return (
+              <tr key={rowIndex}>
+                {rowData.map((cellData) => (
+                  <td>{cellData}</td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    );
+    console.log(table);
+
+    let doc = document.implementation.createHTMLDocument();
+    doc.body.appendChild(table);
+    let file = new File([doc], "tes.html", {
+      type: "text/plain;charset=utf-8",
+    });
+    saveAs(file);
   };
 
   return (
@@ -112,7 +129,7 @@ function HeaderBar() {
         <DeleteColumnForm />
       </Popup>
       <Popup trigger={addRowPopup} setTrigger={setAddRowPopup}>
-        <RowForm/>
+        <RowForm />
       </Popup>
       {isMobile ? (
         // mobile screen
@@ -187,7 +204,10 @@ function HeaderBar() {
                   </NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="Edit">
-                  <NavDropdown.Item href="#action/3.1" onClick={() => setAddRowPopup(true)}>
+                  <NavDropdown.Item
+                    href="#action/3.1"
+                    onClick={() => setAddRowPopup(true)}
+                  >
                     Add Row
                   </NavDropdown.Item>
                   <NavDropdown.Item
@@ -219,7 +239,7 @@ function HeaderBar() {
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     href="#action/deleteColumn"
-                    onClick={() => setDeleteColumnPopup(true)}
+                    onClick={downloadHTML}
                   >
                     html
                   </NavDropdown.Item>

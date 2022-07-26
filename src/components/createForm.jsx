@@ -8,7 +8,7 @@ import GradeChoice from "./identity";
 import DayChoice from "./day";
 import ImportButton from "./ImportButton";
 import { useDispatch } from "react-redux";
-import { setTableName, setData } from "../redux/slices/tableSlice";
+import { setTableName, setData, setSelectedYear } from "../redux/slices/tableSlice";
 
 const CreateForm = () => {
   const dispatch = useDispatch();
@@ -56,6 +56,7 @@ const CreateForm = () => {
       }).then((res) => res.json());
       console.log(res.message);
       dispatch(setTableName(table_name));
+      dispatch(setSelectedYear(year));
       dispatch(setData(res.message));
       history.push("/edited");
     } catch (error) {
