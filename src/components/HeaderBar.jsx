@@ -122,12 +122,14 @@ function HeaderBar() {
 
   return (
     <div>
-      <Popup trigger={addColumnPopup} setTrigger={setAddColumnPopup}>
+      {/* <Popup trigger={addColumnPopup} setTrigger={setAddColumnPopup}>
         <ColumnForm />
-      </Popup>
-      <Popup trigger={deleteColumnPopup} setTrigger={setDeleteColumnPopup}>
+      </Popup> */}
+      <ColumnForm trigger={addColumnPopup} setTrigger={setAddColumnPopup}/>
+      <DeleteColumnForm trigger={deleteColumnPopup} setTrigger={setDeleteColumnPopup} />
+      {/* <Popup trigger={deleteColumnPopup} setTrigger={setDeleteColumnPopup}>
         <DeleteColumnForm />
-      </Popup>
+      </Popup> */}
       <Popup trigger={addRowPopup} setTrigger={setAddRowPopup}>
         <RowForm />
       </Popup>
