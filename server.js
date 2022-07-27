@@ -7,9 +7,6 @@ import cheerio from 'cheerio';
 
 const app = express();
 
-// crawler("2021", "summer", "graduate", [1,2]);
-// const term = "term i";
-
 app.use(
     fileupload({
         createParentPath: true,
