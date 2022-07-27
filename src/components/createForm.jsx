@@ -146,13 +146,15 @@ const ImportButton = (props) => {
         complete: function (results) {
           const rowsArray = [];
           const valuesArray = [];
-  
+
           results.data.map((d) => {
             rowsArray.push(Object.keys(d));
             valuesArray.push(Object.values(d));
+            console.log(d);
           });
           inputField.columns = rowsArray[0];
           inputField.data = valuesArray;
+          
 
         // setTableRows(rowsArray[0]);
 

@@ -175,7 +175,7 @@ export const tableSlice = createSlice({
           timestamp: getTimeStamp(arr[1], state.selected_year),
         };
       });
-      console.log(action.payload.data);
+      // console.log(action.payload.data);
       state.data = transformData;
 
       const originColumn = action.payload.columns;
