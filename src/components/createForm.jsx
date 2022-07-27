@@ -8,7 +8,7 @@ import GradeChoice from "./identity";
 import DayChoice from "./day";
 // import ImportButton from "./ImportButton";
 import { useDispatch } from "react-redux";
-import { setTableName, setData, setFromImport } from "../redux/slices/tableSlice";
+import { setTableName, setData, setFromImport, setSelectedYear } from "../redux/slices/tableSlice";
 import Papa from "papaparse";
 
 const CreateForm = () => {
@@ -49,7 +49,7 @@ const CreateForm = () => {
         days: days,
       };
       // aimi host: vcm-26740.vm.duke.edu -> upload-form
-      const res = await fetch("http://localhost:1999/upload-file", {
+      const res = await fetch("http://10.197.120.183:1999/upload-file", {
         method: "POST",
         body: JSON.stringify(form_data),
         headers: {
@@ -58,6 +58,7 @@ const CreateForm = () => {
       }).then((res) => res.json());
       console.log(res.message);
       dispatch(setTableName(table_name));
+      dispatch(setSelectedYear(year));
       dispatch(setData(res.message));
       history.push("/edited");
     } catch (error) {
