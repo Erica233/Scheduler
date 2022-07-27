@@ -141,7 +141,7 @@ const ImportButton = (props) => {
     try {
       const file = event.target.files[0];
       console.log(file);
-      Papa.parse(file, {
+      const parseFile = Papa.parse(file, {
         header: true,
         complete: function (results) {
           const rowsArray = [];
@@ -151,23 +151,19 @@ const ImportButton = (props) => {
             rowsArray.push(Object.keys(d));
             valuesArray.push(Object.values(d));
           });
+          inputField.columns = rowsArray[0];
+          inputField.data = valuesArray;
 
-          setInputField(results.data);
-        // Filtered Column Names
-        setTableRows(rowsArray[0]);
-        inputField.columns = rowsArray[0];
-        console.log(inputField.columns);
+        // setTableRows(rowsArray[0]);
 
-        // Filtered Values
-        setValues(valuesArray);
-        inputField.data = valuesArray;
-        console.log(inputField.data);
+        // setValues(valuesArray);
+        dispatch(setFromImport(inputField));
         }
       });
+
       const file_name = file.name.split('.').slice(0, -1).join('.');
       console.log(file_name);
       dispatch(setTableName(file_name));
-      dispatch(setFromImport(inputField));
       history.push("/edited");
     } catch (error) {
       //handle some error here
