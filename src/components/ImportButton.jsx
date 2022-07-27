@@ -1,25 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useDispatch } from "react";
 import { useHistory } from "react-router-dom";
 import "../App.css";
+import { setTableName, setData } from "../redux/slices/tableSlice";
+
 
 const ImportButton = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const fileRef = useRef();
+  const [table_name, setTableName] = React.useState("");
 
-  const handleChange = async (event) => {
-    const [file] = event.target.files;
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    // server hostname + url
-    const res = await fetch("http://vcm-26740.vm.duke.edu:1999/upload-file", {
-      method: "POST",
-      body: formData,
-    }).then((res) => res.json());
-    alert(JSON.stringify(`${res.message}, status: ${res.status}`));
-    history.push("/edited");
-  };
 
   return (
     <div id="button" className="row">
@@ -32,9 +22,10 @@ const ImportButton = (props) => {
         </button>
         <input
           ref={fileRef}
-          onChange={handleChange}
+          onChange={handleImport}
           multiple={false}
           type="file"
+          accept=".csv"
           hidden
         />
       </div>
