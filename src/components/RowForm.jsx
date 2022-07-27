@@ -26,7 +26,7 @@ function RowForm() {
     var numberOfDays = Math.floor((inputDate - oneJan) / (24 * 60 * 60 * 1000));
     var result = Math.ceil(( inputDate.getDay() + 1 + numberOfDays) / 7);
     inputField.week = result;
-    console.log(`Week Number (${inputDate}) is ${inputField.week}.`);
+    console.log(`Week Number (${inputField.date}) is ${inputField.week}.`);
 
     return (
         <div>

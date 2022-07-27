@@ -6,9 +6,10 @@ import SemesterChoice from "./semesterChoice";
 import YearChoice from "./YearChoice";
 import GradeChoice from "./identity";
 import DayChoice from "./day";
-import ImportButton from "./ImportButton";
+// import ImportButton from "./ImportButton";
 import { useDispatch } from "react-redux";
-import { setTableName, setData } from "../redux/slices/tableSlice";
+import { setTableName, setData, setFromImport } from "../redux/slices/tableSlice";
+import Papa from "papaparse";
 
 const CreateForm = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const CreateForm = () => {
   const addDaysHandler = (_days) => {
     days = _days;
   };
+
 
   const history = useHistory();
 
@@ -82,7 +84,7 @@ const CreateForm = () => {
         <FormButton title="Start a new Table" />
         <hr className="horizontalRule"></hr>
       </form>
-      <ImportButton title="Import schdule from local" />
+      <ImportButton title="Import Schedule From Local" />
     </div>
   );
 };
@@ -117,6 +119,83 @@ const FormButton = (props) => (
     </div>
   </div>
 );
+
+const ImportButton = (props) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const fileRef = useRef();
+  const [inputField, setInputField] = useState({
+    columns: [],
+    data: [],
+});
+
+  //State to store table Column name
+  const [tableRows, setTableRows] = useState([]);
+
+  //State to store the values
+  const [values, setValues] = useState([]);
+  //
+  const handleImport = (event) => {
+
+    try {
+      const file = event.target.files[0];
+      console.log(file);
+      Papa.parse(file, {
+        header: true,
+        complete: function (results) {
+          const rowsArray = [];
+          const valuesArray = [];
+  
+          results.data.map((d) => {
+            rowsArray.push(Object.keys(d));
+            valuesArray.push(Object.values(d));
+          });
+
+          setInputField(results.data);
+        // Filtered Column Names
+        setTableRows(rowsArray[0]);
+        inputField.columns = rowsArray[0];
+        console.log(inputField.columns);
+
+        // Filtered Values
+        setValues(valuesArray);
+        inputField.data = valuesArray;
+        console.log(inputField.data);
+        }
+      });
+      const file_name = file.name.split('.').slice(0, -1).join('.');
+      console.log(file_name);
+      dispatch(setTableName(file_name));
+      dispatch(setFromImport(inputField));
+      // history.push("/edited");
+    } catch (error) {
+      //handle some error here
+    }
+  };
+  //
+
+  return (
+    <div id="button" className="row">
+      <div className="buttonContainer">
+        <button
+          className="importButton"
+          onClick={() => fileRef.current.click()}
+        >
+          {props.title}
+        </button>
+        <input
+          ref={fileRef}
+          onChange={handleImport}
+          // multiple={false}
+          type="file"
+          name="localFile"
+          accept=".csv"
+          hidden
+        />
+      </div>
+    </div>
+  );
+};
 
 const InputContainer = styled.div`
   display: flex;

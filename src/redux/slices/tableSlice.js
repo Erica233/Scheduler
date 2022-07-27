@@ -79,7 +79,7 @@ export const tableSlice = createSlice({
     addRow: (state, action) => {
       // const date = `${action.payload.date}`,
       // state.data.push({
-      //   title: 
+
       // })
     },
 
