@@ -16,7 +16,7 @@ function DeleteColumnForm(props) {
     };
 
     const arr = useSelector((state) => state.columns);
-    console.log(arr);
+    // console.log(arr);
     const col = arr.filter(column => {
         return column.title !== "Week" && column.title !== "Date";
     })

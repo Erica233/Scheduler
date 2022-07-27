@@ -47,7 +47,7 @@ const CreateForm = () => {
         days: days,
       };
       // aimi host: vcm-26740.vm.duke.edu -> upload-form
-      const res = await fetch("http://10.197.120.183:1999/upload-file", {
+      const res = await fetch("http://172.28.223.163:1999/upload-file", {
         method: "POST",
         body: JSON.stringify(form_data),
         headers: {

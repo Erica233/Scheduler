@@ -5,7 +5,8 @@ import styled from "styled-components";
 
 const semester_options = [
   { value: "spring", label: "Spring" },
-  { value: "summer", label: "Summer" },
+  { value: "summer1", label: "Summer Term 1" },
+  { value: "summer2", label: "Summer Term 2" },
   { value: "fall", label: "Fall" },
 ];
 

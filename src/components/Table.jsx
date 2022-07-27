@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "antd/dist/antd.min.css";
 import { Form, Input, InputNumber, Table, Popconfirm, Typography } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { addColumn, setData, deleteRow } from "../redux/slices/tableSlice";
+import { addColumn, setData, deleteRow, setEditedRow } from "../redux/slices/tableSlice";
 
 const EditableCell = ({
   editing,
@@ -25,7 +25,7 @@ const EditableCell = ({
           }}
           rules={[
             {
-              required: true,
+              required: false,
               message: `Please Input ${title}!`,
             },
           ]}
@@ -45,7 +45,6 @@ const BasicTable = () => {
   const [editingKey, setEditingKey] = useState("");
   const dispatch = useDispatch();
   let data = useSelector((state) => state.data);
-  console.log(data);
   data = data.map(({ timestamp, ...res }) => ({ ...res }));
   
 
@@ -69,19 +68,22 @@ const BasicTable = () => {
 
   const save = async (key) => {
     try {
-      const row = await form.validateFields();
+      const edited_data = await form.validateFields();
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.key);
 
       if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, { ...item, ...row });
-        dispatch(setData(newData));
+        const edited_row = newData[index];
+        for (const [key, value] of Object.entries(edited_data)) {
+          edited_row[key] = value;
+        }
+        dispatch(setEditedRow(edited_row));
         setEditingKey("");
       } else {
-        newData.push(row);
-        dispatch(setData(newData));
-        setEditingKey("");
+        // newData.push(edited_data);
+        // dispatch(setEditedRow(newData));
+        console.log("index less than -1");
+        setEditingKey("");    
       }
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);

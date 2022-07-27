@@ -16,6 +16,7 @@ import DeleteColumnForm from "./DeleteColumnForm";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import * as ReactDOMServer from "react-dom/server";
 import RowForm from "./RowForm";
 import { saveAs } from "file-saver";
 
@@ -55,7 +56,9 @@ function HeaderBar() {
   const navExportIcon = <i className="bi bi-box-arrow-up"></i>;
 
   // dowload functions
-  const export_data = table_data.map(({ key, timestamp, ...res }) => ({ ...res }));
+  const export_data = table_data.map(({ key, timestamp, ...res }) => ({
+    ...res,
+  }));
 
   const downloadExcel = () => {
     const workSheet = XLSX.utils.json_to_sheet(export_data);
@@ -65,19 +68,28 @@ function HeaderBar() {
     let buf = XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
     // binary string
     XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
-    XLSX.writeFile(workBook, `${table_name}.xlsx`);
+    XLSX.writeFile(workBook, `${table_name}.csv`);
   };
 
   const dowloadPDF = () => {
-    const data = export_data.map((data) => {
-      return Object.values(data);
+    const column_titles = [columns_state.map((col) => col.title)];
+    const data = [];
+    export_data.forEach(element => {
+      let row = [];
+      column_titles[0].forEach(col_title => {
+        row.push(element[col_title]);
+      });
+      console.log(row);
+      data.push(row);
     });
+    // const data = export_data.map((data) => {
+    //   return Object.values(data);
+    // });
     console.log(data);
-    console.log(export_data);
     const doc = new jsPDF();
     doc.text(`${table_name}`, 20, 10);
     doc.autoTable({
-      head: [columns_state.map((col) => col.title)],
+      head: column_titles,
       body: data,
     });
     doc.save(`${table_name}.pdf`);
@@ -88,8 +100,7 @@ function HeaderBar() {
     const data = export_data.map((data) => {
       return Object.values(data);
     });
-    console.log(columns);
-    console.log(data);
+
     const table = (
       <table>
         <tbody>
@@ -110,13 +121,13 @@ function HeaderBar() {
         </tbody>
       </table>
     );
-    console.log(table);
-
-    let doc = document.implementation.createHTMLDocument();
-    doc.body.appendChild(table);
-    let file = new File([doc], "tes.html", {
+    
+    // convert react JSX object to HTML
+    const html = ReactDOMServer.renderToStaticMarkup(table);
+    let file = new File([html], "tes.html", {
       type: "text/plain;charset=utf-8",
     });
+
     saveAs(file);
   };
 
@@ -125,8 +136,11 @@ function HeaderBar() {
       {/* <Popup trigger={addColumnPopup} setTrigger={setAddColumnPopup}>
         <ColumnForm />
       </Popup> */}
-      <ColumnForm trigger={addColumnPopup} setTrigger={setAddColumnPopup}/>
-      <DeleteColumnForm trigger={deleteColumnPopup} setTrigger={setDeleteColumnPopup} />
+      <ColumnForm trigger={addColumnPopup} setTrigger={setAddColumnPopup} />
+      <DeleteColumnForm
+        trigger={deleteColumnPopup}
+        setTrigger={setDeleteColumnPopup}
+      />
       {/* <Popup trigger={deleteColumnPopup} setTrigger={setDeleteColumnPopup}>
         <DeleteColumnForm />
       </Popup> */}
@@ -218,15 +232,12 @@ function HeaderBar() {
                   >
                     Add Column
                   </NavDropdown.Item>
+                  <NavDropdown.Divider />
                   <NavDropdown.Item
                     href="#action/deleteColumn"
                     onClick={() => setDeleteColumnPopup(true)}
                   >
                     Delete Column
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Set Holiday
                   </NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="Export">
@@ -245,8 +256,6 @@ function HeaderBar() {
                   >
                     html
                   </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">xml</NavDropdown.Item>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>
