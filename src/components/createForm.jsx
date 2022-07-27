@@ -168,7 +168,7 @@ const ImportButton = (props) => {
       console.log(file_name);
       dispatch(setTableName(file_name));
       dispatch(setFromImport(inputField));
-      // history.push("/edited");
+      history.push("/edited");
     } catch (error) {
       //handle some error here
     }
