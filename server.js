@@ -30,7 +30,6 @@ app.post("/upload-form", async (req, res) => {
             let htmlstr = '';
             let parseSemester = semester;
             if(semester=="summer1" || semester=="summer2"){
-		console.log("收到请求这里！");
             parseSemester = "summer";
         }
         let reqq = https.request({
