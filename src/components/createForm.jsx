@@ -55,8 +55,8 @@ const CreateForm = () => {
         grade: grade,
         days: days,
       };
-      //http://10.197.120.183:1999/upload-file
-      // aimi host: http://vcm-26740.vm.duke.edu:2001/upload-form
+      //test host: http://10.197.120.183:1999/upload-file
+      //aimin host: http://vcm-26740.vm.duke.edu:2001/upload-form
       const res = await fetch("http://10.197.120.183:1999/upload-file", {
         method: "POST",
         body: JSON.stringify(form_data),

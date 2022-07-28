@@ -22,9 +22,9 @@ const EditedTable = () => {
       <div style={{ textAlign: "center" }}>
         <h1
           style={{
+            color: "#003087",
             textAlign: "center",
             fontSize: "30px",
-            letterSpacing: "1px",
             marginTop: "80px",
           }}
         >

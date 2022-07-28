@@ -124,6 +124,7 @@ export const tableSlice = createSlice({
     },
 
     deleteColumn: (state, action) => {
+      console.log(action.payload);
       state.columns = state.columns.filter(
         (column) => column.title !== action.payload
       );
