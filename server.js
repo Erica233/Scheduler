@@ -1,8 +1,9 @@
-import express from "express";
+import express from 'express';
 import fileupload from "express-fileupload";
-import cors from "cors";
+import cors from 'cors';
 
 import https from 'https';
+//import { http, https } from 'follow-redirects';
 import cheerio from 'cheerio';
 
 const app = express();
@@ -36,30 +37,69 @@ app.post("/upload-form", async (req, res) => {
             'hostname': 'registrar.duke.edu',
             'path':'/'+parseSemester+'-'+year+'-academic-calendar/' //2021 fall; 2023 fall
         }, response=>{
-            response.on('data', buffer=>{
-                htmlstr+=buffer;
-            });
-            response.on('end', ()=>{
-            console.log("results:");
-            parseHTML(htmlstr, year, semester, grade, days);
-            console.log(results);
-            let ts = new Date(year+"/"+results[0][1].split(" ")[1]).getTime();
-            res.send({
-                startDate: ts,
-                message: results,
-            });
-            results=[];
-            });
+	    console.log("statusCode:");
+	    console.log(response.statusCode);
+	    if(response.statusCode==301){
+                let reqq2 = https.request({
+                    'hostname': 'registrar.duke.edu',
+                    'path': '/calendars-key-dates/current-academic-calendar/'+parseSemester+'-'+year+'-academic-calendar'  //2021 fall; 2023 fall
+                }, response=>{
+                    response.on('data', buffer=>{
+                        htmlstr+=buffer;
+                    });
+                    response.on('end', ()=>{
+                    console.log("results:");
+                    parseHTML(htmlstr, year, semester, grade, days);
+			console.log(results);
+			let ts = '';
+			if(results.length!=0){
+			    ts = new Date(year+"/"+results[0][1].split(" ")[1]).getTime();
+			}
+			res.send({
+			    data: true,
+                        startDate: ts,
+                        message: results,
+                    });
+                    results=[];
+                    });
+                });
+                reqq2.end();
+            }
+            else if(response.statusCode==200){
+                response.on('data', buffer=>{
+                    htmlstr+=buffer;
+                });
+                response.on('end', ()=>{
+                console.log("results:");
+                parseHTML(htmlstr, year, semester, grade, days);
+                    console.log(results);
+		    let ts = '';
+		    if(results.length!=0){
+			ts = new Date(year+"/"+results[0][1].split(" ")[1]).getTime();
+		    }
+		    res.send({
+			data: true,
+                    startDate: ts,
+                    message: results,
+                });
+                results=[];
+                });
+            }
+	    else{
+		res.send({
+		    data: false,
+                    message: "The calendar for this semester does not exist in Duke Calendar now",
+		});
+            }
         });
-        reqq.end();
-
+            reqq.end();
 	}
     } catch (err) {
         res.status(500).send(err);
     }
 });
 
-const port = process.env.PORT || 1999;
+const port = process.env.PORT || 2001;
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
 
@@ -330,13 +370,20 @@ function parseHTML(htmlstr, year, semester, grade, days){
             }
     }
 
+    //console.log(holidaysArr);
+
     for(let i=0; i<holidaysArr.length; i++){
             let month = holidaysArr[i].getMonth()+1;
             let day = holidaysArr[i].getDate();
             holidaysArr[i] = month + "/" + day;
     }
+    if(holidaysArr.length==0){
+	for(let i=0; i<results.length; i++){
+	    results[i][2] = "";
+	}
+    }
     for(let i=0; i<results.length; i++){
-            let arr = results[i][1].split(" ");
+        let arr = results[i][1].split(" ");
             for(let j=0; j<holidaysArr.length; j++){
                 if(arr[1] == holidaysArr[j]){
                     results[i][2] = "No class";
