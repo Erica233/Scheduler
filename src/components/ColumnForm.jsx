@@ -19,6 +19,7 @@ function ColumnForm(props) {
             return false;
         } else {
            dispatch(addColumn(inputField));
+           setInputField("");
         }
     }
 

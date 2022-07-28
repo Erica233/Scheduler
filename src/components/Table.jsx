@@ -97,7 +97,8 @@ const BasicTable = () => {
     ...columns_state,
     {
       title: "Operation",
-      dataIndex: "operation",
+      dataIndex: "Operation",
+      width: "5%",
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
@@ -164,9 +165,10 @@ const BasicTable = () => {
         dataSource={data}
         columns={mergedColumns}
         rowClassName="editable-row"
-        pagination={{
-          onChange: cancel,
-        }}
+        // pagination={{
+        //   onChange: cancel,
+        // }}
+        pagination={false}
       />
     </Form>
   );

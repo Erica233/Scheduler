@@ -53,8 +53,8 @@ const CreateForm = () => {
         grade: grade,
         days: days,
       };
-      // aimi host: vcm-26740.vm.duke.edu -> upload-form
-      const res = await fetch("http://vcm-26740.vm.duke.edu:1999/upload-form", {
+      // aimi host: http://vcm-26740.vm.duke.edu:1999/upload-form
+      const res = await fetch("http://10.197.120.183:1999/upload-file", {
         method: "POST",
         body: JSON.stringify(form_data),
         headers: {

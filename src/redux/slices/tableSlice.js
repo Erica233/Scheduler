@@ -1,29 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { act } from "react-dom/test-utils";
 
+let column_num = 4;
+
 const init_columns = [
   {
     title: "Week",
     dataIndex: "Week",
-    width: "10%",
+    width: "5%",
     editable: false,
   },
   {
     title: "Date",
     dataIndex: "Date",
-    width: "20%",
+    width: "10%",
     editable: false,
   },
   {
     title: "Topic",
     dataIndex: "Topic",
-    width: "20%",
+    width: `${80 / column_num - 2}%`,
     editable: true,
   },
   {
     title: "Description",
     dataIndex: "Description",
-    width: "20%",
+    width: `${80 / column_num - 2}%`,
     editable: true,
   },
 ];
@@ -56,11 +58,18 @@ export const tableSlice = createSlice({
   reducers: {
     addColumn: (state, action) => {
       const col_name = `${action.payload.column_name}`;
+      column_num += 1;
       state.columns.push({
         title: col_name,
         dataIndex: col_name,
-        width: "20%",
+        width: `${80 / column_num - 2}%`,
         editable: true,
+      });
+      // change other columns width to the same percentage
+      state.columns.forEach((col) => {
+        if (col.title !== "Week" && col.title !== "Date") {
+          col.width = `${80 / column_num - 2}%`;
+        }
       });
 
       const obj = {};
@@ -172,25 +181,28 @@ export const tableSlice = createSlice({
           title: arr,
           dataIndex: arr,
           width: "20%",
-          editable: arr==="Week"||arr==="Date" ? false : true,
+          editable: arr === "Week" || arr === "Date" ? false : true,
         };
       });
       console.log(action.payload.columns);
       console.log(action.payload.data);
       state.columns = transformColumn;
 
-      const data_obj = originColumn.reduce((acc,curr)=> (acc[curr]='',acc),{});
+      const data_obj = originColumn.reduce(
+        (acc, curr) => ((acc[curr] = ""), acc),
+        {}
+      );
       console.log(data_obj);
 
       const originData = action.payload.data;
       const transformData = originData.map((arr, index) => {
-        const obj = {key: index, ...data_obj};
-        for(let i = 0; i < arr.length; i++){
+        const obj = { key: index, ...data_obj };
+        for (let i = 0; i < arr.length; i++) {
           const col = originColumn[i];
           obj[col] = arr[i];
         }
         // add timestamp
-        if(originColumn.includes("Date")){
+        if (originColumn.includes("Date")) {
           obj.timestamp = getTimeStamp(obj.Date, state.selected_year);
         }
         return obj;
@@ -202,11 +214,13 @@ export const tableSlice = createSlice({
     setStartWeek: (state, action) => {
       let inputDate = new Date(action.payload);
       let oneJan = new Date(inputDate.getFullYear(), 0, 1);
-      let numberOfDays = Math.floor((inputDate - oneJan) / (24 * 60 * 60 * 1000));
+      let numberOfDays = Math.floor(
+        (inputDate - oneJan) / (24 * 60 * 60 * 1000)
+      );
       let result = Math.ceil((inputDate.getDay() + 1 + numberOfDays) / 7);
       state.start_week = result;
       console.log(`the number of week: ${result}`);
-    }
+    },
   },
 });
 
