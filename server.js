@@ -23,13 +23,14 @@ app.post("/upload-form", async (req, res) => {
     try {
 	if(req.body){
 	    console.log('got body:', req.body);
-	    const year = 2021;
-        const semester = req.body.semester.toLowerCase();
-        const grade = req.body.grade.toLowerCase();
-        const days = [1,2,3,4,5];
-        let htmlstr = '';
-        let parseSemester = semester;
-        if(semester=="summer1" || semester=="summer2"){
+	    const year = req.body.year;
+            const semester = req.body.semester.toLowerCase();
+            const grade = req.body.grade.toLowerCase();
+            const days = req.body.days;
+            let htmlstr = '';
+            let parseSemester = semester;
+            if(semester=="summer1" || semester=="summer2"){
+		console.log("收到请求这里！");
             parseSemester = "summer";
         }
         let reqq = https.request({
@@ -71,14 +72,16 @@ function numToWeekdays(num) {
 //get dates
 function getDateBetween(start, end, days) {
     var startTime = new Date(start);
+    var startCopy = new Date(start);
     var endTime = new Date(end);
     var i = 1;
+    var flag = -1;
     while (endTime - startTime >= 0) {
         if(days.length==1){
             if (startTime.getDay() != days[0]) {
                 startTime.setDate(startTime.getDate() + 1);
-                if (startTime.getDay() == 1) {
-                    i = i + 1;
+                if (startTime.getDay() == 1 && flag==1){
+		    i = i + 1;
                 }
                 continue;
             }
@@ -86,7 +89,7 @@ function getDateBetween(start, end, days) {
         else if (days.length==2){
             if (startTime.getDay() != days[0] && startTime.getDay() != days[1]) {
                 startTime.setDate(startTime.getDate() + 1);
-                if (startTime.getDay() == 1) {
+                if (startTime.getDay() == 1 && flag==1) {
                     i = i + 1;
                 }
                 continue;
@@ -95,7 +98,7 @@ function getDateBetween(start, end, days) {
         else if (days.length==3){
             if (startTime.getDay() != days[0] && startTime.getDay() != days[1] && startTime.getDay() != days[2]) {
                 startTime.setDate(startTime.getDate() + 1);
-                if (startTime.getDay() == 1) {
+                if (startTime.getDay() == 1 && flag==1) {
                     i = i + 1;
                 }
                 continue;
@@ -104,7 +107,7 @@ function getDateBetween(start, end, days) {
         else if (days.length==4){
             if (startTime.getDay() != days[0] && startTime.getDay() != days[1] && startTime.getDay() != days[2] && startTime.getDay() != days[3]) {
                 startTime.setDate(startTime.getDate() + 1);
-                if (startTime.getDay() == 1) {
+                if (startTime.getDay() == 1 && flag==1) {
                     i = i + 1;
                 }
                 continue;
@@ -113,7 +116,7 @@ function getDateBetween(start, end, days) {
         else if (days.length==5){
             if (startTime.getDay() != days[0] && startTime.getDay() != days[1] && startTime.getDay() != days[2] && startTime.getDay() != days[3] && startTime.getDay() != days[4]) {
                 startTime.setDate(startTime.getDate() + 1);
-                if (startTime.getDay() == 1) {
+                if (startTime.getDay() == 1 && flag==1) {
                     i = i + 1;
                 }
                 continue;
@@ -122,7 +125,7 @@ function getDateBetween(start, end, days) {
         else if (days.length==6){
             if (startTime.getDay() != days[0] && startTime.getDay() != days[1] && startTime.getDay() != days[2] && startTime.getDay() != days[3] && startTime.getDay() != days[4] && startTime.getDay() != days[5]) {
                 startTime.setDate(startTime.getDate() + 1);
-                if (startTime.getDay() == 1) {
+                if (startTime.getDay() == 1 && flag==1) {
                     i = i + 1;
                 }
                 continue;
@@ -131,18 +134,19 @@ function getDateBetween(start, end, days) {
         else if (days.length==7){
             if (startTime.getDay() != days[0] && startTime.getDay() != days[1] && startTime.getDay() != days[2] && startTime.getDay() != days[3] && startTime.getDay() != days[4] && startTime.getDay() != days[5] && startTime.getDay() != days[6]) {
                 startTime.setDate(startTime.getDate() + 1);
-                if (startTime.getDay() == 1) {
+                if (startTime.getDay() == 1 && flag==1) {
                     i = i + 1;
                 }
                 continue;
             }
         }
+	flag=1;
         let month = startTime.getMonth();
         month = month<9?''+(month+1):month+1;
         let day = startTime.getDate().toString().length == 1 ? "" + startTime.getDate() : startTime.getDate();
         results.push([i, numToWeekdays(startTime.getDay()) + " " + month + "/" + day, 1]);
         startTime.setDate(startTime.getDate() + 1);
-        if (startTime.getDay() == 1) {
+        if (startTime.getDay() == 1 && startTime!=startCopy) {
             i = i + 1;
         }
     }
@@ -168,43 +172,38 @@ function crawler(year, semester, grade, days){
 
 function parseHTML(htmlstr, year, semester, grade, days){
     var term = '';
+    var tterm = '';
     var startDate = '';
     var endDate = '';
     var holidays = '';
     if(semester=="summer1"){
-        term = "term i";
+        term = "term i ";
+	tterm = "term 1";
     }
-    if(semester=="summer2"){
+    else if(semester=="summer2"){
         term = "term ii";
+	tterm =	"term 2";
     }
     const $ = cheerio.load(htmlstr);
     const tableStr = $( '.node__content tbody tr').each((index, el)=>{
-            if(semester=="summer"){
-                if($(el).find('td').text().toLowerCase().includes(term) && $(el).find('td').text().toLowerCase().includes("classes begin")){
+        if(semester=="summer1" || semester=="summer2"){
+            if(($(el).find('td').text().toLowerCase().includes(term)||$(el).find('td').text().toLowerCase().includes(tterm)) && $(el).find('td').text().toLowerCase().includes("classes begin")){
                     startDate = $(el).find('td').eq(0).text();
                     startDate += (", " + year);
                     var date = new Date(startDate);
                     var day1 = date.getDay();
                     var date1 = date.getDate();
-                    var month1 = date.getMonth();
+                var month1 = date.getMonth();
                 }
-                else if($(el).find('td').text().toLowerCase().includes(term) && $(el).find('td').text().toLowerCase().includes("classes begin")){
-                    startDate = $(el).find('p').eq(0).text();
-                    startDate += (", " + year);
-                    var date = new Date(startDate);
-                    var day1 = date.getDay();
-                    var date1 = date.getDate();
-                    var month1 = date.getMonth();
-                }
-                if($(el).find('td').text().toLowerCase().includes(term) && $(el).find('td').text().toLowerCase().includes("classes end")){
+            if(($(el).find('td').text().toLowerCase().includes(term)||$(el).find('td').text().toLowerCase().includes(tterm)) && $(el).find('td').text().toLowerCase().includes("classes end")){
                     endDate = $(el).find('td').eq(0).text();
                     endDate += (", " + year);
                     var date = new Date(endDate);
                     var day1 = date.getDay();
                     var date1 = date.getDate();
-                    var month1 = date.getMonth();
+                var month1 = date.getMonth();
                 }
-            }
+        }
             else{
                 if($(el).find('td').text().toLowerCase().includes("semester") && $(el).find('td').text().toLowerCase().includes('begin')){
                     startDate = $(el).find('td').eq(0).text();
