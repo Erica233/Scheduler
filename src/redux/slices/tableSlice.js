@@ -177,11 +177,12 @@ export const tableSlice = createSlice({
 
     setFromImport: (state, action) => {
       const originColumn = action.payload.columns;
+      state.column_num = originColumn.length;
       const transformColumn = originColumn.map((arr) => {
         return {
           title: arr,
           dataIndex: arr,
-          width: "20%",
+          width: arr === "Week" ? "5%" : arr === "Date" ? "10%" : `${80 / column_num - 2}%`,
           editable: arr === "Week" || arr === "Date" ? false : true,
         };
       });
