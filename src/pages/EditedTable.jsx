@@ -12,16 +12,32 @@ const EditedTable = () => {
   const table_year = useSelector((state) => state.selected_year);
   return (
     // <div className="edit">
-    <Layout>
+    <Layout
+      style={{
+        backgroundColor: "#FAACA8",
+        backgroundImage: "linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)",
+      }}
+    >
       <HeaderBar />
       <div style={{ textAlign: "center" }}>
-        <h3>{table_year} {table_name}</h3>
+        <h1
+          style={{
+            textAlign: "center",
+            fontSize: "30px",
+            letterSpacing: "1px",
+            marginTop: "80px",
+          }}
+        >
+          {table_year} {table_name}
+        </h1>
       </div>
-      <Content style={{ padding: "0 50px", marginTop: 10 }}>
+      <Content style={{ padding: "0 50px", marginBottom: 20 }}>
         <BasicTable />
       </Content>
-      <Footer style={{ textAlign: "center" }}>
-        Course Scheduler @2022 Created by Duke University
+      <Footer style={{ textAlign: "center", opacity: 0.8 }}>
+        <div style={{ color: "gray" }}>
+          Course Scheduler @2022 Created by Duke University
+        </div>
       </Footer>
     </Layout>
     // </div>

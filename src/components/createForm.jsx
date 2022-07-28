@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import "../App.css";
+import { Alert } from 'antd';
+import { message } from 'antd';
 import styled from "styled-components";
 import SemesterChoice from "./semesterChoice";
 import YearChoice from "./YearChoice";
@@ -16,6 +17,7 @@ import {
   setStartWeek,
 } from "../redux/slices/tableSlice";
 import Papa from "papaparse";
+import "../App.css";
 
 const CreateForm = () => {
   const dispatch = useDispatch();
@@ -53,7 +55,8 @@ const CreateForm = () => {
         grade: grade,
         days: days,
       };
-      // aimi host: http://vcm-26740.vm.duke.edu:1999/upload-form
+      //http://10.197.120.183:1999/upload-file
+      // aimi host: http://vcm-26740.vm.duke.edu:2001/upload-form
       const res = await fetch("http://10.197.120.183:1999/upload-file", {
         method: "POST",
         body: JSON.stringify(form_data),
@@ -61,11 +64,29 @@ const CreateForm = () => {
           "Content-Type": "application/json",
         },
       }).then((res) => res.json());
-      dispatch(setStartWeek(res.startDate));
-      dispatch(setTableName(table_name));
-      dispatch(setSelectedYear(year));
-      dispatch(setData(res.message));
-      history.push("/edited");
+      if (res.data) {
+        dispatch(setStartWeek(res.startDate));
+        dispatch(setTableName(table_name));
+        dispatch(setSelectedYear(year));
+        dispatch(setData(res.message));
+        history.push("/edited");
+      }
+      else{
+      //   <Alert
+      //   message="Error"
+      //   description={res.message}
+      //   type="error"
+      //   showIcon
+      //   closable
+      // />
+      message.error({
+        content:`${res.message}`,
+        className: 'custom-class',
+        style: {
+          marginTop: '20vh',
+        },
+      });
+      }
     } catch (error) {
       //handle some error here
     }
@@ -141,7 +162,7 @@ const ImportButton = (props) => {
           const rowsArray = [];
           const valuesArray = [];
           let inputField = {};
-  
+
           results.data.map((d) => {
             rowsArray.push(Object.keys(d));
             valuesArray.push(Object.values(d));
@@ -149,13 +170,12 @@ const ImportButton = (props) => {
           });
           inputField.columns = rowsArray[0];
           inputField.data = valuesArray;
-          
 
-        dispatch(setFromImport(inputField));
-        }
+          dispatch(setFromImport(inputField));
+        },
       });
 
-      const file_name = file.name.split('.').slice(0, -1).join('.');
+      const file_name = file.name.split(".").slice(0, -1).join(".");
       console.log(file_name);
       dispatch(setTableName(file_name));
       history.push("/edited");

@@ -169,6 +169,7 @@ const BasicTable = () => {
         //   onChange: cancel,
         // }}
         pagination={false}
+        style = {{boxShadow: "10px 10px 5px #888"}}
       />
     </Form>
   );

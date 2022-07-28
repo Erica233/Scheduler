@@ -135,7 +135,7 @@ function HeaderBar() {
   };
 
   const computer_screen_narvBar = (
-    <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+    <Navbar collapseOnSelect fixed='top' expand="lg" bg="light" variant="light">
       <Container>
         <Navbar.Brand href="/">
           <img
