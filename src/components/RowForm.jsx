@@ -11,12 +11,27 @@ function RowForm() {
     date: "", //
   });
 
-  var inputDate = new Date(inputField.date);
-  var oneJan = new Date(inputDate.getFullYear(), 0, 1);
-  var numberOfDays = Math.floor((inputDate - oneJan) / (24 * 60 * 60 * 1000));
-  var result = Math.ceil((inputDate.getDay() + 1 + numberOfDays) / 7);
-  inputField.week = result;
-  console.log(`Week Number (${inputDate}) is ${inputField.week}.`);
+
+    var temptTime = new Date(inputField.date)
+    var weekday
+    if (temptTime.getDay() == 6) {
+      weekday = 7
+    } else {
+      weekday = temptTime.getDay()
+    }
+    temptTime.setDate(temptTime.getDate() - weekday + 6)
+    var firstDay = new Date(temptTime.getFullYear(), 0, 1)
+    var dayOfWeek = firstDay.getDay()
+    var spendDay = 1
+    if (dayOfWeek != 0) {
+      spendDay = 7 - dayOfWeek + 1
+    }
+    firstDay = new Date(temptTime.getFullYear(), 0, 1 + spendDay)
+    var d = Math.ceil((temptTime.valueOf() - firstDay.valueOf()) / (24 * 60 * 60 * 1000))
+    var result = Math.ceil(d / 7)
+    inputField.week = result + 1
+
+    console.log(`Week Number (${temptTime}) is ${inputField.week}.`);
 
   const weekHandler = (event) => {
     setInputField({ ...inputField, week: event.target.value });
