@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { act } from "react-dom/test-utils";
 
 const init_columns = [
   {
@@ -43,7 +44,7 @@ const getTimeStamp = (data, year) => {
     let month = date[0].length === 1 ? "0" + date[0] : date[0];
     let day = date[1];
     let timestamp = new Date(year, month - 1, day);
-    return timestamp.getTime() / 100000;
+    return timestamp.getTime() / 1000;
   } else {
     return "";
   }
@@ -75,8 +76,8 @@ export const tableSlice = createSlice({
       input_date = input_date.split("-");
       let date_obj = new Date(input_date[0], input_date[1] - 1, input_date[2]);
       // get timestamp and week of new data
-      let timestamp = date_obj.getTime() / 100000;
-      const week = action.payload.week;
+      let timestamp = date_obj.getTime() / 1000;
+      const week = action.payload.week - state.start_week + 1;
 
       // convert date from 1999-00-00 to Tuesday 00/00
       let days = [
@@ -101,14 +102,16 @@ export const tableSlice = createSlice({
       // set the week ,date and timestamp of new data
       // note: the week and date should be capital case
       // aligned with dataIndex in intial_columns
-      new_data.Week = week;
+      new_data.key = state.data.length;
+      new_data.Week = `${week}`;
       new_data.Date = date;
       new_data["timestamp"] = timestamp;
-      state.data.push({ ...new_data, key: state.data.length });
+      state.data.push(new_data);
       // sort table data based on timestamp value
       state.data.sort(
         (a, b) => parseFloat(a.timestamp) - parseFloat(b.timestamp)
       );
+      console.log(state.data);
     },
 
     deleteColumn: (state, action) => {
@@ -163,20 +166,7 @@ export const tableSlice = createSlice({
     },
 
     setFromImport: (state, action) => {
-      console.log(action.payload.data);
-      const originData = action.payload.data;
-      const transformData = originData.map((arr, index) => {
-        return {
-          key: index,
-          Week: `${arr[0]}`,
-          Date: `${arr[1]}`,
-          Topic: arr[2],
-          Description: ``,
-          timestamp: getTimeStamp(arr[1], state.selected_year),
-        };
-      });
-      console.log(action.payload.data);
-      state.data = transformData;
+
 
       const originColumn = action.payload.columns;
       const transformColumn = originColumn.map((arr) => {
@@ -184,12 +174,41 @@ export const tableSlice = createSlice({
           title: arr,
           dataIndex: arr,
           width: "20%",
-          editable: arr==="Week"||arr==="week"||arr==="Date"||arr==="date" ? true : false,
+          editable: arr==="Week"||arr==="Date" ? false : true,
         };
       });
       console.log(action.payload.columns);
+      console.log(action.payload.data);
       state.columns = transformColumn;
+
+      const data_obj = originColumn.reduce((acc,curr)=> (acc[curr]='',acc),{});
+      console.log(data_obj);
+
+      const originData = action.payload.data;
+      const transformData = originData.map((arr, index) => {
+        const obj = {key: index, ...data_obj};
+        for(let i = 0; i < arr.length; i++){
+          const col = originColumn[i];
+          obj[col] = arr[i];
+        }
+        // add timestamp
+        if(originColumn.includes("Date")){
+          obj.timestamp = getTimeStamp(obj.Date, state.selected_year);
+        }
+        return obj;
+      });
+      console.log(transformData);
+      state.data = transformData;
     },
+
+    setStartWeek: (state, action) => {
+      let inputDate = new Date(action.payload);
+      let oneJan = new Date(inputDate.getFullYear(), 0, 1);
+      let numberOfDays = Math.floor((inputDate - oneJan) / (24 * 60 * 60 * 1000));
+      let result = Math.ceil((inputDate.getDay() + 1 + numberOfDays) / 7);
+      state.start_week = result;
+      console.log(`the number of week: ${result}`);
+    }
   },
 });
 
@@ -204,6 +223,7 @@ export const {
   setSelectedYear,
   setEditedRow,
   setFromImport,
+  setStartWeek,
 } = tableSlice.actions;
 
 export default tableSlice.reducer;

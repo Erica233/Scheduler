@@ -29,6 +29,9 @@ function HeaderBar() {
   const table_data = useSelector((state) => {
     return state.data;
   });
+  const table_year = useSelector((state) => {
+    return state.selected_year;
+  });
   const columns_state = useSelector((state) => state.columns);
   // determine the screen size
   const [windowDimension, setWindowDimension] = useState(null);
@@ -71,45 +74,43 @@ function HeaderBar() {
     XLSX.writeFile(workBook, `${table_name}.csv`);
   };
 
-  const dowloadPDF = () => {
-    const column_titles = [columns_state.map((col) => col.title)];
-    const data = [];
-    export_data.forEach(element => {
-      let row = [];
-      column_titles[0].forEach(col_title => {
-        row.push(element[col_title]);
-      });
-      console.log(row);
-      data.push(row);
+  /**
+   * Prepare data for downloadPDF and downloadHTML
+   * -> convert columns object => column_titles array
+   * -> convert table data object => data array(same order to the columns)
+   */
+  const col_title_arr = columns_state.map((col) => col.title);
+  const table_data_arr = [];
+  export_data.forEach((element) => {
+    let row = [];
+    col_title_arr.forEach((col_title) => {
+      row.push(element[col_title]);
     });
-    // const data = export_data.map((data) => {
-    //   return Object.values(data);
-    // });
-    console.log(data);
+    table_data_arr.push(row);
+  });
+
+  const dowloadPDF = () => {
     const doc = new jsPDF();
-    doc.text(`${table_name}`, 20, 10);
+    doc.text(`${table_year} ${table_name}`, 20, 10);
     doc.autoTable({
-      head: column_titles,
-      body: data,
+      head: [col_title_arr],
+      body: table_data_arr,
     });
     doc.save(`${table_name}.pdf`);
   };
 
   const downloadHTML = () => {
-    const columns = columns_state.map((col) => col.title);
-    const data = export_data.map((data) => {
-      return Object.values(data);
-    });
-
     const table = (
+      <div>
+      <h1>{table_year} {table_name}</h1>
       <table>
         <tbody>
           <tr>
-            {columns.map((col_name, idx) => (
+            {col_title_arr.map((col_name, idx) => (
               <th key={idx}>{col_name}</th>
             ))}
           </tr>
-          {data.map((rowData, rowIndex) => {
+          {table_data_arr.map((rowData, rowIndex) => {
             return (
               <tr key={rowIndex}>
                 {rowData.map((cellData) => (
@@ -120,14 +121,14 @@ function HeaderBar() {
           })}
         </tbody>
       </table>
+      </div>
     );
-    
+
     // convert react JSX object to HTML
     const html = ReactDOMServer.renderToStaticMarkup(table);
     let file = new File([html], "tes.html", {
       type: "text/plain;charset=utf-8",
     });
-
     saveAs(file);
   };
 

@@ -30,12 +30,13 @@ function RowForm() {
 
   const handleSubmit = () => {
     const date = inputField.date.split("-");
+    dispatch(addRow(inputField));
     // if input year is not table year 
-    if (parseInt(date[0]) !== table_year) {
-      alert(`Please select date in ${table_year}`);
-    } else {
-      dispatch(addRow(inputField));
-    }
+    // if (parseInt(date[0]) !== table_year) {
+    //   alert(`Please select date in ${table_year}`);
+    // } else {
+    //   dispatch(addRow(inputField));
+    // }
   };
 
   return (

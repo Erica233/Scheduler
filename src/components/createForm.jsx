@@ -8,7 +8,13 @@ import GradeChoice from "./identity";
 import DayChoice from "./day";
 // import ImportButton from "./ImportButton";
 import { useDispatch } from "react-redux";
-import { setTableName, setData, setFromImport, setSelectedYear } from "../redux/slices/tableSlice";
+import {
+  setTableName,
+  setData,
+  setFromImport,
+  setSelectedYear,
+  setStartWeek,
+} from "../redux/slices/tableSlice";
 import Papa from "papaparse";
 
 const CreateForm = () => {
@@ -36,7 +42,6 @@ const CreateForm = () => {
     days = _days;
   };
 
-
   const history = useHistory();
 
   const handleSubmit = async (event) => {
@@ -49,14 +54,14 @@ const CreateForm = () => {
         days: days,
       };
       // aimi host: vcm-26740.vm.duke.edu -> upload-form
-      const res = await fetch("http://172.28.223.163:1999/upload-file", {
+      const res = await fetch("http://vcm-26740.vm.duke.edu:1999/upload-form", {
         method: "POST",
         body: JSON.stringify(form_data),
         headers: {
           "Content-Type": "application/json",
         },
       }).then((res) => res.json());
-      console.log(res.message);
+      dispatch(setStartWeek(res.startDate));
       dispatch(setTableName(table_name));
       dispatch(setSelectedYear(year));
       dispatch(setData(res.message));
@@ -125,19 +130,8 @@ const ImportButton = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const fileRef = useRef();
-  const [inputField, setInputField] = useState({
-    columns: [],
-    data: [],
-});
 
-  //State to store table Column name
-  const [tableRows, setTableRows] = useState([]);
-
-  //State to store the values
-  const [values, setValues] = useState([]);
-  //
   const handleImport = (event) => {
-
     try {
       const file = event.target.files[0];
       console.log(file);
@@ -146,6 +140,7 @@ const ImportButton = (props) => {
         complete: function (results) {
           const rowsArray = [];
           const valuesArray = [];
+          let inputField = {};
   
           results.data.map((d) => {
             rowsArray.push(Object.keys(d));
@@ -154,9 +149,6 @@ const ImportButton = (props) => {
           inputField.columns = rowsArray[0];
           inputField.data = valuesArray;
 
-        // setTableRows(rowsArray[0]);
-
-        // setValues(valuesArray);
         dispatch(setFromImport(inputField));
         }
       });
@@ -169,6 +161,7 @@ const ImportButton = (props) => {
       //handle some error here
     }
   };
+  //
   //
 
   return (
