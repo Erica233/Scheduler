@@ -166,8 +166,6 @@ export const tableSlice = createSlice({
     },
 
     setFromImport: (state, action) => {
-
-
       const originColumn = action.payload.columns;
       const transformColumn = originColumn.map((arr) => {
         return {
