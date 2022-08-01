@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "antd/dist/antd.min.css";
 import { Form, Input, InputNumber, Table, Popconfirm, Typography } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { addColumn, setData, deleteRow, setEditedRow } from "../redux/slices/tableSlice";
+import { deleteRow, setEditedRow } from "../../redux/slices/tableSlice";
 
 const EditableCell = ({
   editing,

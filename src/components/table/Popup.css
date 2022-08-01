@@ -65,17 +65,3 @@
   cursor: pointer;
   font-family: "Open Sans", sans-serif;
 }
-
-.popup__box__header {
-  padding: 15px 20px;
-  margin: 0;
-  background: #edf5f7;
-  color: #454b4d;
-}
-
-.popup__box__header__title {
-  margin: 0;
-  font-size: 16px;
-  text-align: left;
-  font-weight: 600;
-}

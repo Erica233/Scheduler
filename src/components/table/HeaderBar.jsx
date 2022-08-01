@@ -15,10 +15,9 @@ import ColumnForm from "./ColumnForm";
 import DeleteColumnForm from "./DeleteColumnForm";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 import * as ReactDOMServer from "react-dom/server";
-import RowForm from "./RowForm";
 import { saveAs } from "file-saver";
+import RowForm from "./RowForm";
 
 function HeaderBar() {
   // redux

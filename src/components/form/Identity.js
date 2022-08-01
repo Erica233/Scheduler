@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Select from "react-select";
 import styled from "styled-components";
-import "../App.css";
+import "../../App.css";
 
 const grade_options = [
   { value: "graduate", label: "Graduate" },

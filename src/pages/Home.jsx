@@ -1,7 +1,7 @@
 import "../App.css";
 import React from "react";
 import styled from "styled-components";
-import CreateForm from "../components/createForm";
+import CreateForm from "../components/form/CreateForm";
 
 function Home() {
   return (

@@ -1,13 +1,11 @@
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Alert } from 'antd';
 import { message } from 'antd';
 import styled from "styled-components";
-import SemesterChoice from "./semesterChoice";
+import SemesterChoice from "./SemesterChoice";
 import YearChoice from "./YearChoice";
-import GradeChoice from "./identity";
-import DayChoice from "./day";
-// import ImportButton from "./ImportButton";
+import GradeChoice from "./Identity";
+import DayChoice from "./Day";
 import { useDispatch } from "react-redux";
 import {
   setTableName,
@@ -15,9 +13,9 @@ import {
   setFromImport,
   setSelectedYear,
   setStartWeek,
-} from "../redux/slices/tableSlice";
+} from "../../redux/slices/tableSlice";
 import Papa from "papaparse";
-import "../App.css";
+import "../../App.css";
 
 const CreateForm = () => {
   const dispatch = useDispatch();

@@ -1,9 +1,8 @@
 import React from "react";
-import HeaderBar from "../components/HeaderBar";
-import BasicTable from "../components/Table";
-import { Layout, Menu, Breadcrumb } from "antd";
+import HeaderBar from "../components/table/HeaderBar";
+import BasicTable from "../components/table/Table";
+import { Layout } from "antd";
 import { useSelector } from "react-redux";
-// import { Content } from "rsuite";
 
 const { Header, Content, Footer } = Layout;
 

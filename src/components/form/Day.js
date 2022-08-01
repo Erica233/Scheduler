@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import styled from "styled-components";
-import "../App.css";
+import "../../App.css";
 
 const day_options = [
   { value: 0, label: "Sunday" },

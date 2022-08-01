@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import "../App.css";
+import "../../App.css";
 import styled from "styled-components";
 
 const semester_options = [

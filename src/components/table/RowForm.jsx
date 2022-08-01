@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addRow } from "../redux/slices/tableSlice";
-import { DatePicker, Space } from 'antd';
+import { addRow } from "../../redux/slices/tableSlice";
 import "antd/dist/antd.css";
 import "./Popup.css";
 

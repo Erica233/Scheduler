@@ -1,7 +1,7 @@
 // import { render } from '@testing-library/react';
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteColumn } from "../redux/slices/tableSlice";
+import { deleteColumn } from "../../redux/slices/tableSlice";
 import { Select } from "antd";
 import "./Popup.css";
 

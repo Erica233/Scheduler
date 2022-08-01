@@ -1,7 +1,6 @@
 import React, { useRef, useDispatch } from "react";
 import { useHistory } from "react-router-dom";
-import "../App.css";
-import { setTableName, setData } from "../redux/slices/tableSlice";
+import "../../App.css";
 
 
 const ImportButton = (props) => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addColumn } from "../redux/slices/tableSlice";
+import { addColumn } from "../../redux/slices/tableSlice";
 import { Input } from "antd";
 import "./Popup.css";
 
