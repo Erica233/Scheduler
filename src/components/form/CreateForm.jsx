@@ -70,13 +70,6 @@ const CreateForm = () => {
         history.push("/edited");
       }
       else{
-      //   <Alert
-      //   message="Error"
-      //   description={res.message}
-      //   type="error"
-      //   showIcon
-      //   closable
-      // />
       message.error({
         content:`${res.message}`,
         className: 'custom-class',
@@ -181,8 +174,6 @@ const ImportButton = (props) => {
       //handle some error here
     }
   };
-  //
-  //
 
   return (
     <div id="button" className="row">

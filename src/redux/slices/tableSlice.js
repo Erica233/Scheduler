@@ -58,13 +58,20 @@ export const tableSlice = createSlice({
   reducers: {
     addColumn: (state, action) => {
       const col_name = `${action.payload.column_name}`;
+      const next_col_name = action.payload.next_col_name;
+      const col_pos = next_col_name === "Operation" ? state.columns.length : state.columns.findIndex((col)=>{return col.title === next_col_name});
+      console.log(col_pos);
+
       column_num += 1;
-      state.columns.push({
+
+      // add new columns to column array
+      state.columns.splice( col_pos, 0, {
         title: col_name,
         dataIndex: col_name,
         width: `${80 / column_num - 2}%`,
         editable: true,
       });
+
       // change other columns width to the same percentage
       state.columns.forEach((col) => {
         if (col.title !== "Week" && col.title !== "Date") {
@@ -72,6 +79,7 @@ export const tableSlice = createSlice({
         }
       });
 
+      // create field placeholder in data for new column 
       const obj = {};
       obj[col_name] = "";
       state.data.map((data) => {

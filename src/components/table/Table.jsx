@@ -93,6 +93,7 @@ const BasicTable = () => {
   // get columns state from redux store
   const columns_state = useSelector((state) => state.columns);
 
+  // add opertation to the end of table column
   const columns = [
     ...columns_state,
     {
@@ -129,6 +130,13 @@ const BasicTable = () => {
               onClick={() => dispatch(deleteRow(record))}
             >
               Delete
+            </Typography.Link>
+            <br />
+            <Typography.Link
+              disabled={editingKey !== ""}
+              onClick={() => dispatch(deleteRow(record))}
+            >
+              Add New Row
             </Typography.Link>
           </div>
         );
@@ -176,22 +184,3 @@ const BasicTable = () => {
 };
 
 export default BasicTable;
-
-/**
- * TODO
- * 1. add row
- *   - add new row
- *   - add with week and date -> insert into correct position
- * 2. add column
- * 3. pesist store for refresh
- * 4. responsive view -> the table cover the Nav bar
- * 5. edit row
- *    - sort into correct position
- * 6. delete row
- * 7. delete column
- */
-
-/**
- * 1. map backend data from array to object
- * 2. make week and date uneditable
- */
