@@ -175,15 +175,15 @@ function HeaderBar() {
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Export">
-              <NavDropdown.Item onClick={downloadExcel}>csv</NavDropdown.Item>
+              <NavDropdown.Item onClick={downloadExcel}>CSV</NavDropdown.Item>
               <NavDropdown.Item href="#action/addColumn" onClick={dowloadPDF}>
-                pdf
+                PDF
               </NavDropdown.Item>
               <NavDropdown.Item
                 href="#action/deleteColumn"
                 onClick={downloadHTML}
               >
-                html
+                HTML
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

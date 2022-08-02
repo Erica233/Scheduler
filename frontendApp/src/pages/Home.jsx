@@ -1,15 +1,40 @@
 import "../App.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CreateForm from "../components/form/CreateForm";
+import MobileHome from "../components/home/MobileHome";
 
 function Home() {
+  const [windowDimension, setWindowDimension] = useState(null);
+  useEffect(() => {
+    setWindowDimension(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimension(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // const isMobile = windowDimension <= 640;
+  const isMobile = false;
+  
   return (
-    <div className="home">
-      <MainContainer>
-        <FormHeader title="Course Scheduler" />
-        <CreateForm />
-      </MainContainer>
+    <div>
+        {isMobile ? (
+          <MobileHome />
+        ) : (
+          <div className="home">
+          <MainContainer>
+            <FormHeader title="Course Scheduler" />
+            <CreateForm />
+          </MainContainer>
+          </div>
+        )}
+      
     </div>
   );
 }

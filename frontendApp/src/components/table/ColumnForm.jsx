@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addColumn } from "../../redux/slices/tableSlice";
 import { Input, Select, Form, Button } from "antd";
@@ -11,6 +11,8 @@ function ColumnForm(props) {
     column_name: "",
     next_col_name: "",
   });
+  const[height, setHeight] = useState(0);
+  useEffect(()=>{setHeight(document.documentElement.scrollHeight)});
 
   // get column options
   const col_arr = useSelector((state) => state.columns);
@@ -38,20 +40,23 @@ function ColumnForm(props) {
     });
   };
 
-  const isColumnNameExist = (col_name) => col_arr.some((col)=>{ return col.title === col_name});
+  const isColumnNameExist = (col_name) =>
+    col_arr.some((col) => {
+      return col.title === col_name;
+    });
 
   const onFinish = (values) => {
-    if(isColumnNameExist(inputField.column_name)){
+    if (isColumnNameExist(inputField.column_name)) {
       alert("This column name has exist. Please change another name!");
-    }
-    else{
+    } else {
       dispatch(addColumn(inputField));
-      setInputField({column_name:"", next_col_name:""});
+      setInputField({ column_name: "", next_col_name: "" });
     }
   };
 
+
   return props.trigger ? (
-    <div className="popup">
+    <div className="popup" style={{height:`${height}px`}}>
       <div className="popup-inner">
         <button
           className="popup_close-btn"
@@ -75,8 +80,9 @@ function ColumnForm(props) {
               name="column_name"
               placeholder="Column Name"
               style={{
-                width: 200,
-                marginRight: "30px",
+                width: "100%",
+                marginRight: "auto",
+                marginLeft: "auto",
               }}
             />
           </Form.Item>
@@ -98,14 +104,25 @@ function ColumnForm(props) {
               options={col_options}
               onChange={selectHandler}
               style={{
-                width: 200,
-                marginRight: "30px",
+                width: "100%",
+                marginRight: "auto",
+                marginLeft: "auto",
               }}
             />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit"> Submit </Button>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{
+                width: "100%",
+                marginRight: "auto",
+                marginLeft: "auto",
+              }}
+            >
+              Submit 
+            </Button>
           </Form.Item>
         </Form>
       </div>

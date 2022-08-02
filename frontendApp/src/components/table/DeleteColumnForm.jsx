@@ -1,8 +1,8 @@
 // import { render } from '@testing-library/react';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteColumn } from "../../redux/slices/tableSlice";
-import { Select } from "antd";
+import { Select, Form, Button } from "antd";
 import "./Popup.css";
 
 const { Option } = Select;
@@ -10,6 +10,10 @@ const { Option } = Select;
 function DeleteColumnForm(props) {
   const dispatch = useDispatch();
   const [inputField, setInputField] = useState({});
+  const[height, setHeight] = useState(0);
+
+  // set height to extend when scroll
+  useEffect(()=>{setHeight(document.documentElement.scrollHeight)});
 
   const handleChange = (value) => {
     setInputField(value);
@@ -28,7 +32,7 @@ function DeleteColumnForm(props) {
   });
 
   return props.trigger ? (
-    <div className="popup">
+    <div className="popup" style={{height:`${height}px`}}>
       <div className="popup-inner">
         <button
           className="popup_close-btn"
@@ -36,42 +40,47 @@ function DeleteColumnForm(props) {
         >
           Close
         </button>
-        <Select
-          placeholder="Column Name"
-          onChange={handleChange}
-          options={col_options}
-          style={{
-            width: 200,
-            marginRight: "30px",
-          }}
-        />
-        <button
-          className="popup__btn"
-          onClick={() => {
-            dispatch(deleteColumn(inputField));
-            props.setTrigger(false);
-          }}
-        >
-          Submit
-        </button>
+        <Form layout="vertical">
+          <Form.Item
+            label="Column Name"
+            required
+            rules={[
+              { required: true, message: "Please input new column name!" },
+            ]}
+          >
+            <Select
+              placeholder="Column Name"
+              onChange={handleChange}
+              options={col_options}
+              style={{
+                width: "100%",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              onClick={() => {
+              dispatch(deleteColumn(inputField));
+              props.setTrigger(false);
+            }}
+              style={{
+                width: "100%",
+                marginRight: "auto",
+                marginLeft: "auto",
+              }}
+            >
+              Submit 
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
     </div>
   ) : (
     ""
   );
-
-  // return (
-  //   <div>
-  //     <Select
-  //       className="select"
-  //       size="small"
-  //       placeholder="Please Select Column To Delete"
-  //       options={col_options}
-  //       onChange={handleChange}
-  //     />
-  //     <button onClick={()=>dispatch(deleteColumn(inputField))}>Submit</button>
-  //   </div>
-  // );
 }
 
 export default DeleteColumnForm;
