@@ -1,6 +1,21 @@
 import React, { useState } from "react";
 import "antd/dist/antd.min.css";
-import { Form, Input, InputNumber, Table, Popconfirm, Typography } from "antd";
+import {
+  Form,
+  Input,
+  InputNumber,
+  Table,
+  Popconfirm,
+  Typography,
+  Button,
+  Row,
+  Col,
+} from "antd";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  AppstoreAddOutlined,
+} from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteRow, setEditedRow } from "../../redux/slices/tableSlice";
 
@@ -46,7 +61,6 @@ const BasicTable = () => {
   const dispatch = useDispatch();
   let data = useSelector((state) => state.data);
   data = data.map(({ timestamp, ...res }) => ({ ...res }));
-  
 
   const isEditing = (record) => record.key === editingKey;
 
@@ -83,7 +97,7 @@ const BasicTable = () => {
         // newData.push(edited_data);
         // dispatch(setEditedRow(newData));
         console.log("index less than -1");
-        setEditingKey("");    
+        setEditingKey("");
       }
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
@@ -117,28 +131,40 @@ const BasicTable = () => {
             </Popconfirm>
           </span>
         ) : (
-          <div>
-            <Typography.Link
-              disabled={editingKey !== ""}
-              onClick={() => edit(record)}
-            >
-              Edit
-            </Typography.Link>
-            <br />
+          <Row gutter={8}>
+            <Col>
+              <Typography.Link
+                disabled={editingKey !== ""}
+                onClick={() => edit(record)}
+              >
+                <Button shape="circle">
+                  <EditOutlined />
+                </Button>
+              </Typography.Link>
+            </Col>
+
+            <Col>
+              <Typography.Link
+                disabled={editingKey !== ""}
+                onClick={() => dispatch(deleteRow(record))}
+              >
+                <Button shape="circle">
+                  <DeleteOutlined />
+                </Button>
+              </Typography.Link>
+            </Col>
+
+            <Col>
             <Typography.Link
               disabled={editingKey !== ""}
               onClick={() => dispatch(deleteRow(record))}
             >
-              Delete
+              <Button shape="circle">
+                <AppstoreAddOutlined />
+              </Button>
             </Typography.Link>
-            <br />
-            <Typography.Link
-              disabled={editingKey !== ""}
-              onClick={() => dispatch(deleteRow(record))}
-            >
-              Add New Row
-            </Typography.Link>
-          </div>
+            </Col>
+          </Row>
         );
       },
     },
@@ -177,7 +203,7 @@ const BasicTable = () => {
         //   onChange: cancel,
         // }}
         pagination={false}
-        style = {{boxShadow: "10px 10px 5px #888"}}
+        style={{ boxShadow: "10px 10px 5px #888" }}
       />
     </Form>
   );
