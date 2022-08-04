@@ -5,12 +5,27 @@ import { Form, Button, DatePicker } from "antd";
 import "antd/dist/antd.css";
 import "./Popup.css";
 
-function RowForm() {
+const getTimeStamp = (input_date) => {
+  input_date = input_date.split("-");
+  let date_obj = new Date(input_date[0], input_date[1] - 1, input_date[2]);
+  // get timestamp and week of new data
+  let timestamp = date_obj.getTime() / 1000;
+  return timestamp;
+};
+
+function RowForm(props) {
   const dispatch = useDispatch();
   const table_year = useSelector((state) => state.selected_year);
-  let inputField = {week: '', date: ''};
+  const table_data = useSelector((state) => state.data);
+  let inputField = { week: "", date: ""};
+
+  const isDateExist = (new_date_timestamp) =>
+    table_data.some((data) => {
+      return data.timestamp === new_date_timestamp;
+    });
 
   const dateHandler = (date, dateString) => {
+    console.log(date);
     let temptTime = new Date(date);
     let weekday = temptTime.getDay() === 6 ? 7 : temptTime.getDay();
 
@@ -31,7 +46,16 @@ function RowForm() {
   };
 
   const handleSubmit = () => {
-    dispatch(addRow(inputField));
+    if(inputField.date === "") {
+      alert("Please select date for new row!");
+    }
+    else if(isDateExist(getTimeStamp(inputField.date))){
+      alert("This date has exist in table. Please change another date!");
+    }
+    else{
+      dispatch(addRow(inputField));
+      props.setTrigger(false);
+    }
   };
 
   return (
@@ -42,12 +66,14 @@ function RowForm() {
           required
           rules={[{ required: true, message: "Please input new column name!" }]}
         >
-          <DatePicker onChange={dateHandler} 
-          style={{
+          <DatePicker
+            onChange={dateHandler}
+            style={{
               width: "100%",
               marginRight: "auto",
               marginLeft: "auto",
-            }}/>
+            }}
+          />
         </Form.Item>
         <Form.Item>
           <Button

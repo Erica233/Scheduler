@@ -9,24 +9,28 @@ const init_columns = [
     dataIndex: "Week",
     width: "5%",
     editable: false,
+    align: "center",
   },
   {
     title: "Date",
     dataIndex: "Date",
     width: "10%",
     editable: false,
+    align: "center",
   },
   {
     title: "Topic",
     dataIndex: "Topic",
     width: `${80 / column_num - 2}%`,
     editable: true,
+    align: "center",
   },
   {
     title: "Description",
     dataIndex: "Description",
     width: `${80 / column_num - 2}%`,
     editable: true,
+    align: "center",
   },
 ];
 
@@ -70,6 +74,7 @@ export const tableSlice = createSlice({
         dataIndex: col_name,
         width: `${80 / column_num - 2}%`,
         editable: true,
+        align: "center",
       });
 
       // change other columns width to the same percentage

@@ -55,7 +55,7 @@ const CreateForm = () => {
       };
       //test host: http://10.197.120.183:1999/upload-file
       //aimin host: http://vcm-26740.vm.duke.edu:2001/upload-form
-      const res = await fetch("http://10.197.120.183:1999/upload-file", {
+      const res = await fetch("http://localhost:1999/upload-file", {
         method: "POST",
         body: JSON.stringify(form_data),
         headers: {

@@ -114,6 +114,7 @@ const BasicTable = () => {
       title: "Operation",
       dataIndex: "Operation",
       width: "5%",
+      align: "center",
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (

@@ -52,7 +52,8 @@ function HeaderBar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isMobile = windowDimension <= 640;
+  // const isMobile = windowDimension <= 640;
+  const isMobile = false;
 
   // icon for header bart
   const navDropdownIcon = <i className="bi bi-plus-circle"></i>;
