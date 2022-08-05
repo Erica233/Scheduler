@@ -30,7 +30,7 @@ function ColumnForm(props) {
 
   // handle input new columns name
   const inputsHandler = (e) => {
-    setInputField({ column_name: e.target.value });
+    setInputField((preState)=>{ return{...preState, column_name: e.target.value }});
   };
 
   // handle select position
@@ -38,6 +38,7 @@ function ColumnForm(props) {
     setInputField((preState) => {
       return { ...preState, next_col_name: value };
     });
+    console.log(inputField.next_col_name);
   };
 
   const isColumnNameExist = (col_name) =>

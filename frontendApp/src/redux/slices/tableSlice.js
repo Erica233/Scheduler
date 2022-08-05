@@ -62,7 +62,7 @@ export const tableSlice = createSlice({
   reducers: {
     addColumn: (state, action) => {
       const col_name = `${action.payload.column_name}`;
-      const next_col_name = action.payload.next_col_name;
+      const next_col_name = `${action.payload.next_col_name}`;
       const col_pos = next_col_name === "Operation" ? state.columns.length : state.columns.findIndex((col)=>{return col.title === next_col_name});
       console.log(col_pos);
 

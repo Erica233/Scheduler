@@ -21,7 +21,7 @@ function Home() {
 
   // const isMobile = windowDimension <= 640;
   const isMobile = false;
-  
+
   return (
     <div>
         {isMobile ? (
@@ -45,6 +45,8 @@ const FormHeader = (props) => <h2 id="headerTitle">{props.title}</h2>;
 
 const MainContainer = styled.div`
   display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
   margin-left: auto;
   margin-right: auto;
   align-items: center;
