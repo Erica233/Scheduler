@@ -18,6 +18,8 @@ import {
 } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteRow, setEditedRow } from "../../redux/slices/tableSlice";
+import NewRowForm from "./NewRowForm";
+import Popup from "./Popup";
 
 const EditableCell = ({
   editing,
@@ -63,6 +65,8 @@ const BasicTable = () => {
   data = data.map(({ timestamp, ...res }) => ({ ...res }));
 
   const isEditing = (record) => record.key === editingKey;
+
+  const [addRowPopup, setAddRowPopup] = useState(false);
 
   const edit = (record) => {
     console.log(record);
@@ -158,8 +162,13 @@ const BasicTable = () => {
             <Col>
             <Typography.Link
               disabled={editingKey !== ""}
-              onClick={() => dispatch(deleteRow(record))}
+              onClick={() => setAddRowPopup(true)}
             >
+              <div>
+                <Popup trigger={addRowPopup} setTrigger={setAddRowPopup}>
+                  <NewRowForm />
+                </Popup>
+              </div>
               <Button shape="circle">
                 <AppstoreAddOutlined />
               </Button>
