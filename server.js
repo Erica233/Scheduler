@@ -1,18 +1,23 @@
+/*
 import express from 'express';
-import fileupload from "express-fileupload";
+//import fileupload from "express-fileupload";
 import cors from 'cors';
 
 import https from 'https';
 //import { http, https } from 'follow-redirects';
 import cheerio from 'cheerio';
+*/
+
+var express = require("express");                                                                                             
+
+var cors = require("cors");                                                                                                   
+                                                                                                                           
+var https = require( "https");                                                                                                 
+ 
+var cheerio = require("cheerio");
 
 const app = express();
 
-app.use(
-    fileupload({
-        createParentPath: true,
-    }),
-);
 
 app.use(cors());
 app.use(express.json());
