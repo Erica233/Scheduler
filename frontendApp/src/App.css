@@ -5,108 +5,42 @@
   font-family: Arial, Helvetica, sans-serif;
   margin: 3rem 0 2rem 0;
   font-size: 2rem;
-}
-
-@media only screen and (max-width: 320px) {
-  #headerTitle {
-    font-size: 1rem;
-  }
-
-  .formButton {
-    font-size: 0.7rem;
-  }
-
-  .importButton {
-    font-size: 0.7rem;
-  }
-}
-
-@media only screen and (min-width: 360px) {
-  #headerTitle {
-    font-size: 1.3rem;
-  }
-
-  .formButton {
-    font-size: 0.7rem;
-  }
-
-  .importButton {
-    font-size: 0.7rem;
-  }
-}
-@media only screen and (min-width: 411px) {
-  #headerTitle {
-    font-size: 1.5rem;
-  }
-
-  .formButton {
-    font-size: 0.8rem;
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  #headerTitle {
-    font-size: 1.6rem;
-  }
-
-  .formButton {
-    font-size: 0.85rem;
-  }
-}
-@media only screen and (min-width: 1024px) {
-  #headerTitle {
-    font-size: 1.8rem;
-  }
-
-  .formButton {
-    font-size: 0.9rem;
-  }
-}
-@media only screen and (min-width: 1280px) {
-  #headerTitle {
-    font-size: 2rem;
-  }
-
-  .formButton {
-    font-size: 1rem;
-  }
+  color: #003087;
 }
 
 .row label {
   align-self: start;
   padding-left: 4.5rem;
   padding-bottom: 0.5rem;
-  color: rgba(187, 187, 187, 0.9); 
+  color: #003087;
 }
 
 .formButton {
-  background: rgb(246, 71, 112);
-  background: linear-gradient(
-    90deg,
-    rgba(68, 93, 247)0%,
-    rgba(246, 71, 112, 0.5) 100%
-  );
+  background-color: #faaca8;
+  background-image: linear-gradient(19deg, #faaca8 0%, #ddd6f3 100%);
   text-transform: uppercase;
-  letter-spacing: 0.2rem;
+  letter-spacing: 0.1rem;
   width: 65%;
   height: 3rem;
   border: none;
   color: white;
   border-radius: 2rem;
   cursor: pointer;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.5);
+  box-shadow: 0 5px 20px 0 rgba(31, 38, 135, 0.5);
 }
 
 .importButton {
-  background: rgb(246, 71, 112);
+  /* background: rgb(246, 71, 112);
   background: linear-gradient(
     90deg,
     rgba(68, 93, 247)0%,
     rgba(246, 71, 112, 0.5) 100%
-  );
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.5);
+  ); */
+  background-color: #faaca8;
+  background-image: linear-gradient(19deg, #faaca8 0%, #ddd6f3 100%);
+  box-shadow: 0 5px 20px 0 rgba(31, 38, 135, 0.5);
   text-transform: uppercase;
-  letter-spacing: 0.2rem;
+  letter-spacing: 0.1rem;
   width: 80%;
   height: 3rem;
   border: none;
@@ -128,10 +62,6 @@
   padding-bottom: 1rem;
   transition: box-shadow 0.2s ease-in;
   color: rgb(47, 43, 43);
-}
-
-#button {
-  padding-bottom: 1.5rem;
 }
 
 #alternativeLogin {
@@ -167,4 +97,107 @@
   background-color: #ebd0d0;
   margin: 0 0 1rem 1rem;
   backdrop-filter: blur(25px);
+}
+
+.tableContainer {
+  padding: 0 50px;
+  margin-bottom: 20;
+}
+
+@media only screen and (max-width: 320px) {
+  #headerTitle {
+    font-size: 1rem;
+  }
+
+  .formButton {
+    font-size: 0.7rem;
+  }
+
+  .importButton {
+    font-size: 0.7rem;
+  }
+
+  .tableContainer {
+    padding: 0 10px;
+    margin-bottom: 20;
+  }
+}
+
+@media only screen and (min-width: 360px) {
+  #headerTitle {
+    font-size: 1.3rem;
+  }
+
+  .formButton {
+    font-size: 0.7rem;
+  }
+
+  .importButton {
+    font-size: 0.7rem;
+  }
+
+  .tableContainer {
+    padding: 0 10px;
+    margin-bottom: 20;
+  }
+}
+
+@media only screen and (min-width: 411px) {
+  #headerTitle {
+    font-size: 1.5rem;
+  }
+
+  .formButton {
+    font-size: 0.8rem;
+  }
+
+  .tableContainer {
+    padding: 0 10px;
+    margin-bottom: 20;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  #headerTitle {
+    font-size: 1.6rem;
+  }
+
+  .formButton {
+    font-size: 0.85rem;
+  }
+
+  .tableContainer {
+    padding: 0 10px;
+    margin-bottom: 20;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  #headerTitle {
+    font-size: 1.8rem;
+  }
+
+  .formButton {
+    font-size: 0.9rem;
+  }
+
+  .tableContainer {
+    padding: 0 10px;
+    margin-bottom: 20;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  #headerTitle {
+    font-size: 2rem;
+  }
+
+  .formButton {
+    font-size: 1rem;
+  }
+
+  .tableContainer {
+    padding: 0 10px;
+    margin-bottom: 20;
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "antd/dist/antd.min.css";
 import {
   Form,
@@ -160,19 +160,14 @@ const BasicTable = () => {
             </Col>
 
             <Col>
-            <Typography.Link
-              disabled={editingKey !== ""}
-              onClick={() => setAddRowPopup(true)}
-            >
-              <div>
-                <Popup trigger={addRowPopup} setTrigger={setAddRowPopup}>
-                  <NewRowForm />
-                </Popup>
-              </div>
-              <Button shape="circle">
-                <AppstoreAddOutlined />
-              </Button>
-            </Typography.Link>
+              <Typography.Link
+                disabled={editingKey !== ""}
+                onClick={() => setAddRowPopup(true)}
+              >
+                <Button shape="circle">
+                  <AppstoreAddOutlined />
+                </Button>
+              </Typography.Link>
             </Col>
           </Row>
         );
@@ -198,24 +193,33 @@ const BasicTable = () => {
   });
 
   return (
-    <Form form={form} component={false}>
-      <Table
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        bordered
-        dataSource={data}
-        columns={mergedColumns}
-        rowClassName="editable-row"
-        // pagination={{
-        //   onChange: cancel,
-        // }}
-        pagination={false}
-        style={{ boxShadow: "10px 10px 5px #888" }}
-      />
-    </Form>
+    <div>
+      <Popup trigger={addRowPopup} setTrigger={setAddRowPopup}>
+        <NewRowForm />
+      </Popup>
+
+      <Form form={form} component={false}>
+        <Table
+          components={{
+            body: {
+              cell: EditableCell,
+            },
+          }}
+          bordered
+          dataSource={data}
+          columns={mergedColumns}
+          rowClassName="editable-row"
+          // pagination={{
+          //   onChange: cancel,
+          // }}
+          pagination={false}
+          style={{ boxShadow: "10px 10px 5px #888" }}
+          scroll={{
+            x: 100,
+          }}
+        />
+      </Form>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HeaderBar from "../components/table/HeaderBar";
 import BasicTable from "../components/table/Table";
 import { Layout } from "antd";
@@ -9,6 +9,13 @@ const { Header, Content, Footer } = Layout;
 const EditedTable = () => {
   const table_name = useSelector((state) => state.table_name);
   const table_year = useSelector((state) => state.selected_year);
+  const [windowDimension, setWindowDimension] = useState(null);
+  useEffect(() => {
+    setWindowDimension(window.innerWidth);
+  }, []);
+
+  const isMobile = windowDimension <= 640;
+
   return (
     // <div className="edit">
     <Layout
@@ -30,13 +37,24 @@ const EditedTable = () => {
           {table_year} {table_name}
         </h1>
       </div>
-      <Content >
-       <div style={{ padding: "0 50px", marginBottom: 20 }}>
-        <BasicTable />
-       </div>
-        
+      <Content>
+        {isMobile ? (
+          <div
+            className="tableContainer"
+            style={{ padding: "0 15px", marginBottom: 20 }}
+          >
+            <BasicTable />
+          </div>
+        ) : (
+          <div
+            className="tableContainer"
+            style={{ padding: "0 50px", marginBottom: 20 }}
+          >
+            <BasicTable />
+          </div>
+        )}
       </Content>
-      <Footer style={{ textAlign: "center", opacity: 0.8}}>
+      <Footer style={{ textAlign: "center", opacity: 0.8 }}>
         <div style={{ color: "gray" }}>
           Course Scheduler @2022 Created by Duke University
         </div>

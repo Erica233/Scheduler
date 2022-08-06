@@ -45,7 +45,7 @@ const FormHeader = (props) => <h2 id="headerTitle">{props.title}</h2>;
 
 const MainContainer = styled.div`
   display: flex;
-  margin-top: auto;
+  margin-top: 50px;
   margin-bottom: auto;
   margin-left: auto;
   margin-right: auto;
@@ -53,7 +53,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   height: 80vh;
   width: 30vw;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(8.5px);
   -webkit-backdrop-filter: blur(8.5px);

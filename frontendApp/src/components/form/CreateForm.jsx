@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { message } from 'antd';
+import { message } from "antd";
 import styled from "styled-components";
 import SemesterChoice from "./SemesterChoice";
 import YearChoice from "./YearChoice";
@@ -15,6 +15,7 @@ import {
   setStartWeek,
 } from "../../redux/slices/tableSlice";
 import Papa from "papaparse";
+import Divider from '@mui/material/Divider';
 import "../../App.css";
 
 const CreateForm = () => {
@@ -68,15 +69,14 @@ const CreateForm = () => {
         dispatch(setSelectedYear(year));
         dispatch(setData(res.message));
         history.push("/edited");
-      }
-      else{
-      message.error({
-        content:`${res.message}`,
-        className: 'custom-class',
-        style: {
-          marginTop: '20vh',
-        },
-      });
+      } else {
+        message.error({
+          content: `${res.message}`,
+          className: "custom-class",
+          style: {
+            marginTop: "20vh",
+          },
+        });
       }
     } catch (error) {
       //handle some error here
@@ -85,7 +85,9 @@ const CreateForm = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <ImportButton title="Import Schedule From Local" />
+      <Divider>Create a new Schedule</Divider>
+      <form onSubmit={handleSubmit} style={{padding: "20px"}}>
         <FormInput
           description="Table Name"
           placeholder="Enter Your Schedule Name"
@@ -100,9 +102,7 @@ const CreateForm = () => {
         <GradeChoice description="Grade" onChangeFilter={addGradeHandler} />
         <DayChoice description="Days" onChangeFilter={addDaysHandler} />
         <FormButton title="Start a new Table" />
-        <hr className="horizontalRule"></hr>
       </form>
-      <ImportButton title="Import Schedule From Local" />
     </div>
   );
 };

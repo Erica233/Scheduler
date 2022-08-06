@@ -157,7 +157,7 @@ function HeaderBar() {
             </NavDropdown>
             <NavDropdown title="Edit">
               <NavDropdown.Item
-                href="#action/3.1"
+                href="#action/addRow"
                 onClick={() => setAddRowPopup(true)}
               >
                 Add Row
@@ -177,12 +177,12 @@ function HeaderBar() {
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Export">
-              <NavDropdown.Item onClick={downloadExcel}>CSV</NavDropdown.Item>
-              <NavDropdown.Item href="#action/addColumn" onClick={dowloadPDF}>
+              <NavDropdown.Item href="#action/downloadCVS" onClick={downloadExcel}>CSV</NavDropdown.Item>
+              <NavDropdown.Item href="#action/downloadPDF" onClick={dowloadPDF}>
                 PDF
               </NavDropdown.Item>
               <NavDropdown.Item
-                href="#action/deleteColumn"
+                href="#action/downloadHTML"
                 onClick={downloadHTML}
               >
                 HTML

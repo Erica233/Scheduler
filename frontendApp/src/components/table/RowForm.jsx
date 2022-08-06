@@ -28,7 +28,6 @@ function RowForm(props) {
     console.log(date);
     let temptTime = new Date(date);
     let weekday = temptTime.getDay() === 6 ? 7 : temptTime.getDay();
-
     temptTime.setDate(temptTime.getDate() - weekday + 6);
     var firstDay = new Date(temptTime.getFullYear(), 0, 1);
     var dayOfWeek = firstDay.getDay();

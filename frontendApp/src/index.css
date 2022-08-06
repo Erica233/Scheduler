@@ -1,20 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300;1,400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300;1,400&display=swap");
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body{
+body {
   height: 100vh;
   width: 100vw;
-  background-color: #003087;
+  background-color: #faaca8;
+  background-image: linear-gradient(19deg, #faaca8 0%, #ddd6f3 100%);
 }
 
-.home{
-  background-image: url('./statics/background_image.jpeg');
-  font-family: 'Raleway', sans-serif;
+.home {
+  font-family: "Raleway", sans-serif;
   background-size: cover;
   justify-content: center;
   align-items: center;
@@ -22,9 +22,9 @@ body{
   width: 100vw;
 }
 
-.edited{
+.edited {
   background-color: #003087;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   background-size: cover;
   justify-content: center;
   align-items: center;
