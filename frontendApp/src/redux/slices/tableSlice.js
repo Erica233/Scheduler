@@ -64,13 +64,18 @@ export const tableSlice = createSlice({
       const col_name = `${action.payload.column_name}`;
       const next_col_name = `${action.payload.next_col_name}`;
       console.log(next_col_name);
-      const col_pos = next_col_name === "Operation" ? state.columns.length : state.columns.findIndex((col)=>{return col.title === next_col_name});
+      const col_pos =
+        next_col_name === "Operation"
+          ? state.columns.length
+          : state.columns.findIndex((col) => {
+              return col.title === next_col_name;
+            });
       console.log(col_pos);
 
       column_num += 1;
 
       // add new columns to column array
-      state.columns.splice( col_pos, 0, {
+      state.columns.splice(col_pos, 0, {
         title: col_name,
         dataIndex: col_name,
         width: `${80 / column_num - 2}%`,
@@ -85,7 +90,7 @@ export const tableSlice = createSlice({
         }
       });
 
-      // create field placeholder in data for new column 
+      // create field placeholder in data for new column
       const obj = {};
       obj[col_name] = "";
       state.data.map((data) => {
@@ -196,7 +201,12 @@ export const tableSlice = createSlice({
         return {
           title: arr,
           dataIndex: arr,
-          width: arr === "Week" ? "5%" : arr === "Date" ? "10%" : `${80 / column_num - 2}%`,
+          width:
+            arr === "Week"
+              ? "5%"
+              : arr === "Date"
+              ? "10%"
+              : `${80 / column_num - 2}%`,
           editable: arr === "Week" || arr === "Date" ? false : true,
         };
       });
@@ -228,12 +238,20 @@ export const tableSlice = createSlice({
     },
 
     setStartWeek: (state, action) => {
-      let inputDate = new Date(action.payload);
-      let oneJan = new Date(inputDate.getFullYear(), 0, 1);
-      let numberOfDays = Math.floor(
-        (inputDate - oneJan) / (24 * 60 * 60 * 1000)
+      let temptTime = new Date(action.payload);
+      let weekday = temptTime.getDay() === 6 ? 7 : temptTime.getDay();
+      temptTime.setDate(temptTime.getDate() - weekday + 6);
+      var firstDay = new Date(temptTime.getFullYear(), 0, 1);
+      var dayOfWeek = firstDay.getDay();
+      var spendDay = 1;
+      if (dayOfWeek != 0) {
+        spendDay = 7 - dayOfWeek + 1;
+      }
+      firstDay = new Date(temptTime.getFullYear(), 0, 1 + spendDay);
+      var d = Math.ceil(
+        (temptTime.valueOf() - firstDay.valueOf()) / (24 * 60 * 60 * 1000)
       );
-      let result = Math.ceil((inputDate.getDay() + 1 + numberOfDays) / 7);
+      var result = Math.ceil(d / 7) + 1;
       state.start_week = result;
       console.log(`the number of week: ${result}`);
     },
