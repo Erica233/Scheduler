@@ -99,7 +99,7 @@ app.post("/upload-form", async (req, res) => {
     }
 });
 
-const port = process.env.PORT || 2001;
+const port = process.env.PORT || 2002;
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
 
