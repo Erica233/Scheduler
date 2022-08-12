@@ -121,6 +121,7 @@ function ColumnForm(props) {
                 marginRight: "auto",
                 marginLeft: "auto",
               }}
+              onClick={() => props.setTrigger(false)}
             >
               Submit 
             </Button>
