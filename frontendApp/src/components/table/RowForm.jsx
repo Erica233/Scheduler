@@ -49,7 +49,7 @@ function RowForm(props) {
       alert("Please select date for new row!");
     }
     else if(isDateExist(getTimeStamp(inputField.date))){
-      alert("This date has exist in table. Please change another date!");
+      alert("Column name already exists");
     }
     else{
       dispatch(addRow(inputField));

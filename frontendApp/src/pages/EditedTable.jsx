@@ -34,7 +34,7 @@ const EditedTable = () => {
             marginTop: "80px",
           }}
         >
-          {table_year} {table_name}
+          {table_name}
         </h1>
       </div>
       <Content>

@@ -56,7 +56,7 @@ function NewRowForm(props) {
       alert("Please select date for new row!");
     }
     else if(isDateExist(getTimeStamp(inputField.date))){
-      alert("This date has exist in table. Please change another date!");
+      alert("Date already exists!");
     }
     // else if (checkDate(getTimeStamp(inputField.date))) {
     //   alert("This date is not valid, please check it before submission!");

@@ -23,7 +23,7 @@ function Home() {
   const isMobile = false;
 
   return (
-    <div>
+    <div style={{}}>
       {isMobile ? (
         <MobileHome />
       ) : (

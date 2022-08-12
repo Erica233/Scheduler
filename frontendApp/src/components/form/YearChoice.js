@@ -8,7 +8,7 @@ const YearChoice = (props) => {
 
   // get selected years(select last 10 years)
   const year = new Date().getFullYear();
-  const years = Array.from(new Array(10), (val, index) => year - index + 1);
+  const years = Array.from(new Array(3), (val, index) => year + index);
 
   const year_options = years.map((arr) => {
     return {
