@@ -79,6 +79,7 @@ function RowForm(props) {
             type="primary"
             onClick={() => {
               handleSubmit();
+              props.setTrigger(false);
             }}
             style={{
               width: "100%",
