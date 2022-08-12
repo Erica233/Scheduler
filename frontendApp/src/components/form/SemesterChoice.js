@@ -4,10 +4,10 @@ import "../../App.css";
 import styled from "styled-components";
 
 const semester_options = [
+  { value: "fall", label: "Fall" },
   { value: "spring", label: "Spring" },
   { value: "summer1", label: "Summer Term 1" },
   { value: "summer2", label: "Summer Term 2" },
-  { value: "fall", label: "Fall" },
 ];
 
 const SemesterChoice = (props) => {

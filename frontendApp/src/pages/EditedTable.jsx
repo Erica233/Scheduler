@@ -55,9 +55,6 @@ const EditedTable = () => {
         )}
       </Content>
       <Footer style={{ textAlign: "center", opacity: 0.8 }}>
-        <div style={{ color: "gray" }}>
-          Course Scheduler @2022 Created by Duke University
-        </div>
       </Footer>
     </Layout>
     // </div>

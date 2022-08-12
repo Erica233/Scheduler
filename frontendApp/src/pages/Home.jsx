@@ -24,17 +24,18 @@ function Home() {
 
   return (
     <div>
-        {isMobile ? (
-          <MobileHome />
-        ) : (
-          <div className="home">
+      {isMobile ? (
+        <MobileHome />
+      ) : (
+        <div
+          className="home"
+        >
           <MainContainer>
-            <FormHeader title="Course Scheduler" />
-            <CreateForm />
+          <FormHeader title="Course Scheduler" />
+          <CreateForm />
           </MainContainer>
-          </div>
-        )}
-      
+        </div>
+      )}
     </div>
   );
 }
@@ -44,24 +45,27 @@ export default Home;
 const FormHeader = (props) => <h2 id="headerTitle">{props.title}</h2>;
 
 const MainContainer = styled.div`
-  display: flex;
+  ${"" /* display: flex; */}
   margin-top: 50px;
   margin-bottom: auto;
   margin-left: auto;
   margin-right: auto;
   align-items: center;
+  align: center;
   flex-direction: column;
-  height: 80vh;
-  width: 30vw;
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(8.5px);
+  ${"" /* height: 80vh; */}
+  width: 40vw;
+  ${
+    "" /* background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); */
+  }
+  ${'' /* backdrop-filter: blur(8.5px);
   -webkit-backdrop-filter: blur(8.5px);
   border-radius: 15px;
   color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
-  overflow: auto;
+  overflow: auto; */}
   @media only screen and (max-width: 320px) {
     width: 80vw;
     height: 90vh;

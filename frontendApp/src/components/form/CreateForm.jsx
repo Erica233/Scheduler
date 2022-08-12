@@ -85,23 +85,23 @@ const CreateForm = () => {
 
   return (
     <div>
-      <ImportButton title="Import Schedule From Local" />
+      <ImportButton title="IMPORT SCHEDULE" />
       <Divider>Create a new Schedule</Divider>
       <form onSubmit={handleSubmit} style={{padding: "20px"}}>
         <FormInput
-          description="Table Name"
+          description="CHEDULE NAME"
           placeholder="Enter Your Schedule Name"
           type="text"
           onChangeInput={addTableNameHandler}
         />
-        <YearChoice description="Year" onChangeFilter={addYearHandler} />
+        <YearChoice description="YEAR" onChangeFilter={addYearHandler} />
         <SemesterChoice
-          description="Semester"
+          description="SEMESTER"
           onChangeFilter={addSemesterHandler}
         />
-        <GradeChoice description="Grade" onChangeFilter={addGradeHandler} />
-        <DayChoice description="Days" onChangeFilter={addDaysHandler} />
-        <FormButton title="Start a new Table" />
+        <GradeChoice description="LEVEL" onChangeFilter={addGradeHandler} />
+        <DayChoice description="DAYS" onChangeFilter={addDaysHandler} />
+        <FormButton title="START" />
       </form>
     </div>
   );
