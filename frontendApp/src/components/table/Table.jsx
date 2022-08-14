@@ -220,7 +220,7 @@ const BasicTable = () => {
           //   onChange: cancel,
           // }}
           pagination={false}
-          style={{ boxShadow: "10px 10px 5px #888" }}
+          // style={{ boxShadow: "10px 10px 5px #888" }}
           scroll={{
             x: 100,
           }}
