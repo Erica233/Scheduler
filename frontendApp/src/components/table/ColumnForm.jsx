@@ -48,7 +48,7 @@ function ColumnForm(props) {
 
   const onFinish = (values) => {
     if (isColumnNameExist(inputField.column_name)) {
-      alert("This column name has exist. Please change another name!");
+      alert("Column name already exists!");
     } else {
       dispatch(addColumn(inputField));
       setInputField({ column_name: "", next_col_name: "" });
@@ -89,7 +89,7 @@ function ColumnForm(props) {
           </Form.Item>
 
           <Form.Item
-            label="Column Position"
+            label="Position Before"
             required
             rules={[
               {

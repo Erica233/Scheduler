@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import NavLink from "react-bootstrap/esm/NavLink";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Home, PlusCircle, ExternalLink } from "react-feather";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
@@ -15,10 +16,12 @@ import ColumnForm from "./ColumnForm";
 import DeleteColumnForm from "./DeleteColumnForm";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
-import 'jspdf-autotable';
+import "jspdf-autotable";
 import * as ReactDOMServer from "react-dom/server";
 import { saveAs } from "file-saver";
 import RowForm from "./RowForm";
+import "../../App.css";
+// import { NavLink } from "react-router-dom";
 
 function HeaderBar() {
   // redux
@@ -52,8 +55,7 @@ function HeaderBar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // const isMobile = windowDimension <= 640;
-  const isMobile = false;
+  const isMobile = windowDimension <= 640;
 
   // icon for header bart
   const navDropdownIcon = <i className="bi bi-plus-circle"></i>;
@@ -135,110 +137,12 @@ function HeaderBar() {
     saveAs(file);
   };
 
-  const computer_screen_narvBar = (
-    <Navbar collapseOnSelect fixed='top' expand="lg" bg="light" variant="light">
-      <Container>
-        <Navbar.Brand href="/">
-          <img
-            src="https://sustainability.ncsu.edu/multisite/wp-content/uploads/2019/02/Duke-Logo-400x300.png"
-            height="40"
-            alt="Duke Logo"
-            loading="lazy"
-          />
-          Course Scheduler
-        </Navbar.Brand>
-        <Navbar.Toggle />
-        <Navbar.Collapse>
-          <Nav className="me-auto"></Nav>
-          <Nav>
-            <NavDropdown title="Style">
-              <NavDropdown.Item href="#action/3.1">Template 1</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Template 2</NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown title="Edit">
-              <NavDropdown.Item
-                href="#action/addRow"
-                onClick={() => setAddRowPopup(true)}
-              >
-                Add Row
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                href="#action/addColumn"
-                onClick={() => setAddColumnPopup(true)}
-              >
-                Add Column
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item
-                href="#action/deleteColumn"
-                onClick={() => setDeleteColumnPopup(true)}
-              >
-                Delete Column
-              </NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown title="Export">
-              <NavDropdown.Item href="#action/downloadCVS" onClick={downloadExcel}>CSV</NavDropdown.Item>
-              <NavDropdown.Item href="#action/downloadPDF" onClick={dowloadPDF}>
-                PDF
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                href="#action/downloadHTML"
-                onClick={downloadHTML}
-              >
-                HTML
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-  );
-
-  const mobile_scree_narvBar = (<MobileNavbar.Wrapper>
-    <MobileNavbar.Items>
-      <MobileNavbar.Item>
-        <Dropdown id={`dropdown-basic`} drop="up">
-          <DropdownToggle variant="light">
-            <MobileNavbar.Icon>
-              <Home size={20} />
-            </MobileNavbar.Icon>
-            <br />
-            Style
-          </DropdownToggle>
-          <DropdownMenu>
-            <Dropdown.Item eventKey="1">Template 1</Dropdown.Item>
-            <Dropdown.Item eventKey="2">Template 2</Dropdown.Item>
-            <Dropdown.Item eventKey="3">
-              Something else here
-            </Dropdown.Item>
-          </DropdownMenu>
-        </Dropdown>
-      </MobileNavbar.Item>
-      <Dropdown id={`dropdown-basic`} drop="up">
-        <DropdownToggle variant="light">
-          <MobileNavbar.Icon>
-            <PlusCircle size={20} />
-          </MobileNavbar.Icon>
-          <br />
-          Edit
-        </DropdownToggle>
-        <DropdownMenu>
-          <Dropdown.Item eventKey="1">Add Column</Dropdown.Item>
-          <Dropdown.Item eventKey="2">Add Row</Dropdown.Item>
-          <Dropdown.Item eventKey="2">Delete Column</Dropdown.Item>
-          <Dropdown.Item eventKey="3">Set Holiday</Dropdown.Item>
-        </DropdownMenu>
-      </Dropdown>
-      <MobileNavbar.Item>
-        <Button variant="light">
-          <MobileNavbar.Icon>
-            <ExternalLink size={20} />
-          </MobileNavbar.Icon>
-          Export
-        </Button>
-      </MobileNavbar.Item>
-    </MobileNavbar.Items>
-  </MobileNavbar.Wrapper>);
+  const DropDownTitleFontStyle = isMobile
+    ? "dropdownTitleFontMobile"
+    : "dropdownTitleFontPC";
+  const DropDownItemFontStyle = isMobile
+    ? "dropdownItemFontMobile"
+    : "dropdownItemFontPC";
 
   return (
     <div>
@@ -250,11 +154,85 @@ function HeaderBar() {
       <Popup trigger={addRowPopup} setTrigger={setAddRowPopup}>
         <RowForm />
       </Popup>
-      {isMobile ? (
-        mobile_scree_narvBar
-      ) : (
-        computer_screen_narvBar
-      )}
+      {/* narvbar */}
+      <Navbar
+        collapseOnSelect
+        fixed="top"
+        expand="lg"
+        bg="light"
+        variant="light"
+      >
+        <Container>
+          <Navbar.Brand href="/">
+            <img
+              src="https://sustainability.ncsu.edu/multisite/wp-content/uploads/2019/02/Duke-Logo-400x300.png"
+              height="40"
+              alt="Duke Logo"
+              loading="lazy"
+            />
+            Course Scheduler
+          </Navbar.Brand>
+          <Navbar.Toggle />
+          <Navbar.Collapse>
+            <Nav className="me-auto"></Nav>
+            <Nav>
+              {/* <NavDropdown title="Style" className={DropDownTitleFontStyle}>
+              <NavDropdown.Item href="#action/3.1">Template 1</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Template 2</NavDropdown.Item>
+            </NavDropdown> */}
+              <NavLink
+                className={DropDownTitleFontStyle}
+                href="#addColumn"
+                onClick={() => setAddColumnPopup(true)}
+              >
+                Add Row
+              </NavLink>
+              {/* <NavDropdown title="Edit" className={DropDownTitleFontStyle}>
+                <NavDropdown.Item
+                  href="#action/addRow"
+                  onClick={() => setAddRowPopup(true)}
+                >
+                  <div className={DropDownItemFontStyle}>Add Row</div>
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="#action/addColumn"
+                  onClick={() => setAddColumnPopup(true)}
+                >
+                  <div className={DropDownItemFontStyle}>Add Column</div>
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item
+                  href="#action/deleteColumn"
+                  onClick={() => setDeleteColumnPopup(true)}
+                >
+                  <div className={DropDownItemFontStyle}>Delete Column</div>
+                </NavDropdown.Item>
+              </NavDropdown> */}
+              <NavDropdown title="Export" className={DropDownTitleFontStyle}>
+                <NavDropdown.Item
+                  href="#action/downloadCVS"
+                  onClick={downloadExcel}
+                >
+                  {" "}
+                  <div className={DropDownItemFontStyle}>CSV</div>
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="#action/downloadPDF"
+                  onClick={dowloadPDF}
+                >
+                  <div className={DropDownItemFontStyle}>PDF </div>
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="#action/downloadHTML"
+                  onClick={downloadHTML}
+                >
+                  <div className={DropDownItemFontStyle}>HTML</div>
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
     </div>
   );
 }

@@ -10,6 +10,7 @@ import {
   Button,
   Row,
   Col,
+  Tooltip,
 } from "antd";
 import {
   EditOutlined,
@@ -131,9 +132,9 @@ const BasicTable = () => {
             >
               Save
             </Typography.Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+            <Typography.Link onClick={cancel}>
               <a>Cancel</a>
-            </Popconfirm>
+            </Typography.Link>
           </span>
         ) : (
           <Row gutter={8}>
@@ -142,9 +143,11 @@ const BasicTable = () => {
                 disabled={editingKey !== ""}
                 onClick={() => edit(record)}
               >
-                <Button shape="circle">
-                  <EditOutlined />
-                </Button>
+                <Tooltip title="edit row">
+                  <Button shape="circle">
+                    <EditOutlined />
+                  </Button>
+                </Tooltip>
               </Typography.Link>
             </Col>
 
@@ -153,9 +156,11 @@ const BasicTable = () => {
                 disabled={editingKey !== ""}
                 onClick={() => dispatch(deleteRow(record))}
               >
-                <Button shape="circle">
-                  <DeleteOutlined />
-                </Button>
+                <Tooltip title="delete row">
+                  <Button shape="circle">
+                    <DeleteOutlined />
+                  </Button>
+                </Tooltip>
               </Typography.Link>
             </Col>
 
@@ -164,9 +169,11 @@ const BasicTable = () => {
                 disabled={editingKey !== ""}
                 onClick={() => setAddRowPopup(true)}
               >
-                <Button shape="circle">
-                  <AppstoreAddOutlined />
-                </Button>
+                <Tooltip title="add a row below">
+                  <Button shape="circle">
+                    <AppstoreAddOutlined />
+                  </Button>
+                </Tooltip>
               </Typography.Link>
             </Col>
           </Row>
