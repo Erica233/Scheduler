@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import HeaderBar from "../components/table/HeaderBar";
 import BasicTable from "../components/table/Table";
-import { Layout } from "antd";
+import { Layout} from "antd";
 import { useSelector } from "react-redux";
 
 const { Header, Content, Footer } = Layout;

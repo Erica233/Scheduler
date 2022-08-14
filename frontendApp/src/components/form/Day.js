@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import Select from "react-select";
+// import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import styled from "styled-components";
+import { Select } from "antd";
+
 import "../../App.css";
 
 const day_options = [
@@ -30,10 +32,9 @@ const Day = (props) => {
       <SelectsContainer>
         <Select
           className="select"
-          closeMenuOnSelect={false}
+          mode="multiple"
           allowClear
           placeholder="Please Select"
-          isMulti="True"
           options={day_options}
           components={animatedComponents}
           onChange={dropdownChangeHandler}

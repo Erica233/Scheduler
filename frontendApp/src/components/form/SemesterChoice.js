@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Select from "react-select";
+// import Select from "react-select";
 import "../../App.css";
 import styled from "styled-components";
+import { Select } from "antd";
 
 const semester_options = [
   { value: "fall", label: "Fall" },
@@ -25,7 +26,6 @@ const SemesterChoice = (props) => {
       <SelectsContainer>
         <Select
           className="select"
-          size="small"
           placeholder="Please Select"
           options={semester_options}
           onChange={dropdownChangeHandler}

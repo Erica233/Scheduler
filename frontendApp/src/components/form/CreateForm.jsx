@@ -221,10 +221,10 @@ const InputContainer = styled.div`
 
 const StyledInput = styled.input`
   background: rgba(255, 255, 255, 1);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.5);
+  box-shadow: 0 8px 10px 0 rgba(31, 38, 135, 0.5);
   border-radius: 2rem;
   width: 80%;
-  height: 3rem;
+  height: 4rem;
   padding: 1rem;
   border: none;
   outline: none;

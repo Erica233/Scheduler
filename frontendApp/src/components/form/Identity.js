@@ -1,6 +1,8 @@
-import React, {useState} from "react";
-import Select from "react-select";
+import React, { useState } from "react";
+// import Select from "react-select";
 import styled from "styled-components";
+import { Select } from "antd";
+
 import "../../App.css";
 
 const grade_options = [
@@ -14,22 +16,19 @@ const Identity = (props) => {
   const dropdownChangeHandler = (option) => {
     setGradeOption(option);
     props.onChangeFilter(option.value);
-  }
+  };
 
   return (
     <div className="row">
       <label>{props.description}</label>
       <SelectsContainer>
-<Select
-        className="select"
-        size="small"
-        placeholder="Please Select"
-        options={grade_options}
-        onChange={dropdownChangeHandler}
-      />
+        <Select
+          className="select"
+          placeholder="Please Select"
+          options={grade_options}
+          onChange={dropdownChangeHandler}
+        />
       </SelectsContainer>
-         
-     
     </div>
   );
 };
