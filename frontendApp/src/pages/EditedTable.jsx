@@ -19,16 +19,21 @@ const EditedTable = () => {
   return (
     // <div className="edit">
     <Layout
+      // style={{
+      //   backgroundColor: "#FAACA8",
+      //   backgroundImage: "linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)",
+      // }}
       style={{
-        backgroundColor: "#FAACA8",
-        backgroundImage: "linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)",
+        backgroundColor: "#003087"
       }}
     >
+
+    
       <HeaderBar />
       <div style={{ textAlign: "center" }}>
         <h1
           style={{
-            color: "#003087",
+            color: "white",
             textAlign: "center",
             fontSize: "30px",
             marginTop: "80px",
@@ -54,7 +59,7 @@ const EditedTable = () => {
           </div>
         )}
       </Content>
-      <Footer style={{ textAlign: "center", opacity: 0.8 }}>
+      <Footer style={{ textAlign: "center", opacity: 1 }}>
       </Footer>
     </Layout>
     // </div>
