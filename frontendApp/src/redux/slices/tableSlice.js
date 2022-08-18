@@ -7,30 +7,30 @@ const init_columns = [
   {
     title: "Week",
     dataIndex: "Week",
-    width: "5%",
+    width: "150",
     editable: false,
-    align: "center",
+    // align: "center",
   },
   {
     title: "Date",
     dataIndex: "Date",
-    width: "10%",
+    width: "150",
     editable: false,
-    align: "center",
+    // align: "center",
   },
   {
     title: "Topic",
     dataIndex: "Topic",
-    width: `${80 / column_num - 2}%`,
+    width: `200`,
     editable: true,
-    align: "center",
+    // align: "center",
   },
   {
     title: "Description",
     dataIndex: "Description",
-    width: `${80 / column_num - 2}%`,
+    width: `200`,
     editable: true,
-    align: "center",
+    // align: "center",
   },
 ];
 
@@ -60,7 +60,7 @@ export const tableSlice = createSlice({
   name: "table_info",
   initialState,
   reducers: {
-    addColumn: (state, action) => {
+    addColumnBefore: (state, action) => {
       const col_name = `${action.payload.column_name}`;
       const next_col_name = `${action.payload.next_col_name}`;
       console.log(next_col_name);
@@ -76,6 +76,42 @@ export const tableSlice = createSlice({
 
       // add new columns to column array
       state.columns.splice(col_pos, 0, {
+        title: col_name,
+        dataIndex: col_name,
+        width: `${80 / column_num - 2}%`,
+        editable: true,
+        align: "center",
+      });
+
+      // change other columns width to the same percentage
+      state.columns.forEach((col) => {
+        if (col.title !== "Week" && col.title !== "Date") {
+          col.width = `${80 / column_num - 2}%`;
+        }
+      });
+
+      // create field placeholder in data for new column
+      const obj = {};
+      obj[col_name] = "";
+      state.data.map((data) => {
+        Object.assign(data, obj);
+        return data;
+      });
+    },
+
+    addColumnBehind: (state, action) => {
+      const col_name = `${action.payload.column_name}`;
+      const pre_col_name = `${action.payload.next_col_name}`;
+      console.log(pre_col_name);
+      const col_pos = state.columns.findIndex((col) => {
+              return col.title === pre_col_name;
+            });
+      console.log(col_pos);
+
+      column_num += 1;
+
+      // add new columns to column array
+      state.columns.splice(col_pos+1, 0, {
         title: col_name,
         dataIndex: col_name,
         width: `${80 / column_num - 2}%`,
@@ -255,11 +291,16 @@ export const tableSlice = createSlice({
       state.start_week = result;
       console.log(`the number of week: ${result}`);
     },
+
+    setColumns:(state, action) => {
+      state.columns = action.payload;
+    },
   },
 });
 
 export const {
-  addColumn,
+  addColumnBehind,
+  addColumnBefore,
   addRow,
   deleteColumn,
   deleteRow,
@@ -270,6 +311,7 @@ export const {
   setEditedRow,
   setFromImport,
   setStartWeek,
+  setColumns,
 } = tableSlice.actions;
 
 export default tableSlice.reducer;

@@ -12,15 +12,57 @@ import {
   Col,
   Tooltip,
 } from "antd";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  AppstoreAddOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteRow, setEditedRow } from "../../redux/slices/tableSlice";
+import {
+  deleteRow,
+  setEditedRow,
+  setColumns,
+} from "../../redux/slices/tableSlice";
 import NewRowForm from "./NewRowForm";
+import { Resizable } from "react-resizable"; // make column resiable
 import Popup from "./Popup";
+import ColumnForm from "./ColumnForm";
+import { arrayMoveImmutable } from "array-move";
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+} from "react-sortable-hoc";
+import Icon from "@mui/material/Icon";
+
+import "../../App.css";
+
+const ResizableTitle = (props) => {
+  const { onResize, width, ...restProps } = props;
+
+  console.log(`resize: ${width}`);
+
+  if (!width) {
+    return <th {...restProps} />;
+  }
+
+  return (
+    <Resizable
+      width={parseInt(width)}
+      height={0}
+      handle={
+        <span
+          className="react-resizable-handle"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        />
+      }
+      onResize={onResize}
+      draggableOpts={{
+        enableUserSelectHack: false,
+      }}
+    >
+      <th {...restProps} />
+    </Resizable>
+  );
+};
 
 const EditableCell = ({
   editing,
@@ -67,7 +109,13 @@ const BasicTable = () => {
 
   const isEditing = (record) => record.key === editingKey;
 
+  // state for add row & column popup
   const [addRowPopup, setAddRowPopup] = useState(false);
+  const [addColumnPopupBefore, setAddColumnPopupBefore] = useState(false);
+  const [addColumnPopupBehind, setAddColumnPopupBehind] = useState(false);
+  const [addColumnPopup, setAddColumnPopup] = useState(false);
+  const [currColName, setCurrColName] = useState("false");
+
 
   const edit = (record) => {
     console.log(record);
@@ -113,12 +161,12 @@ const BasicTable = () => {
   const columns_state = useSelector((state) => state.columns);
 
   // add opertation to the end of table column
-  const columns = [
+  let columns = [
     ...columns_state,
     {
       title: "Operation",
       dataIndex: "Operation",
-      width: "5%",
+      width: "150",
       align: "center",
       render: (_, record) => {
         const editable = isEditing(record);
@@ -137,7 +185,7 @@ const BasicTable = () => {
             </Typography.Link>
           </span>
         ) : (
-          <Row gutter={8}>
+          <Row gutter={6}>
             <Col>
               <Typography.Link
                 disabled={editingKey !== ""}
@@ -163,28 +211,68 @@ const BasicTable = () => {
                 </Tooltip>
               </Typography.Link>
             </Col>
-
-            <Col>
-              <Typography.Link
-                disabled={editingKey !== ""}
-                onClick={() => setAddRowPopup(true)}
-              >
-                <Tooltip title="add a row below">
-                  <Button shape="circle">
-                    <AppstoreAddOutlined />
-                  </Button>
-                </Tooltip>
-              </Typography.Link>
-            </Col>
           </Row>
         );
       },
     },
   ];
 
-  const mergedColumns = columns.map((col) => {
+  
+
+  columns = columns.map((col) => ({
+    ...col,
+    title: (
+      <span style={{justifyContent: "space-between"}}>
+    
+        <Icon
+          color="primary"
+          fontSize="small"
+          onClick={() => {
+            setAddColumnPopupBefore(true);
+            setAddColumnPopup(addColumnPopupBefore || addColumnPopupBehind);
+            setCurrColName(col.title);
+          }}
+          style={{left: "0"}}
+        >
+          add_circle
+        </Icon>
+        {col.title}
+        {col.title !== "Operation" ? <Icon
+          color="primary"
+          fontSize="small"
+          onClick={() => {
+            setAddColumnPopupBehind(true);
+            setAddColumnPopup(addColumnPopupBefore || addColumnPopupBehind);
+            setCurrColName(col.title);
+          }}
+        >
+          add_circle
+        </Icon> : ""}
+       
+        
+      </span>
+    ),
+  }));
+
+  console.log(addColumnPopup);
+
+  const handleResize =
+    (index) =>
+    (_, { size }) => {
+      const newColumns = [...columns];
+      newColumns[index] = { ...newColumns[index], width: size.width };
+      setColumns(newColumns);
+    };
+
+  const mergedColumns = columns.map((col, index) => {
     if (!col.editable) {
-      return col;
+      return {
+        ...col,
+        onHeaderCell: (column) => ({
+          width: column.width,
+          onResize: handleResize(index),
+        }),
+      };
     }
 
     return {
@@ -196,8 +284,46 @@ const BasicTable = () => {
         title: col.title,
         editing: isEditing(record),
       }),
+
+      onHeaderCell: (column) => ({
+        width: column.width,
+        onResize: handleResize(index),
+      }),
     };
   });
+
+  const SortableItem = SortableElement((props) => <tr {...props} />);
+  const SortableBody = SortableContainer((props) => <tbody {...props} />);
+
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    if (oldIndex !== newIndex) {
+      const newData = arrayMoveImmutable(
+        data.slice(),
+        oldIndex,
+        newIndex
+      ).filter((el) => !!el);
+      console.log("Sorted items: ", newData);
+      setColumns(newData);
+    }
+  };
+
+  const DraggableContainer = (props) => (
+    <SortableBody
+      useDragHandle
+      disableAutoscroll
+      helperClass="row-dragging"
+      onSortEnd={onSortEnd}
+      {...props}
+    />
+  );
+
+  const DraggableBodyColumn = ({ className, style, ...restProps }) => {
+    // function findIndex base on Table rowKey props and should always be a right array index
+    const index = columns.findIndex(
+      (x) => x.dataIndex === restProps["col-key"]
+    );
+    return <SortableItem index={index} {...restProps} />;
+  };
 
   return (
     <div>
@@ -205,9 +331,23 @@ const BasicTable = () => {
         <NewRowForm />
       </Popup>
 
+      <ColumnForm
+        trigger={addColumnPopup}
+        setTrigger={setAddColumnPopup}
+        curr_col_name={currColName}
+        pos={addColumnPopupBefore === true ? "before" : "befind"}
+        resetBefore={setAddColumnPopupBefore}
+        resetBehind={setAddColumnPopupBehind}
+      />
+
       <Form form={form} component={false}>
         <Table
           components={{
+            header: {
+              // cell: ResizableTitle,
+              wrapper: DraggableContainer,
+              row: DraggableBodyColumn,
+            },
             body: {
               cell: EditableCell,
             },

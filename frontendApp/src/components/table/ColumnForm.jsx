@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addColumn } from "../../redux/slices/tableSlice";
+import { addColumnBefore, addColumnBehind } from "../../redux/slices/tableSlice";
 import { Input, Select, Form, Button } from "antd";
 import "./Popup.css";
 import Operation from "antd/lib/transfer/operation";
@@ -11,6 +11,7 @@ function ColumnForm(props) {
     column_name: "",
     next_col_name: "",
   });
+
   const[height, setHeight] = useState(0);
   useEffect(()=>{setHeight(document.documentElement.scrollHeight)});
 
@@ -31,15 +32,18 @@ function ColumnForm(props) {
   // handle input new columns name
   const inputsHandler = (e) => {
     setInputField((preState)=>{ return{...preState, column_name: e.target.value }});
+    setInputField((preState) => {
+      return { ...preState, next_col_name: props.curr_col_name};
+    });
   };
 
   // handle select position
-  const selectHandler = (value) => {
-    setInputField((preState) => {
-      return { ...preState, next_col_name: value };
-    });
-    console.log(inputField.next_col_name);
-  };
+  // const selectHandler = (value) => {
+  //   setInputField((preState) => {
+  //     return { ...preState, next_col_name: value };
+  //   });
+  //   console.log(inputField.next_col_name);
+  // };
 
   const isColumnNameExist = (col_name) =>
     col_arr.some((col) => {
@@ -47,11 +51,29 @@ function ColumnForm(props) {
     });
 
   const onFinish = (values) => {
+    // check if user input column name already exists
     if (isColumnNameExist(inputField.column_name)) {
       alert("Column name already exists!");
     } else {
-      dispatch(addColumn(inputField));
-      setInputField({ column_name: "", next_col_name: "" });
+      // check insert before or befind
+      if(props.pos === "before")
+      {
+        dispatch(addColumnBefore(inputField));
+        console.log(inputField);
+        setInputField({ column_name: "", next_col_name: "" });
+        props.resetBefore(false);
+        console.log(`[Insert Column Before]: next_col_name: ${inputField.next_col_name}`);
+      } 
+      else // insert befind
+      { 
+        dispatch(addColumnBehind(inputField));
+        console.log(inputField);
+        setInputField({ column_name: "", next_col_name: "" });
+        props.resetBehind(false);
+        console.log(`[Insert Column Befind]:: pre_col_name: ${inputField.next_col_name}`);
+      }
+      // close the form after submission
+      props.setTrigger(false)
     }
   };
 
@@ -88,7 +110,7 @@ function ColumnForm(props) {
             />
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
             label="Position Before"
             required
             rules={[
@@ -110,7 +132,7 @@ function ColumnForm(props) {
                 marginLeft: "auto",
               }}
             />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item>
             <Button
@@ -121,7 +143,6 @@ function ColumnForm(props) {
                 marginRight: "auto",
                 marginLeft: "auto",
               }}
-              onClick={() => props.setTrigger(false)}
             >
               Submit 
             </Button>

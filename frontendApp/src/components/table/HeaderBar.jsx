@@ -5,11 +5,6 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import NavLink from "react-bootstrap/esm/NavLink";
-import Dropdown from "react-bootstrap/Dropdown";
-import { Home, PlusCircle, ExternalLink } from "react-feather";
-import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
-import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
-import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from "react-redux";
 import Popup from "./Popup";
 import ColumnForm from "./ColumnForm";
@@ -183,9 +178,16 @@ function HeaderBar() {
               <NavLink
                 className={DropDownTitleFontStyle}
                 href="#addColumn"
-                onClick={() => setAddColumnPopup(true)}
+                onClick={() => setAddRowPopup(true)}
               >
                 Add Row
+              </NavLink>
+              <NavLink
+                className={DropDownTitleFontStyle}
+                href="#deleteColumn"
+                onClick={() => setDeleteColumnPopup(true)}
+              >
+                Delete Column
               </NavLink>
               {/* <NavDropdown title="Edit" className={DropDownTitleFontStyle}>
                 <NavDropdown.Item

@@ -46,7 +46,7 @@ const FormHeader = (props) => <h2 id="headerTitle">{props.title}</h2>;
 
 const MainContainer = styled.div`
   ${"" /* display: flex; */}
-  margin-top: 50px;
+  margin-top: auto;
   margin-bottom: auto;
   margin-left: auto;
   margin-right: auto;
