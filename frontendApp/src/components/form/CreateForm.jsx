@@ -101,22 +101,27 @@ const CreateForm = () => {
 
   return (
     <div>
-      <ImportButton title="IMPORT SCHEDULE" />
-      <Divider>Create a new Schedule</Divider>
-      <form onSubmit={handleSubmit} style={{padding: "20px"}}>
+      <ImportButton title="IMPORT SCHEDULE (.cvs file)" />
+      <Divider>Create A New Schedule</Divider>
+      <form onSubmit={handleSubmit} style={{padding: "10px"}}>
         <FormInput
           description="CHEDULE NAME"
           placeholder="Enter Your Schedule Name"
           type="text"
           onChangeInput={addTableNameHandler}
         />
+        <br/>
         <YearChoice description="YEAR" onChangeFilter={addYearHandler} />
+        <br/>
         <SemesterChoice
           description="SEMESTER"
           onChangeFilter={addSemesterHandler}
         />
+        <br/>
         <GradeChoice description="LEVEL" onChangeFilter={addGradeHandler} />
+        <br/>
         <DayChoice description="DAYS" onChangeFilter={addDaysHandler} />
+        <br/>
         <FormButton title="START" />
       </form>
     </div>

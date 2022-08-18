@@ -59,8 +59,8 @@ const EditedTable = () => {
           </div>
         )}
       </Content>
-      <Footer style={{ textAlign: "center", opacity: 1 }}>
-      </Footer>
+      {/* <Footer style={{ textAlign: "center", opacity: 1 }}>
+      </Footer> */}
     </Layout>
     // </div>
   );
