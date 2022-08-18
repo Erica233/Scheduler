@@ -17,7 +17,7 @@ const SemesterChoice = (props) => {
   // get selected value
   const dropdownChangeHandler = (option) => {
     setSemesterOption(option);
-    props.onChangeFilter(option.value);
+    props.onChangeFilter(option);
   };
 
   return (

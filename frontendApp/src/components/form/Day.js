@@ -23,7 +23,7 @@ const Day = (props) => {
   const dropdownChangeHandler = (option) => {
     setDaysOption(option);
     // mapping from option's object to array only contains value
-    props.onChangeFilter(option.map(option => option.value));
+    props.onChangeFilter(option);
   };
 
   return (

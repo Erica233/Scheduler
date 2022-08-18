@@ -23,7 +23,7 @@ const YearChoice = (props) => {
   // get selected value
   const dropdownChangeHandler = (option) => {
     setYearOption(option);
-    props.onChangeFilter(option.value);
+    props.onChangeFilter(option);
   };
 
   return (

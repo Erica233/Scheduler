@@ -55,6 +55,10 @@ const CreateForm = () => {
         days: days,
       };
 
+      console.log(semester);
+      console.log(grade);
+      console.log(days);
+
       if(semester === "" || grade === "" || days === ""){
         message.error({
           content: "Please make appropriate selections.",

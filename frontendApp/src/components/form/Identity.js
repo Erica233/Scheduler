@@ -15,7 +15,7 @@ const Identity = (props) => {
 
   const dropdownChangeHandler = (option) => {
     setGradeOption(option);
-    props.onChangeFilter(option.value);
+    props.onChangeFilter(option);
   };
 
   return (
