@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRow } from "../../redux/slices/tableSlice";
 import { Form, Button, DatePicker } from "antd";
@@ -18,6 +18,8 @@ function RowForm(props) {
   const table_year = useSelector((state) => state.selected_year);
   const table_data = useSelector((state) => state.data);
   let inputField = { week: "", date: ""};
+  const[height, setHeight] = useState(0);
+  useEffect(()=>{setHeight(document.documentElement.scrollHeight)});
 
   const isDateExist = (new_date_timestamp) =>
     table_data.some((data) => {
@@ -57,8 +59,15 @@ function RowForm(props) {
     }
   };
 
-  return (
-    <div>
+  return props.trigger ? (
+    <div className="popup" style={{height:`${height}px`}}>
+      <div className="popup-inner">
+        <button
+          className="popup_close-btn"
+          onClick={() => props.setTrigger(false)}
+        >
+          Close
+        </button>
       <Form layout="vertical" name="addRow">
         <Form.Item
           label="Date"
@@ -91,7 +100,10 @@ function RowForm(props) {
           </Button>
         </Form.Item>
       </Form>
+      </div>
     </div>
+  ) : (
+    ""
   );
 }
 
