@@ -126,7 +126,7 @@ function HeaderBar() {
 
     // convert react JSX object to HTML
     const html = ReactDOMServer.renderToStaticMarkup(table);
-    let file = new File([html], "tes.html", {
+    let file = new File([html], `${table_name}.html`, {
       type: "text/plain;charset=utf-8",
     });
     saveAs(file);
