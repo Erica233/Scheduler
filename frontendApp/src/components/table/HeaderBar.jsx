@@ -146,9 +146,7 @@ function HeaderBar() {
         trigger={deleteColumnPopup}
         setTrigger={setDeleteColumnPopup}
       />
-      <Popup trigger={addRowPopup} setTrigger={setAddRowPopup}>
-        <RowForm />
-      </Popup>
+      <RowForm trigger={addRowPopup} setTrigger={setAddRowPopup}/>
       {/* narvbar */}
       <Navbar
         collapseOnSelect
