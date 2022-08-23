@@ -9,28 +9,28 @@ const init_columns = [
     dataIndex: "Week",
     width: "150",
     editable: false,
-    // align: "center",
+    align: "center",
   },
   {
     title: "Date",
     dataIndex: "Date",
     width: "150",
     editable: false,
-    // align: "center",
+    align: "center",
   },
   {
     title: "Topic",
     dataIndex: "Topic",
     width: `200`,
     editable: true,
-    // align: "center",
+    align: "center",
   },
   {
     title: "Description",
     dataIndex: "Description",
     width: `200`,
     editable: true,
-    // align: "center",
+    align: "center",
   },
 ];
 

@@ -222,9 +222,11 @@ const BasicTable = () => {
   columns = columns.map((col) => ({
     ...col,
     title: (
-      <span style={{justifyContent: "space-between"}}>
+      // <span style={{justifyContent: "space-between"}}>
+    <div>
+
     
-        <Icon
+        {/* <Icon
           color="primary"
           fontSize="small"
           onClick={() => {
@@ -235,8 +237,10 @@ const BasicTable = () => {
           style={{left: "0"}}
         >
           add_circle
-        </Icon>
+        </Icon> */}
         {col.title}
+        <br/>
+        <Tooltip placement="bottom" title="add column after">
         {col.title !== "Operation" ? <Icon
           color="primary"
           fontSize="small"
@@ -248,9 +252,9 @@ const BasicTable = () => {
         >
           add_circle
         </Icon> : ""}
-       
-        
-      </span>
+        </Tooltip>
+        </div>
+      // </span>
     ),
   }));
 
