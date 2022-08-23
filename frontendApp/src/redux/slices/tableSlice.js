@@ -180,9 +180,17 @@ export const tableSlice = createSlice({
 
     deleteColumn: (state, action) => {
       console.log(action.payload);
+      const del_title = action.payload;
+      // delete column name from columns list
       state.columns = state.columns.filter(
-        (column) => column.title !== action.payload
+        (column) => column.title !== del_title
       );
+
+      // delete column field from data list
+      state.data.forEach(object => {
+        delete object[del_title];
+      });
+
     },
 
     deleteRow: (state, action) => {
