@@ -347,7 +347,8 @@ function parseHTML(htmlstr, year, semester, grade, days){
                     date_begin = new Date(star);
                     date_end = new Date(en);
                 }
-                for(let i = date_begin.getTime(); i<=date_end.getTime();){
+                //Classes resume day should have class
+                for(let i = date_begin.getTime(); i<date_end.getTime();){
                     let push_date = new Date(parseInt(i));
                     for(let j = 0; j<days.length; j++){
                         if(push_date.getDay()==days[j]){
