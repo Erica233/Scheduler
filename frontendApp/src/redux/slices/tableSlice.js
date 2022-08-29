@@ -3,6 +3,7 @@ import { act } from "react-dom/test-utils";
 
 let column_num = 4;
 
+// initial columns field when a table is created in the first time
 const init_columns = [
   {
     title: "Week",
@@ -252,6 +253,7 @@ export const tableSlice = createSlice({
               ? "10%"
               : `${80 / column_num - 2}%`,
           editable: arr === "Week" || arr === "Date" ? false : true,
+          align: "center",
         };
       });
       console.log(action.payload.columns);

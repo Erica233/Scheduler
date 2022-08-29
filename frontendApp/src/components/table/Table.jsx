@@ -104,6 +104,7 @@ const BasicTable = () => {
   // const [data, setData] = useState(tableData);
   const [editingKey, setEditingKey] = useState("");
   const dispatch = useDispatch();
+  // fetch data state from redux storage
   let data = useSelector((state) => state.data);
   data = data.map(({ timestamp, ...res }) => ({ ...res }));
 
@@ -116,7 +117,7 @@ const BasicTable = () => {
   const [addColumnPopup, setAddColumnPopup] = useState(false);
   const [currColName, setCurrColName] = useState("false");
 
-
+  // edit operation
   const edit = (record) => {
     console.log(record);
     form.setFieldsValue({
@@ -129,10 +130,12 @@ const BasicTable = () => {
     setEditingKey(record.key);
   };
 
+  // cancel operation
   const cancel = () => {
     setEditingKey("");
   };
 
+  // save operation
   const save = async (key) => {
     try {
       const edited_data = await form.validateFields();
@@ -157,10 +160,10 @@ const BasicTable = () => {
     }
   };
 
-  // get columns state from redux store
+  // get columns state from redux storage
   const columns_state = useSelector((state) => state.columns);
 
-  // add opertation to the end of table column
+  // add "opertation" column to the end of table column
   let columns = [
     ...columns_state,
     {
@@ -217,16 +220,13 @@ const BasicTable = () => {
     },
   ];
 
-  
-
   columns = columns.map((col) => ({
     ...col,
     title: (
       // <span style={{justifyContent: "space-between"}}>
     <div>
-
-    
-        {/* <Icon
+    {// we can add icon to add a new column before this column
+        /* <Icon
           color="primary"
           fontSize="small"
           onClick={() => {
@@ -246,7 +246,7 @@ const BasicTable = () => {
           fontSize="small"
           onClick={() => {
             setAddColumnPopupBehind(true);
-            setAddColumnPopup(addColumnPopupBefore || addColumnPopupBehind);
+            setAddColumnPopup(true);
             setCurrColName(col.title);
           }}
         >
@@ -258,7 +258,7 @@ const BasicTable = () => {
     ),
   }));
 
-  console.log(addColumnPopup);
+  console.log(columns);
 
   const handleResize =
     (index) =>

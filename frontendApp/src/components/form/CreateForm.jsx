@@ -105,7 +105,7 @@ const CreateForm = () => {
       <Divider>Create A New Schedule</Divider>
       <form onSubmit={handleSubmit} style={{padding: "10px"}}>
         <FormInput
-          description="CHEDULE NAME"
+          description="SCHEDULE NAME"
           placeholder="Enter Your Schedule Name"
           type="text"
           onChangeInput={addTableNameHandler}
