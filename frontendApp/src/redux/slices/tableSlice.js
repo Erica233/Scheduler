@@ -9,14 +9,14 @@ const init_columns = [
     title: "Week",
     dataIndex: "Week",
     width: "150",
-    editable: false,
+    editable: true,
     align: "center",
   },
   {
     title: "Date",
     dataIndex: "Date",
     width: "150",
-    editable: false,
+    editable: true,
     align: "center",
   },
   {
@@ -252,7 +252,8 @@ export const tableSlice = createSlice({
               : arr === "Date"
               ? "10%"
               : `${80 / column_num - 2}%`,
-          editable: arr === "Week" || arr === "Date" ? false : true,
+          // editable: arr === "Week" || arr === "Date" ? false : true,
+          editable: true,
           align: "center",
         };
       });

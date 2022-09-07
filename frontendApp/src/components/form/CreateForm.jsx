@@ -21,6 +21,7 @@ import "../../App.css";
 const CreateForm = () => {
   const dispatch = useDispatch();
 
+  // store information users provides in the form
   let table_name = "",
     year = "",
     semester = "",
@@ -45,6 +46,7 @@ const CreateForm = () => {
 
   const history = useHistory();
 
+  // handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -72,6 +74,7 @@ const CreateForm = () => {
       //test host: http://10.197.120.183:1999/upload-file
       //aimin host: http://vcm-26740.vm.duke.edu:2001/upload-form
       //http://vcm-27091.vm.duke.edu:2002/upload-form
+      // send form information to the backend and get the schdule information in the response
       const res = await fetch("http://vcm-27091.vm.duke.edu:2002/upload-form", {
         method: "POST",
         body: JSON.stringify(form_data),
@@ -80,6 +83,7 @@ const CreateForm = () => {
         },
       }).then((res) => res.json());
       if (res.data) {
+        // store data into redux storage
         dispatch(setStartWeek(res.startDate));
         dispatch(setTableName(table_name));
         dispatch(setSelectedYear(year));
@@ -159,6 +163,7 @@ const FormButton = (props) => (
   </div>
 );
 
+// import schdule infomration from local file(.csv file)
 const ImportButton = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
