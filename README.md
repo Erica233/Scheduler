@@ -22,11 +22,15 @@ cd ../backend
 npm start
 ```
 
+Course Scheduler is a web app where users can create and modify their course schedules and can export them into different forms.
+
+At homepage, users can choose to import their local schedule by clicking the first blue button or create a new schedule by filling in the schedule name and choosing course year, semester (including fall, spring, summer term 1 and summer term 2), course level (including undergraduate level and graduate level) and class days for their course.
+
 ## Code Structure
 
-### Frontend
-
 The code is mainly divided into front-end (in the frontendApp folder) and back-end (in the backend folder).
+
+### Frontend
 
 In the front-end part, the [package.json](frontendApp/package.json) and [package-lock.json](frontendApp/package-lock.json) are config files. The main code is in the src folder.
 
